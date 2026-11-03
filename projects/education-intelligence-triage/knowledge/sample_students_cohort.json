@@ -1,11 +1,21 @@
 {
+  "pilot_cohort": "Grade 8 Adolescent Pilot (Ages 13-14, Male & Female)",
   "students": [
     {
-      "id": "STU-101",
+      "id": "STU-801",
       "name": "Arjun Mehta",
+      "sex": "Male",
       "age": 13,
       "grade": "8th Grade",
-      "adolescent_stage": "Mid-Adolescence Growth Spurt",
+      "adolescent_stage": "Tanner Stage 3 — Peak Height Velocity (Growth Spurt)",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Rapid Somatic Growth & Early Testosterone Surge",
+        "circadian_melatonin_shift_mins": 95,
+        "cortisol_awakening_reactivity": 68,
+        "dopamine_reward_sensitivity": 82,
+        "iron_ferritin_and_micronutrient_status": "Borderline-Low Ferritin (Vegetarian + Rapid Linear Growth)",
+        "endocrine_academic_impact": "95-min delayed melatonin onset causes morning prefrontal fog (Periods 1-2); rising testosterone & reward-seeking increase restlessness during passive lectures."
+      },
       "cognitive_arcade_telemetry": {
         "working_memory_index": 78,
         "sustained_attention_stamina_mins": 14,
@@ -45,91 +55,268 @@
       }
     },
     {
-      "id": "STU-102",
-      "name": "Zara Al-Mansoor",
-      "age": 15,
-      "grade": "10th Grade",
-      "adolescent_stage": "Mid-to-Late Adolescence",
+      "id": "STU-802",
+      "name": "Ananya Iyer",
+      "sex": "Female",
+      "age": 13,
+      "grade": "8th Grade",
+      "adolescent_stage": "Post-Menarcheal Early Stabilization",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Late Luteal Progesterone Dip & Ferritin Depletion",
+        "circadian_melatonin_shift_mins": 75,
+        "cortisol_awakening_reactivity": 78,
+        "dopamine_reward_sensitivity": 70,
+        "iron_ferritin_and_micronutrient_status": "Low Iron/Ferritin + Magnesium Deficit (Cyclical Fatigue)",
+        "endocrine_academic_impact": "Cyclical iron/ferritin dip reduces cerebral oxygenation and working-memory stamina by ~20% during late-luteal/early-follicular days; heightened HPA-axis cortisol increases test-anxiety perfectionism."
+      },
       "cognitive_arcade_telemetry": {
-        "working_memory_index": 91,
-        "sustained_attention_stamina_mins": 32,
-        "impulse_control_go_nogo_score": 89,
-        "cognitive_flexibility_score": 85,
+        "working_memory_index": 82,
+        "sustained_attention_stamina_mins": 18,
+        "impulse_control_go_nogo_score": 84,
+        "cognitive_flexibility_score": 79,
+        "dominant_modality": "analytical_systems",
+        "secondary_modality": "visual_spatial"
+      },
+      "talent_scores": {
+        "quantitative_and_pattern_logic": 95,
+        "systems_and_engineering": 91,
+        "linguistic_and_narrative": 86,
+        "creative_and_design_synthesis": 78,
+        "interpersonal_and_leadership": 74
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 6.2,
+        "sleep_consistency_score": 64,
+        "morning_protein_and_hydration_score": 50,
+        "glycemic_spike_risk": "Moderate (tea + biscuit breakfast before school)",
+        "adolescent_growth_or_hormonal_fatigue_flag": true,
+        "physical_activity_mins": 20
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 52,
+        "mood_valence_trend": "High academic perfectionism & afternoon exhaustion",
+        "daily_screen_time_hours": 4.6,
+        "late_night_social_media_mins": 60,
+        "social_comparison_vulnerability": "High (aesthetic & academic peer comparison)",
+        "frustration_recovery_rate": 60
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "Strong academic focus, high parental expectations",
+        "home_study_environment": "Quiet desk, studies late into the night",
+        "peer_belonging_index": 76,
+        "religious_and_cultural_context": "Carnatic music practice at 6:30 PM; traditional South Indian vegetarian meals (needs Vitamin C + iron pairing)"
+      }
+    },
+    {
+      "id": "STU-803",
+      "name": "Zoya Khan",
+      "sex": "Female",
+      "age": 13,
+      "grade": "8th Grade",
+      "adolescent_stage": "Mid-Adolescence Balanced Endocrine Rhythm",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Follicular Estrogen Cognitive Peak & Regulated Cortisol",
+        "circadian_melatonin_shift_mins": 45,
+        "cortisol_awakening_reactivity": 42,
+        "dopamine_reward_sensitivity": 68,
+        "iron_ferritin_and_micronutrient_status": "Optimal Ferritin, Vitamin D & Omega-3 Balance",
+        "endocrine_academic_impact": "Well-regulated circadian cortisol curve and stable estrogen-supported verbal/hippocampal memory consolidation enable 30+ min deep Socratic study blocks."
+      },
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 92,
+        "sustained_attention_stamina_mins": 30,
+        "impulse_control_go_nogo_score": 90,
+        "cognitive_flexibility_score": 87,
         "dominant_modality": "auditory_verbal",
         "secondary_modality": "analytical_systems"
       },
       "talent_scores": {
         "linguistic_and_narrative": 96,
-        "interpersonal_and_leadership": 92,
-        "creative_and_design_synthesis": 84,
-        "systems_and_engineering": 74,
-        "quantitative_and_pattern_logic": 79
+        "interpersonal_and_leadership": 93,
+        "creative_and_design_synthesis": 85,
+        "quantitative_and_pattern_logic": 81,
+        "systems_and_engineering": 76
       },
       "bio_and_nutrition": {
-        "avg_sleep_hours": 7.6,
-        "sleep_consistency_score": 88,
-        "morning_protein_and_hydration_score": 84,
-        "glycemic_spike_risk": "Low",
+        "avg_sleep_hours": 8.1,
+        "sleep_consistency_score": 90,
+        "morning_protein_and_hydration_score": 86,
+        "glycemic_spike_risk": "Low (eggs, dates, nuts & hydration before school)",
         "adolescent_growth_or_hormonal_fatigue_flag": false,
-        "physical_activity_mins": 45
+        "physical_activity_mins": 50
       },
       "psychological_and_digital": {
-        "stress_resilience_score": 86,
-        "mood_valence_trend": "Stable & Positive",
-        "daily_screen_time_hours": 2.1,
-        "late_night_social_media_mins": 10,
+        "stress_resilience_score": 88,
+        "mood_valence_trend": "Stable & Resilient",
+        "daily_screen_time_hours": 1.9,
+        "late_night_social_media_mins": 5,
         "social_comparison_vulnerability": "Low",
-        "frustration_recovery_rate": 90
+        "frustration_recovery_rate": 91
       },
       "socio_cultural_and_family": {
-        "family_support_sync": "Strong collaborative routines",
-        "home_study_environment": "Quiet dedicated study corner",
-        "peer_belonging_index": 91,
-        "religious_and_cultural_context": "Observes seasonal fasting and daily prayer windows; thrives when deep study blocks align with post-dawn reflection hours"
+        "family_support_sync": "Warm collaborative family check-ins",
+        "home_study_environment": "Dedicated study corner, devices docked in living room at 9 PM",
+        "peer_belonging_index": 92,
+        "religious_and_cultural_context": "Daily prayer rhythm & seasonal fasting awareness; thrives with post-dawn reflection and debate clubs"
       }
     },
     {
-      "id": "STU-103",
-      "name": "Leo Vance",
+      "id": "STU-804",
+      "name": "Kabir Verma",
+      "sex": "Male",
       "age": 14,
-      "grade": "9th Grade",
-      "adolescent_stage": "Adolescent Transition",
+      "grade": "8th Grade",
+      "adolescent_stage": "Mid-Pubertal Testosterone & Dopamine Remodeling",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Acute Circadian Phase Delay + High Dopamine Novelty Seeking",
+        "circadian_melatonin_shift_mins": 140,
+        "cortisol_awakening_reactivity": 88,
+        "dopamine_reward_sensitivity": 95,
+        "iron_ferritin_and_micronutrient_status": "Severe Vitamin D, Zinc & Omega-3 Deficit (Skipped Breakfasts)",
+        "endocrine_academic_impact": "2.3-hour melatonin phase delay + late-night gaming causes acute prefrontal executive dysfunction (impulse score 46/100); chronic cortisol elevation triggers fight-or-flight rage-quits on timed tasks."
+      },
       "cognitive_arcade_telemetry": {
         "working_memory_index": 64,
         "sustained_attention_stamina_mins": 9,
-        "impulse_control_go_nogo_score": 48,
-        "cognitive_flexibility_score": 79,
+        "impulse_control_go_nogo_score": 46,
+        "cognitive_flexibility_score": 80,
         "dominant_modality": "kinesthetic_experiential",
         "secondary_modality": "visual_spatial"
       },
       "talent_scores": {
         "creative_and_design_synthesis": 95,
-        "kinesthetic_and_rhythm": 91,
-        "systems_and_engineering": 77,
-        "linguistic_and_narrative": 58,
-        "quantitative_and_pattern_logic": 62
+        "kinesthetic_and_rhythm": 92,
+        "systems_and_engineering": 79,
+        "quantitative_and_pattern_logic": 64,
+        "linguistic_and_narrative": 58
       },
       "bio_and_nutrition": {
-        "avg_sleep_hours": 4.9,
-        "sleep_consistency_score": 34,
-        "morning_protein_and_hydration_score": 30,
-        "glycemic_spike_risk": "Severe (skips breakfast, high caffeine/sugar gaming snacks)",
+        "avg_sleep_hours": 4.8,
+        "sleep_consistency_score": 32,
+        "morning_protein_and_hydration_score": 28,
+        "glycemic_spike_risk": "Severe (skips breakfast, high-caffeine soda & ultra-processed snacks)",
         "adolescent_growth_or_hormonal_fatigue_flag": true,
         "physical_activity_mins": 15
       },
       "psychological_and_digital": {
-        "stress_resilience_score": 32,
-        "mood_valence_trend": "Critical drop — high apathy & rage-quit spikes in tasks",
-        "daily_screen_time_hours": 7.8,
-        "late_night_social_media_mins": 135,
-        "social_comparison_vulnerability": "High (cyber-peer conflict indicators)",
-        "frustration_recovery_rate": 28
+        "stress_resilience_score": 31,
+        "mood_valence_trend": "Critical drop — irritability, apathy & task abandonment",
+        "daily_screen_time_hours": 8.2,
+        "late_night_social_media_mins": 145,
+        "social_comparison_vulnerability": "High (online gaming conflict & cyber-peer friction)",
+        "frustration_recovery_rate": 26
       },
       "socio_cultural_and_family": {
-        "family_support_sync": "Strained — recent family relocation",
-        "home_study_environment": "Isolated bedroom with unmonitored late-night screens",
-        "peer_belonging_index": 38,
-        "religious_and_cultural_context": "Secular household; values music, skateboarding, and nature grounding"
+        "family_support_sync": "Strained — recent family relocation & evening schedule mismatch",
+        "home_study_environment": "Closed bedroom door with unmonitored dual-screen setup",
+        "peer_belonging_index": 36,
+        "religious_and_cultural_context": "Secular household; responds strongly to music production, drumming, and outdoor kinetic challenges"
+      }
+    },
+    {
+      "id": "STU-805",
+      "name": "Maya Lin",
+      "sex": "Female",
+      "age": 13,
+      "grade": "8th Grade",
+      "adolescent_stage": "Early-to-Mid Pubertal HPA-Axis Sensitization",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Estrogen/Progesterone Fluctuation + Hyper-Reactive Cortisol",
+        "circadian_melatonin_shift_mins": 125,
+        "cortisol_awakening_reactivity": 92,
+        "dopamine_reward_sensitivity": 86,
+        "iron_ferritin_and_micronutrient_status": "Depleted B-Complex, Iron & Protein (Meal Skipping from Social Media Body Image Pressure)",
+        "endocrine_academic_impact": "Elevated social-evaluative threat sensitivity (oxytocin/cortisol coupling) combined with caloric restriction impairs hippocampal recall during oral/public classroom evaluations."
+      },
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 70,
+        "sustained_attention_stamina_mins": 11,
+        "impulse_control_go_nogo_score": 68,
+        "cognitive_flexibility_score": 84,
+        "dominant_modality": "visual_spatial",
+        "secondary_modality": "auditory_verbal"
+      },
+      "talent_scores": {
+        "creative_and_design_synthesis": 97,
+        "linguistic_and_narrative": 89,
+        "interpersonal_and_leadership": 78,
+        "visual_and_spatial_arts": 94,
+        "quantitative_and_pattern_logic": 66
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 5.0,
+        "sleep_consistency_score": 38,
+        "morning_protein_and_hydration_score": 32,
+        "glycemic_spike_risk": "Severe (skips breakfast & lunch protein; afternoon iced coffee crash)",
+        "adolescent_growth_or_hormonal_fatigue_flag": true,
+        "physical_activity_mins": 20
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 35,
+        "mood_valence_trend": "Acute internalizing anxiety & social withdrawal",
+        "daily_screen_time_hours": 7.1,
+        "late_night_social_media_mins": 130,
+        "social_comparison_vulnerability": "Critical (late-night aesthetic/appearance comparison spirals)",
+        "frustration_recovery_rate": 33
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "Caring parents, unaware of late-night internalizing stress",
+        "home_study_environment": "Quiet bedroom, uses tablet under blanket past midnight",
+        "peer_belonging_index": 41,
+        "religious_and_cultural_context": "Mindfulness & artistic household; thrives in small-group creative studios and non-competitive mentorship"
+      }
+    },
+    {
+      "id": "STU-806",
+      "name": "Rohan Nair",
+      "sex": "Male",
+      "age": 13,
+      "grade": "8th Grade",
+      "adolescent_stage": "Tanner Stage 3 — Athletics-Regulated Endocrine Profile",
+      "hormonal_and_adolescent_profile": {
+        "pubertal_phase": "Growth Hormone & BDNF Boost via Daily Aerobic Exercise",
+        "circadian_melatonin_shift_mins": 50,
+        "cortisol_awakening_reactivity": 45,
+        "dopamine_reward_sensitivity": 74,
+        "iron_ferritin_and_micronutrient_status": "Strong Protein/Electrolyte Balance (High Caloric Burn from Track & Field)",
+        "endocrine_academic_impact": "Morning athletics upregulates BDNF (Brain-Derived Neurotrophic Factor) and stabilizes baseline dopamine, unlocking peak problem-solving velocity right after physical movement."
+      },
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 87,
+        "sustained_attention_stamina_mins": 26,
+        "impulse_control_go_nogo_score": 85,
+        "cognitive_flexibility_score": 91,
+        "dominant_modality": "kinesthetic_experiential",
+        "secondary_modality": "analytical_systems"
+      },
+      "talent_scores": {
+        "kinesthetic_and_rhythm": 94,
+        "systems_and_engineering": 90,
+        "interpersonal_and_leadership": 88,
+        "quantitative_and_pattern_logic": 85,
+        "linguistic_and_narrative": 72
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 8.0,
+        "sleep_consistency_score": 86,
+        "morning_protein_and_hydration_score": 88,
+        "glycemic_spike_risk": "Low (high-protein coastal diet with complex carbs & hydration)",
+        "adolescent_growth_or_hormonal_fatigue_flag": false,
+        "physical_activity_mins": 75
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 84,
+        "mood_valence_trend": "Energetic & Collaborative",
+        "daily_screen_time_hours": 2.3,
+        "late_night_social_media_mins": 15,
+        "social_comparison_vulnerability": "Low",
+        "frustration_recovery_rate": 89
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "Consistent family dinners & outdoor weekend routines",
+        "home_study_environment": "Standing/movement-friendly study desk",
+        "peer_belonging_index": 90,
+        "religious_and_cultural_context": "Intergenerational household with evening storytelling and sports mentorship"
       }
     }
   ]

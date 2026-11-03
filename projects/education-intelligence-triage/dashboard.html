@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KALKI — Education Intelligence & 5D Student Triage System</title>
+  <title>KALKI — Grade 8 Adolescent Pilot & 5D Triage Intelligence</title>
   <style>
     :root {
       --bg: #0b1020;
@@ -18,6 +18,7 @@
       --amber: #f59e0b;
       --red: #ef4444;
       --cyan: #06b6d4;
+      --pink: #ec4899;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -49,16 +50,16 @@
       box-shadow: 0 0 20px var(--accent-glow);
       font-weight: 800;
     }
-    .brand h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.02em; }
-    .brand p { font-size: 0.8rem; color: var(--muted); }
-    .controls { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    .brand h1 { font-size: 1.22rem; font-weight: 800; letter-spacing: 0.02em; }
+    .brand p { font-size: 0.79rem; color: var(--muted); }
+    .controls { display: flex; gap: 0.65rem; align-items: center; flex-wrap: wrap; }
     select, button {
       background: var(--panel-alt);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 0.5rem 0.9rem;
+      padding: 0.48rem 0.85rem;
       border-radius: 8px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -80,10 +81,10 @@
     .role-tab, .game-tab {
       border: none;
       background: transparent;
-      padding: 0.45rem 0.85rem;
+      padding: 0.42rem 0.8rem;
       border-radius: 7px;
       font-weight: 600;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--muted);
     }
     .role-tab.active, .game-tab.active {
@@ -92,11 +93,11 @@
       box-shadow: 0 0 12px var(--accent-glow);
     }
     main {
-      max-width: 1440px;
+      max-width: 1460px;
       margin: 0 auto;
       padding: 1.5rem 2rem;
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: 410px 1fr;
       gap: 1.5rem;
     }
     @media (max-width: 1080px) {
@@ -120,7 +121,7 @@
     .badge {
       padding: 0.25rem 0.7rem;
       border-radius: 999px;
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
@@ -129,12 +130,12 @@
     .badge.AMBER { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid var(--amber); }
     .badge.RED { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid var(--red); }
 
-    .metric-row { margin-bottom: 0.75rem; }
+    .metric-row { margin-bottom: 0.72rem; }
     .metric-label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.82rem;
-      margin-bottom: 0.28rem;
+      font-size: 0.81rem;
+      margin-bottom: 0.26rem;
       color: var(--muted);
     }
     .metric-label strong { color: var(--text); }
@@ -150,6 +151,9 @@
       border-radius: 999px;
       transition: width 0.35s ease;
     }
+    .bar-fill.hormone {
+      background: linear-gradient(90deg, var(--pink), var(--amber));
+    }
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -157,67 +161,84 @@
     }
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.95rem;
       margin-bottom: 1rem;
     }
     .stat-tile {
       background: var(--panel-alt);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.9rem;
+      padding: 0.85rem;
     }
-    .stat-tile .label { font-size: 0.76rem; color: var(--muted); }
-    .stat-tile .val { font-size: 1.35rem; font-weight: 800; margin-top: 0.2rem; }
+    .stat-tile .label { font-size: 0.75rem; color: var(--muted); }
+    .stat-tile .val { font-size: 1.3rem; font-weight: 800; margin-top: 0.2rem; }
     ul.clean-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.58rem;
     }
     ul.clean-list li {
       background: var(--panel-alt);
-      padding: 0.7rem 0.9rem;
+      padding: 0.68rem 0.9rem;
       border-radius: 10px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       border-left: 3px solid var(--accent);
+    }
+    .equation-box {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(236, 72, 153, 0.12));
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      border-radius: 12px;
+      padding: 0.95rem 1.1rem;
+      margin-bottom: 1rem;
+      font-size: 0.84rem;
+    }
+    .equation-formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(11, 16, 32, 0.75);
+      padding: 0.55rem 0.8rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      color: #f9a8d4;
+      font-size: 0.8rem;
     }
     .arcade-arena {
       background: var(--bg);
       border: 1px dashed var(--border);
       border-radius: 12px;
-      padding: 1.1rem;
+      padding: 1.05rem;
       text-align: center;
-      margin-top: 0.75rem;
+      margin-top: 0.7rem;
     }
     .arcade-target {
-      width: 86px;
-      height: 86px;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
-      margin: 0.85rem auto;
+      margin: 0.8rem auto;
       display: grid;
       place-items: center;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       user-select: none;
       transition: transform 0.1s ease;
     }
     .matrix-grid {
       display: grid;
-      grid-template-columns: repeat(3, 64px);
+      grid-template-columns: repeat(3, 62px);
       gap: 8px;
       justify-content: center;
-      margin: 0.85rem auto;
+      margin: 0.8rem auto;
     }
     .matrix-cell {
-      width: 64px;
-      height: 64px;
+      width: 62px;
+      height: 62px;
       background: var(--panel-alt);
       border: 1px solid var(--border);
       border-radius: 10px;
       cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
+      transition: background 0.15s ease;
     }
     .matrix-cell.lit {
       background: var(--cyan);
@@ -230,9 +251,9 @@
       display: block;
       width: 100%;
       text-align: left;
-      margin-top: 0.5rem;
-      padding: 0.6rem 0.8rem;
-      font-size: 0.82rem;
+      margin-top: 0.45rem;
+      padding: 0.58rem 0.78rem;
+      font-size: 0.81rem;
       background: var(--panel-alt);
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -244,19 +265,19 @@
       color: #67e8f9;
       padding: 0.65rem 1rem;
       border-radius: 10px;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       margin-bottom: 0.9rem;
     }
-    .slider-group { margin-bottom: 0.68rem; }
+    .slider-group { margin-bottom: 0.62rem; }
     .slider-group label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--muted);
     }
     input[type="range"] { width: 100%; accent-color: var(--accent); }
     .sync-pill {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
       background: rgba(16, 185, 129, 0.15);
@@ -266,20 +287,22 @@
     table.cohort-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       margin-bottom: 1rem;
     }
     table.cohort-table th, table.cohort-table td {
       text-align: left;
-      padding: 0.65rem 0.75rem;
+      padding: 0.6rem 0.65rem;
       border-bottom: 1px solid var(--border);
     }
     table.cohort-table th {
       color: var(--muted);
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
     }
+    tr.clickable-row { cursor: pointer; transition: background 0.15s ease; }
+    tr.clickable-row:hover { background: rgba(99, 102, 241, 0.12); }
   </style>
 </head>
 <body>
@@ -287,13 +310,18 @@
     <div class="brand">
       <div class="brand-icon">⚡</div>
       <div>
-        <h1>KALKI — Education Intelligence & 5D Triage System</h1>
-        <p>Brain Wiring • Talent Discovery • Bio/Nutrition/Hormones • Mental Health & Screen Time • Family & Cultural Sync</p>
+        <h1>KALKI — Grade 8 Adolescent Pilot (Male & Female 5D Intelligence)</h1>
+        <p>Brain Wiring • Talent Discovery • Adolescent Hormones & Growth • Nutrition & Sleep • Social Media & Family Sync</p>
       </div>
     </div>
     <div class="controls">
       <span id="dbSyncStatus" class="sync-pill">Kalki Core Online</span>
-      <label for="studentSelect" style="font-size:0.84rem;color:var(--muted);">Student:</label>
+      <label for="sexFilter" style="font-size:0.8rem;color:var(--muted);">Pilot Filter:</label>
+      <select id="sexFilter">
+        <option value="ALL">All Grade 8 Pilot (3M / 3F)</option>
+        <option value="Male">Grade 8 Male Cohort (3)</option>
+        <option value="Female">Grade 8 Female Cohort (3)</option>
+      </select>
       <select id="studentSelect"></select>
       <div class="role-tabs" role="tablist" aria-label="Switch View Mode">
         <button class="role-tab active" data-role="student">🎮 Student</button>
@@ -305,7 +333,7 @@
   </header>
 
   <main>
-    <!-- Left Column: Multi-Game Stealth Arcade + Bio-Psycho-Social Logger -->
+    <!-- Left Column: Multi-Game Stealth Arcade + Bio-Hormonal-Social Logger -->
     <aside>
       <div class="card">
         <h2>
@@ -319,12 +347,12 @@
 
         <!-- Game 1: Go / No-Go Impulse Control -->
         <div id="gamePanel_impulse" class="game-panel">
-          <p style="font-size:0.79rem;color:var(--muted);">
-            Measures <strong>Impulse Control</strong> & <strong>Focus Stamina</strong>. Tap ONLY on <strong>GREEN (TAP!)</strong>; hold back on <strong>RED (HOLD!)</strong>.
+          <p style="font-size:0.78rem;color:var(--muted);">
+            Measures <strong>Prefrontal Impulse Control</strong> & <strong>Focus Stamina</strong>. Tap ONLY on <strong>GREEN (TAP!)</strong>; hold back on <strong>RED (HOLD!)</strong>.
           </p>
           <div class="arcade-arena">
             <div id="arcadeOrb" class="arcade-target" style="background:#334155;">START</div>
-            <div id="arcadeStats" style="font-size:0.8rem;color:var(--muted);">
+            <div id="arcadeStats" style="font-size:0.79rem;color:var(--muted);">
               Click START for a 10-trial Stealth Brain-Wiring burst.
             </div>
           </div>
@@ -332,13 +360,13 @@
 
         <!-- Game 2: Spatial Matrix Working Memory -->
         <div id="gamePanel_spatial" class="game-panel" style="display:none;">
-          <p style="font-size:0.79rem;color:var(--muted);">
+          <p style="font-size:0.78rem;color:var(--muted);">
             Measures <strong>Visual-Spatial Working Memory</strong> & <strong>Systems Engineering Talent</strong>. Memorize the glowing pattern and repeat it!
           </p>
           <div class="arcade-arena">
             <div class="matrix-grid" id="matrixGrid"></div>
             <button id="btnStartSpatial" class="btn-primary" style="margin-top:0.4rem;">Flash Spatial Pattern</button>
-            <div id="spatialStats" style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">
+            <div id="spatialStats" style="font-size:0.79rem;color:var(--muted);margin-top:0.5rem;">
               Watch the 4 glowing nodes, then tap them in any order.
             </div>
           </div>
@@ -346,12 +374,12 @@
 
         <!-- Game 3: Narrative & Empathy Quest RPG -->
         <div id="gamePanel_empathy" class="game-panel" style="display:none;">
-          <p style="font-size:0.79rem;color:var(--muted);">
+          <p style="font-size:0.78rem;color:var(--muted);">
             Measures <strong>Social-Emotional Leadership</strong>, <strong>Linguistic Framing</strong> & <strong>Peer Belonging</strong>.
           </p>
           <div class="arcade-arena" style="text-align:left;">
-            <div id="rpgPrompt" style="font-size:0.84rem;font-weight:600;margin-bottom:0.5rem;">
-              Scenario: During a robotics team sprint, your teammate freezes up after a social media rumor and wants to quit before the demo. What do you do?
+            <div id="rpgPrompt" style="font-size:0.82rem;font-weight:600;margin-bottom:0.45rem;">
+              Scenario: During a Grade 8 robotics sprint, a teammate freezes up after a social media rumor and wants to quit before the demo. What do you do?
             </div>
             <button class="rpg-choice" data-score="95" data-boost="8">
               🤝 A) Pause the build for 5 mins, validate their feelings privately, and co-design a calm visual role they enjoy.
@@ -362,7 +390,7 @@
             <button class="rpg-choice" data-score="52" data-boost="-5">
               ⚡ C) Tell them to ignore the drama and push harder because grades depend on the demo.
             </button>
-            <div id="rpgStats" style="font-size:0.8rem;color:var(--muted);margin-top:0.65rem;">
+            <div id="rpgStats" style="font-size:0.79rem;color:var(--muted);margin-top:0.6rem;">
               Select a response to log Social-Emotional & Leadership telemetry.
             </div>
           </div>
@@ -371,19 +399,27 @@
 
       <div class="card">
         <h2>
-          <span>⚡ 5D Bio-Psycho-Social Check-In</span>
-          <button id="btnSaveCheckin" class="btn-primary" style="padding:0.3rem 0.7rem;font-size:0.76rem;">Save Check-In</button>
+          <span>🧬 5D Bio, Hormonal & Lifestyle Simulator</span>
+          <button id="btnSaveCheckin" class="btn-primary" style="padding:0.28rem 0.68rem;font-size:0.75rem;">Save to DB</button>
         </h2>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;">
-          Adjust daily sleep, nutrition, screen time, and stress markers. Click <strong>Save Check-In</strong> to persist to SQLite.
+        <p style="font-size:0.77rem;color:var(--muted);margin-bottom:0.75rem;">
+          Tune sleep, nutrition, pubertal melatonin shift, cortisol reactivity, and late-night social media to see live impact on <strong>Academic Readiness</strong>:
         </p>
         <div class="slider-group">
           <label><span>Avg Sleep (Hours/Night)</span><strong id="valSleep">5.8h</strong></label>
           <input type="range" id="simSleep" min="4.0" max="9.5" step="0.2" value="5.8" />
         </div>
         <div class="slider-group">
-          <label><span>Morning Protein & Hydration</span><strong id="valNutrition">45/100</strong></label>
+          <label><span>Morning Protein, Iron & Hydration</span><strong id="valNutrition">45/100</strong></label>
           <input type="range" id="simNutrition" min="15" max="100" step="5" value="45" />
+        </div>
+        <div class="slider-group">
+          <label><span>Pubertal Melatonin Phase Delay</span><strong id="valMelatonin">+95m</strong></label>
+          <input type="range" id="simMelatonin" min="20" max="160" step="5" value="95" />
+        </div>
+        <div class="slider-group">
+          <label><span>HPA-Axis Cortisol Reactivity</span><strong id="valCortisol">68/100</strong></label>
+          <input type="range" id="simCortisol" min="25" max="98" step="2" value="68" />
         </div>
         <div class="slider-group">
           <label><span>Late-Night Social Media (Mins)</span><strong id="valSocial">75m</strong></label>
@@ -402,14 +438,17 @@
 
     <!-- Right Column: Role-Scoped Portals (Student, Teacher, Parent, Academy) -->
     <section id="mainContent">
+      <!-- Live Adolescent & Hormonal Academic Impact Equation Banner -->
+      <div class="equation-box" id="hormonalEquationBanner"></div>
+
       <!-- Role View 1: STUDENT -->
       <div class="card role-panel" data-panel="student">
         <h2>
-          <span>🎮 Kalki Student Companion — Quests, Power-Ups & Brain Blueprint</span>
-          <span class="badge GREEN">XP Level 12</span>
+          <span>🎮 Kalki Student Companion — Quests, Bio-Fuel & Brain Blueprint</span>
+          <span class="badge GREEN" id="studentReadinessBadge">Academic Bandwidth: 70%</span>
         </h2>
-        <p style="font-size:0.86rem;color:var(--muted);margin-bottom:0.9rem;">
-          Welcome to your personal Kalki Quest Log! Complete your daily study sprints and bio-fuel quests to level up your focus shield and unlock talent labs.
+        <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;">
+          Your brain is rewiring at high speed during Grade 8! Complete these personalized quests to sync your sleep, nutrition, and focus sprints:
         </p>
         <ul class="clean-list" id="studentQuestsList"></ul>
       </div>
@@ -421,7 +460,7 @@
           <span id="teacherTierBadge" class="badge AMBER">AMBER</span>
         </h2>
         <div class="privacy-banner">
-          🔒 <strong>Kalki Privacy Guardrail Active:</strong> Sensitive biological, hormonal, medical, family, and religious records are strictly masked in the Teacher view. Showing classroom & learning modality accommodations only.
+          🔒 <strong>Kalki Privacy Guardrail Active:</strong> Sensitive pubertal, hormonal, medical, family, and religious records are strictly masked in the Teacher view. Showing classroom & learning modality accommodations only.
         </div>
         <ul class="clean-list" id="teacherCardList"></ul>
       </div>
@@ -429,55 +468,56 @@
       <!-- Role View 3: PARENT -->
       <div class="card role-panel" data-panel="parent" style="display:none;">
         <h2>
-          <span>🏡 Kalki Parent Co-Pilot — Nutrition, Sleep, Hormones & Home Harmony</span>
+          <span>🏡 Kalki Parent Co-Pilot — Adolescent Hormones, Nutrition, Sleep & Home Harmony</span>
           <span id="parentTierBadge" class="badge AMBER">AMBER</span>
         </h2>
-        <p id="parentSummaryText" style="font-size:0.88rem;color:var(--muted);margin-bottom:0.85rem;"></p>
+        <p id="parentSummaryText" style="font-size:0.87rem;color:var(--muted);margin-bottom:0.85rem;"></p>
         <div class="grid-2" style="margin-bottom:1rem;">
           <div>
-            <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Converging Bio-Psycho-Social Signals</h3>
+            <h3 style="font-size:0.82rem;color:var(--muted);margin-bottom:0.45rem;">Converging Bio-Hormonal & Digital Signals</h3>
             <ul class="clean-list" id="riskFactorsList"></ul>
           </div>
           <div>
-            <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Socio-Cultural, Growth & Family Context</h3>
+            <h3 style="font-size:0.82rem;color:var(--muted);margin-bottom:0.45rem;">Adolescent Endocrine, Growth & Family Context</h3>
             <ul class="clean-list" id="socioContextList"></ul>
           </div>
         </div>
-        <h3 style="font-size:0.85rem;color:var(--cyan);margin-bottom:0.5rem;">Actionable Home Playbook</h3>
+        <h3 style="font-size:0.84rem;color:var(--cyan);margin-bottom:0.5rem;">Actionable Parent & Home Playbook</h3>
         <ul class="clean-list" id="parentPlanList"></ul>
       </div>
 
       <!-- Role View 4: ACADEMY -->
       <div class="card role-panel" data-panel="academy" style="display:none;">
         <h2>
-          <span>🏛️ Kalki Academy Command Center — Institutional Triage & Talent Governance</span>
-          <span id="academyTierBadge" class="badge AMBER">COHORT LIVE</span>
+          <span>🏛️ Kalki Academy Command Center — Grade 8 Pilot Cohort (Male & Female)</span>
+          <span id="academyTierBadge" class="badge AMBER">6 PILOT STUDENTS</span>
         </h2>
         <div class="grid-3" id="academyStatsTiles"></div>
-        <h3 style="font-size:0.84rem;color:var(--muted);margin-bottom:0.45rem;">Academy Cohort Triage Matrix</h3>
+        <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Grade 8 Pilot Triage & Endocrine-Academic Matrix (Click any student row to inspect)</h3>
         <table class="cohort-table">
           <thead>
             <tr>
               <th>Student</th>
-              <th>Grade</th>
-              <th>Triage Tier</th>
+              <th>Sex</th>
+              <th>Pubertal & Endocrine Phase</th>
+              <th>Triage</th>
+              <th>Base WM → Effective Bandwidth</th>
               <th>Dominant Modality</th>
-              <th>Top Talent Stream</th>
-              <th>Sleep / Screen</th>
+              <th>Top Talent</th>
             </tr>
           </thead>
           <tbody id="academyCohortTableBody"></tbody>
         </table>
-        <h3 style="font-size:0.84rem;color:var(--muted);margin-bottom:0.45rem;">Institutional Governance & Escalation Protocol (Selected Student)</h3>
+        <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Institutional Governance & Escalation Protocol (Selected Student)</h3>
         <ul class="clean-list" id="academyPlanList"></ul>
       </div>
 
-      <!-- Shared Brain-Wiring & Talent Discovery Graph -->
+      <!-- Shared Brain-Wiring, Endocrine Modulation & Talent Discovery Graph -->
       <div class="grid-2" id="brainAndTalentGrid">
         <div class="card">
-          <h2>🧬 Kalki Brain-Wiring & Tailored Learning Methodology</h2>
+          <h2>🧬 Brain-Wiring & Adolescent Endocrine Modulation</h2>
           <div id="cognitiveBars"></div>
-          <div style="margin-top:0.9rem;padding:0.8rem;background:var(--panel-alt);border-radius:10px;font-size:0.84rem;" id="methodologyBox"></div>
+          <div style="margin-top:0.85rem;padding:0.8rem;background:var(--panel-alt);border-radius:10px;font-size:0.83rem;" id="methodologyBox"></div>
         </div>
 
         <div class="card">
@@ -492,10 +532,17 @@
   <script>
     const FALLBACK_COHORT = [
       {
-        id: "STU-101",
+        id: "STU-801",
         name: "Arjun Mehta",
+        sex: "Male",
         grade: "8th Grade (Age 13)",
-        stage: "Mid-Adolescence Growth Spurt",
+        stage: "Tanner Stage 3 — Peak Height Velocity (Growth Spurt)",
+        pubertal_phase: "Rapid Somatic Growth & Early Testosterone Surge",
+        melatonin_shift: 95,
+        cortisol_reactivity: 68,
+        dopamine_sensitivity: 82,
+        micronutrient_status: "Borderline-Low Ferritin (Vegetarian + Rapid Linear Growth)",
+        endocrine_impact: "95-min delayed melatonin onset causes morning prefrontal fog (Periods 1-2); rising testosterone & reward-seeking increase restlessness during passive lectures.",
         dominant_modality: "Visual-Spatial",
         secondary_modality: "Kinesthetic-Experiential",
         working_memory: 78,
@@ -517,78 +564,228 @@
           "Linguistic & Narrative": 61
         },
         socio_context: [
-          "Adolescent Stage: Mid-Adolescence Growth Spurt (elevated sleep & caloric/micronutrient baseline).",
-          "Cultural & Spiritual Rhythm: Evening family prayer at 7:30 PM; vegetarian diet requiring intentional B12/iron/protein pairing.",
+          "Endocrine & Growth Profile: Rapid Somatic Growth & Early Testosterone Surge (+95m melatonin delay).",
+          "Micronutrient & Diet Context: Evening family prayer at 7:30 PM; vegetarian diet requiring intentional B12/iron/protein pairing.",
           "Home Environment: Shared study space; high evening device distraction when parents work late."
         ]
       },
       {
-        id: "STU-102",
-        name: "Zara Al-Mansoor",
-        grade: "10th Grade (Age 15)",
-        stage: "Mid-to-Late Adolescence",
-        dominant_modality: "Auditory-Verbal",
-        secondary_modality: "Analytical-Systems",
-        working_memory: 91,
-        stamina: 32,
-        impulse_control: 89,
-        cognitive_flexibility: 85,
-        sleep: 7.6,
-        nutrition: 84,
-        social_mins: 10,
-        screen_hrs: 2.1,
-        stress_resilience: 86,
-        belonging: 91,
-        growth_flag: false,
+        id: "STU-802",
+        name: "Ananya Iyer",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Post-Menarcheal Early Stabilization",
+        pubertal_phase: "Late Luteal Progesterone Dip & Ferritin Depletion",
+        melatonin_shift: 75,
+        cortisol_reactivity: 78,
+        dopamine_sensitivity: 70,
+        micronutrient_status: "Low Iron/Ferritin + Magnesium Deficit (Cyclical Fatigue)",
+        endocrine_impact: "Cyclical iron/ferritin dip reduces cerebral oxygenation and working-memory stamina by ~20% during late-luteal/early-follicular days; heightened HPA-axis cortisol increases test-anxiety perfectionism.",
+        dominant_modality: "Analytical-Systems",
+        secondary_modality: "Visual-Spatial",
+        working_memory: 82,
+        stamina: 18,
+        impulse_control: 84,
+        cognitive_flexibility: 79,
+        sleep: 6.2,
+        nutrition: 50,
+        social_mins: 60,
+        screen_hrs: 4.6,
+        stress_resilience: 52,
+        belonging: 76,
+        growth_flag: true,
         talents: {
-          "Linguistic & Narrative": 96,
-          "Interpersonal & Leadership": 92,
-          "Creative & Design Synthesis": 84,
-          "Quantitative & Pattern Logic": 79,
-          "Systems & Engineering": 74
+          "Quantitative & Pattern Logic": 95,
+          "Systems & Engineering": 91,
+          "Linguistic & Narrative": 86,
+          "Creative & Design Synthesis": 78,
+          "Interpersonal & Leadership": 74
         },
         socio_context: [
-          "Cultural & Spiritual Rhythm: Observes seasonal fasting & daily prayer windows; thrives when deep study blocks align with post-dawn reflection hours.",
-          "Home Environment: Quiet dedicated study corner with collaborative family check-ins."
+          "Endocrine & Growth Profile: Post-Menarcheal Early Stabilization; cyclical ferritin & magnesium dip impacts afternoon stamina.",
+          "Cultural & Diet Context: Carnatic music practice at 6:30 PM; traditional vegetarian meals (needs Vitamin C + iron pairing).",
+          "Home Environment: High parental expectations & perfectionism; studies late into the night."
         ]
       },
       {
-        id: "STU-103",
-        name: "Leo Vance",
-        grade: "9th Grade (Age 14)",
-        stage: "Adolescent Transition",
+        id: "STU-803",
+        name: "Zoya Khan",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Mid-Adolescence Balanced Endocrine Rhythm",
+        pubertal_phase: "Follicular Estrogen Cognitive Peak & Regulated Cortisol",
+        melatonin_shift: 45,
+        cortisol_reactivity: 42,
+        dopamine_sensitivity: 68,
+        micronutrient_status: "Optimal Ferritin, Vitamin D & Omega-3 Balance",
+        endocrine_impact: "Well-regulated circadian cortisol curve and stable estrogen-supported verbal/hippocampal memory consolidation enable 30+ min deep Socratic study blocks.",
+        dominant_modality: "Auditory-Verbal",
+        secondary_modality: "Analytical-Systems",
+        working_memory: 92,
+        stamina: 30,
+        impulse_control: 90,
+        cognitive_flexibility: 87,
+        sleep: 8.1,
+        nutrition: 86,
+        social_mins: 5,
+        screen_hrs: 1.9,
+        stress_resilience: 88,
+        belonging: 92,
+        growth_flag: false,
+        talents: {
+          "Linguistic & Narrative": 96,
+          "Interpersonal & Leadership": 93,
+          "Creative & Design Synthesis": 85,
+          "Quantitative & Pattern Logic": 81,
+          "Systems & Engineering": 76
+        },
+        socio_context: [
+          "Endocrine & Growth Profile: Balanced Follicular/Luteal rhythm with optimal ferritin & Vitamin D levels.",
+          "Cultural & Spiritual Rhythm: Daily prayer rhythm & seasonal fasting awareness; thrives with post-dawn reflection.",
+          "Home Environment: Dedicated study corner; devices docked in living room at 9:00 PM."
+        ]
+      },
+      {
+        id: "STU-804",
+        name: "Kabir Verma",
+        sex: "Male",
+        grade: "8th Grade (Age 14)",
+        stage: "Mid-Pubertal Testosterone & Dopamine Remodeling",
+        pubertal_phase: "Acute Circadian Phase Delay + High Dopamine Novelty Seeking",
+        melatonin_shift: 140,
+        cortisol_reactivity: 88,
+        dopamine_sensitivity: 95,
+        micronutrient_status: "Severe Vitamin D, Zinc & Omega-3 Deficit (Skipped Breakfasts)",
+        endocrine_impact: "2.3-hour melatonin phase delay + late-night gaming causes acute prefrontal executive dysfunction (impulse score 46/100); chronic cortisol elevation triggers fight-or-flight rage-quits on timed tasks.",
         dominant_modality: "Kinesthetic-Experiential",
         secondary_modality: "Visual-Spatial",
         working_memory: 64,
         stamina: 9,
-        impulse_control: 48,
-        cognitive_flexibility: 79,
-        sleep: 4.9,
-        nutrition: 30,
-        social_mins: 135,
-        screen_hrs: 7.8,
-        stress_resilience: 32,
-        belonging: 38,
+        impulse_control: 46,
+        cognitive_flexibility: 80,
+        sleep: 4.8,
+        nutrition: 28,
+        social_mins: 145,
+        screen_hrs: 8.2,
+        stress_resilience: 31,
+        belonging: 36,
         growth_flag: true,
         talents: {
           "Creative & Design Synthesis": 95,
-          "Kinesthetic & Rhythm": 91,
-          "Systems & Engineering": 77,
-          "Quantitative & Pattern Logic": 62,
+          "Kinesthetic & Rhythm": 92,
+          "Systems & Engineering": 79,
+          "Quantitative & Pattern Logic": 64,
           "Linguistic & Narrative": 58
         },
         socio_context: [
-          "Adolescent Stage: Rapid growth transition + circadian phase delay.",
-          "Family & Social Context: Recent family relocation causing peer isolation (belonging 38/100) and unmonitored late-night gaming/scrolling.",
-          "Grounding Anchors: Values music production, skateboarding, and outdoor kinetic challenges."
+          "Endocrine & Growth Profile: Mid-Pubertal Testosterone & Dopamine Remodeling (+140m melatonin shift).",
+          "Family & Social Context: Recent family relocation causing peer isolation (belonging 36/100) and late-night gaming.",
+          "Grounding Anchors: Responds strongly to music production, drumming, and kinetic studio challenges."
+        ]
+      },
+      {
+        id: "STU-805",
+        name: "Maya Lin",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Early-to-Mid Pubertal HPA-Axis Sensitization",
+        pubertal_phase: "Estrogen/Progesterone Fluctuation + Hyper-Reactive Cortisol",
+        melatonin_shift: 125,
+        cortisol_reactivity: 92,
+        dopamine_sensitivity: 86,
+        micronutrient_status: "Depleted B-Complex, Iron & Protein (Meal Skipping from Social Media Body Image Pressure)",
+        endocrine_impact: "Elevated social-evaluative threat sensitivity (oxytocin/cortisol coupling) combined with caloric restriction impairs hippocampal recall during oral/public classroom evaluations.",
+        dominant_modality: "Visual-Spatial",
+        secondary_modality: "Auditory-Verbal",
+        working_memory: 70,
+        stamina: 11,
+        impulse_control: 68,
+        cognitive_flexibility: 84,
+        sleep: 5.0,
+        nutrition: 32,
+        social_mins: 130,
+        screen_hrs: 7.1,
+        stress_resilience: 35,
+        belonging: 41,
+        growth_flag: true,
+        talents: {
+          "Creative & Design Synthesis": 97,
+          "Visual & Spatial Arts": 94,
+          "Linguistic & Narrative": 89,
+          "Interpersonal & Leadership": 78,
+          "Quantitative & Pattern Logic": 66
+        },
+        socio_context: [
+          "Endocrine & Growth Profile: Pubertal HPA-Axis Sensitization (Cortisol reactivity 92/100) + meal skipping.",
+          "Digital Vulnerability: High late-night aesthetic/body-image comparison spirals on social media.",
+          "Grounding Anchors: Thrives in small-group visual arts studios and non-competitive mentorship."
+        ]
+      },
+      {
+        id: "STU-806",
+        name: "Rohan Nair",
+        sex: "Male",
+        grade: "8th Grade (Age 13)",
+        stage: "Tanner Stage 3 — Athletics-Regulated Endocrine Profile",
+        pubertal_phase: "Growth Hormone & BDNF Boost via Daily Aerobic Exercise",
+        melatonin_shift: 50,
+        cortisol_reactivity: 45,
+        dopamine_sensitivity: 74,
+        micronutrient_status: "Strong Protein/Electrolyte Balance (High Caloric Burn from Track & Field)",
+        endocrine_impact: "Morning athletics upregulates BDNF (Brain-Derived Neurotrophic Factor) and stabilizes baseline dopamine, unlocking peak problem-solving velocity right after physical movement.",
+        dominant_modality: "Kinesthetic-Experiential",
+        secondary_modality: "Analytical-Systems",
+        working_memory: 87,
+        stamina: 26,
+        impulse_control: 85,
+        cognitive_flexibility: 91,
+        sleep: 8.0,
+        nutrition: 88,
+        social_mins: 15,
+        screen_hrs: 2.3,
+        stress_resilience: 84,
+        belonging: 90,
+        growth_flag: false,
+        talents: {
+          "Kinesthetic & Rhythm": 94,
+          "Systems & Engineering": 90,
+          "Interpersonal & Leadership": 88,
+          "Quantitative & Pattern Logic": 85,
+          "Linguistic & Narrative": 72
+        },
+        socio_context: [
+          "Endocrine & Growth Profile: Athletics-regulated Growth Hormone & BDNF boost; stable circadian rhythm.",
+          "Family & Cultural Context: Intergenerational household with coastal high-protein diet and sports mentorship.",
+          "Home Environment: Standing/movement-friendly study desk with consistent 9:30 PM lights-out."
         ]
       }
     ];
 
     let COHORT = JSON.parse(JSON.stringify(FALLBACK_COHORT));
-    let activeIdx = 0;
+    let sexFilterVal = "ALL";
+    let activeStudentId = "STU-801";
     let activeStudent = COHORT[0];
     let activeRole = "student";
+
+    function computeAcademicEquation(s) {
+      const baseWm = Number(s.working_memory || 75);
+      const melShift = Number(s.melatonin_shift || 60);
+      const cort = Number(s.cortisol_reactivity || 50);
+      const dop = Number(s.dopamine_sensitivity || 70);
+      const sleepPenalty = Math.max(0, (7.5 - s.sleep) * 4.0);
+      const circadianPenalty = Math.max(0, (melShift - 45) * 0.15) + sleepPenalty;
+      const endocrineStressPenalty = Math.max(0, (cort - 55) * 0.22) + Math.max(0, (65 - s.nutrition) * 0.18);
+      const effectiveBandwidth = Math.round(Math.max(25, Math.min(99, baseWm - circadianPenalty - endocrineStressPenalty)));
+      const sprintAdj = cort >= 75 || dop >= 85 ? -2 : 2;
+      const optimalSprint = Math.min(35, Math.max(8, Number(s.stamina || 15) + sprintAdj));
+      return {
+        baseWm,
+        circadianPenalty: Math.round(circadianPenalty * 10) / 10,
+        endocrineStressPenalty: Math.round(endocrineStressPenalty * 10) / 10,
+        effectiveBandwidth,
+        optimalSprint
+      };
+    }
 
     function computeStudentTier(s) {
       const critical = [];
@@ -596,8 +793,14 @@
       if (s.sleep < 5.2) critical.push(`Critical sleep deprivation (${s.sleep}h/night) impairing prefrontal memory consolidation.`);
       else if (s.sleep < 6.8) risks.push(`Adolescent sleep debt (${s.sleep}h vs 8.5h optimal).`);
 
-      if (s.nutrition < 40) critical.push(`Severe morning nutritional deficit (${s.nutrition}/100) causing glycemic & focus crashes.`);
-      else if (s.nutrition < 60) risks.push(`Suboptimal morning protein/hydration (${s.nutrition}/100).`);
+      if (s.nutrition < 40) critical.push(`Severe morning nutritional/iron deficit (${s.nutrition}/100) causing glycemic & focus crashes.`);
+      else if (s.nutrition < 60) risks.push(`Suboptimal morning protein/iron/hydration (${s.nutrition}/100).`);
+
+      if (s.melatonin_shift >= 120) critical.push(`Severe pubertal melatonin phase delay (+${s.melatonin_shift}m) causing Period 1-2 prefrontal fog.`);
+      else if (s.melatonin_shift >= 75) risks.push(`Pubertal circadian melatonin shift (+${s.melatonin_shift}m) reducing early-morning working memory.`);
+
+      if (s.cortisol_reactivity >= 85) critical.push(`Hyper-reactive HPA-axis cortisol (${s.cortisol_reactivity}/100) triggering acute test-anxiety / freeze.`);
+      else if (s.cortisol_reactivity >= 68) risks.push(`Elevated adolescent cortisol reactivity (${s.cortisol_reactivity}/100).`);
 
       if (s.social_mins >= 120) critical.push(`Severe late-night social media circadian disruption (${s.social_mins}m past bedtime).`);
       else if (s.social_mins >= 45) risks.push(`Elevated late-night social media dopamine load (${s.social_mins}m past bedtime).`);
@@ -606,16 +809,16 @@
       else if (s.stress_resilience < 65) risks.push(`Moderate emotional strain (resilience ${s.stress_resilience}/100).`);
 
       if (s.belonging < 45) critical.push(`Peer isolation alert (Belonging Index ${s.belonging}/100).`);
-      if (s.growth_flag) risks.push(`Active adolescent growth/hormonal shift (${s.stage}) increasing baseline energy demand.`);
+      if (s.growth_flag) risks.push(`Active adolescent growth/hormonal shift (${s.pubertal_phase}) increasing baseline energy demand.`);
 
       let tier = "GREEN";
-      let tierDesc = "TIER 1 (GREEN) — Bio-rhythms & emotional regulation are well-aligned. Focus on autonomous talent acceleration and stretch challenges.";
+      let tierDesc = "TIER 1 (GREEN) — Endocrine rhythms, sleep, and emotional regulation are well-aligned. Focus on autonomous talent acceleration.";
       if (critical.length > 0) {
         tier = "RED";
-        tierDesc = "TIER 3 (RED) — Urgent Counselor & Family Safeguarding Triage. Pause high-stakes academic pressure and stabilize sleep, nutrition, and emotional safety.";
+        tierDesc = "TIER 3 (RED) — Urgent Counselor & Family Safeguarding Triage. Pause high-stakes timed pressure and stabilize sleep, micronutrients, and emotional safety.";
       } else if (risks.length >= 2) {
         tier = "AMBER";
-        tierDesc = "TIER 2 (AMBER) — Converging bio-psycho-social stressors detected. Launching a 14-day synchronized Student, Parent, Teacher & Academy coaching loop.";
+        tierDesc = "TIER 2 (AMBER) — Converging adolescent endocrine, sleep & nutritional stressors detected. Launching a 14-day synchronized coaching loop.";
       }
       return { tier, tierDesc, critical, risks };
     }
@@ -626,6 +829,7 @@
       const bio = p.bio_and_nutrition || {};
       const psych = p.psychological_and_digital || {};
       const socio = p.socio_cultural_and_family || {};
+      const horm = p.hormonal_and_adolescent_profile || {};
       const t = p.talent_scores || {};
       const prettyTalents = {};
       Object.entries(t).forEach(([k, v]) => {
@@ -635,8 +839,15 @@
       return {
         id: p.id,
         name: p.name,
-        grade: `${p.grade} (Age ${p.age || 14})`,
-        stage: p.adolescent_stage || "Adolescence",
+        sex: p.sex || "Unspecified",
+        grade: `${p.grade} (Age ${p.age || 13})`,
+        stage: p.adolescent_stage || "Grade 8 Adolescence",
+        pubertal_phase: horm.pubertal_phase || p.adolescent_stage || "Pubertal Remodeling",
+        melatonin_shift: horm.circadian_melatonin_shift_mins ?? 65,
+        cortisol_reactivity: horm.cortisol_awakening_reactivity ?? 55,
+        dopamine_sensitivity: horm.dopamine_reward_sensitivity ?? 72,
+        micronutrient_status: horm.iron_ferritin_and_micronutrient_status || "Standard Baseline",
+        endocrine_impact: horm.endocrine_academic_impact || "Adolescent neuro-endocrine shift impacts morning focus and stamina.",
         dominant_modality: (cog.dominant_modality || "visual_spatial").replace(/_/g, "-"),
         secondary_modality: (cog.secondary_modality || "kinesthetic_experiential").replace(/_/g, "-"),
         working_memory: cog.working_memory_index ?? 75,
@@ -652,12 +863,17 @@
         growth_flag: Boolean(bio.adolescent_growth_or_hormonal_fatigue_flag),
         talents: prettyTalents,
         socio_context: [
-          `Adolescent Stage: ${p.adolescent_stage || "Adolescence"} | Peer Belonging: ${socio.peer_belonging_index ?? 75}/100`,
+          `Endocrine & Growth Stage (${p.sex || "Student"}): ${horm.pubertal_phase || p.adolescent_stage} | Micronutrients: ${horm.iron_ferritin_and_micronutrient_status || "Balanced"}`,
           `Cultural & Spiritual Context: ${socio.religious_and_cultural_context || "Standard schedule"}`,
           `Home & Study Environment: ${socio.home_study_environment || "Home study space"} (${socio.family_support_sync || "Active family support"})`
         ],
         history: item.history || { arcade_events: [], bio_logs: [] }
       };
+    }
+
+    function getFilteredCohort() {
+      if (sexFilterVal === "ALL") return COHORT;
+      return COHORT.filter((s) => s.sex === sexFilterVal);
     }
 
     async function loadFromBackend() {
@@ -667,8 +883,9 @@
         const data = await res.json();
         if (data.students && data.students.length) {
           COHORT = data.students.map(mapBackendStudent);
-          activeStudent = COHORT[activeIdx] || COHORT[0];
-          document.getElementById("dbSyncStatus").textContent = "Kalki SQLite Live";
+          activeStudent = COHORT.find((s) => s.id === activeStudentId) || COHORT[0];
+          activeStudentId = activeStudent.id;
+          document.getElementById("dbSyncStatus").textContent = "Kalki Grade 8 Pilot Live";
           populateSelect();
           syncSlidersFromStudent();
           renderDashboard();
@@ -684,23 +901,35 @@
     function populateSelect() {
       const selectEl = document.getElementById("studentSelect");
       selectEl.innerHTML = "";
-      COHORT.forEach((s, idx) => {
+      const list = getFilteredCohort();
+      if (!list.some((s) => s.id === activeStudentId) && list.length) {
+        activeStudent = list[0];
+        activeStudentId = activeStudent.id;
+      }
+      list.forEach((s) => {
         const opt = document.createElement("option");
-        opt.value = idx;
-        opt.textContent = `${s.name} — ${s.grade}`;
-        if (idx === activeIdx) opt.selected = true;
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.sex === "Female" ? "♀" : "♂"}) — ${s.grade}`;
+        if (s.id === activeStudentId) opt.selected = true;
         selectEl.appendChild(opt);
       });
     }
 
-    document.getElementById("studentSelect").addEventListener("change", (e) => {
-      activeIdx = Number(e.target.value);
-      activeStudent = COHORT[activeIdx];
+    document.getElementById("sexFilter").addEventListener("change", (e) => {
+      sexFilterVal = e.target.value;
+      populateSelect();
       syncSlidersFromStudent();
       renderDashboard();
     });
 
-    // Role Tabs: Student, Teacher, Parent, Academy
+    document.getElementById("studentSelect").addEventListener("change", (e) => {
+      activeStudentId = e.target.value;
+      activeStudent = COHORT.find((s) => s.id === activeStudentId) || COHORT[0];
+      syncSlidersFromStudent();
+      renderDashboard();
+    });
+
+    // Role Tabs
     document.querySelectorAll(".role-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".role-tab").forEach((b) => b.classList.remove("active"));
@@ -725,20 +954,27 @@
       document.querySelectorAll(".role-panel").forEach((panel) => {
         panel.style.display = panel.dataset.panel === activeRole ? "block" : "none";
       });
+      // Hide raw endocrine formula in Teacher view to preserve medical/hormonal privacy
+      document.getElementById("hormonalEquationBanner").style.display =
+        activeRole === "teacher" ? "none" : "block";
     }
 
     function syncSlidersFromStudent() {
       document.getElementById("simSleep").value = activeStudent.sleep;
       document.getElementById("simNutrition").value = activeStudent.nutrition;
+      document.getElementById("simMelatonin").value = activeStudent.melatonin_shift;
+      document.getElementById("simCortisol").value = activeStudent.cortisol_reactivity;
       document.getElementById("simSocial").value = activeStudent.social_mins;
       document.getElementById("simStress").value = activeStudent.stress_resilience;
       document.getElementById("simStamina").value = activeStudent.stamina;
     }
 
-    ["simSleep", "simNutrition", "simSocial", "simStress", "simStamina"].forEach((id) => {
+    ["simSleep", "simNutrition", "simMelatonin", "simCortisol", "simSocial", "simStress", "simStamina"].forEach((id) => {
       document.getElementById(id).addEventListener("input", () => {
         activeStudent.sleep = parseFloat(document.getElementById("simSleep").value);
         activeStudent.nutrition = parseInt(document.getElementById("simNutrition").value, 10);
+        activeStudent.melatonin_shift = parseInt(document.getElementById("simMelatonin").value, 10);
+        activeStudent.cortisol_reactivity = parseInt(document.getElementById("simCortisol").value, 10);
         activeStudent.social_mins = parseInt(document.getElementById("simSocial").value, 10);
         activeStudent.stress_resilience = parseInt(document.getElementById("simStress").value, 10);
         activeStudent.stamina = parseInt(document.getElementById("simStamina").value, 10);
@@ -757,6 +993,8 @@
             student_id: activeStudent.id,
             sleep_hours: activeStudent.sleep,
             nutrition_score: activeStudent.nutrition,
+            melatonin_shift_mins: activeStudent.melatonin_shift,
+            cortisol_reactivity: activeStudent.cortisol_reactivity,
             late_night_social_mins: activeStudent.social_mins,
             stress_resilience: activeStudent.stress_resilience,
             stamina_mins: activeStudent.stamina
@@ -764,9 +1002,10 @@
         });
         if (res.ok) {
           const data = await res.json();
-          COHORT[activeIdx] = mapBackendStudent(data);
-          activeStudent = COHORT[activeIdx];
-          statusEl.textContent = "Check-In Saved to Kalki DB ✓";
+          const idx = COHORT.findIndex((s) => s.id === activeStudent.id);
+          if (idx >= 0) COHORT[idx] = mapBackendStudent(data);
+          activeStudent = COHORT[idx] || activeStudent;
+          statusEl.textContent = "Saved to Kalki DB ✓";
           renderDashboard();
         } else {
           statusEl.textContent = "Updated Locally ✓";
@@ -790,8 +1029,9 @@
         });
         if (res.ok) {
           const data = await res.json();
-          COHORT[activeIdx] = mapBackendStudent(data);
-          activeStudent = COHORT[activeIdx];
+          const idx = COHORT.findIndex((s) => s.id === activeStudent.id);
+          if (idx >= 0) COHORT[idx] = mapBackendStudent(data);
+          activeStudent = COHORT[idx] || activeStudent;
           document.getElementById("dbSyncStatus").textContent = "Kalki Arcade Synced ✓";
           renderDashboard();
         }
@@ -800,12 +1040,12 @@
       }
     }
 
-    function renderBar(label, val, suffix = "%") {
+    function renderBar(label, val, suffix = "%", extraClass = "") {
       const pct = Math.min(100, Math.max(5, val));
       return `
         <div class="metric-row">
           <div class="metric-label"><span>${label}</span><strong>${val}${suffix}</strong></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+          <div class="bar-bg"><div class="bar-fill ${extraClass}" style="width:${pct}%"></div></div>
         </div>
       `;
     }
@@ -813,37 +1053,68 @@
     function renderDashboard() {
       document.getElementById("valSleep").textContent = `${activeStudent.sleep}h`;
       document.getElementById("valNutrition").textContent = `${activeStudent.nutrition}/100`;
+      document.getElementById("valMelatonin").textContent = `+${activeStudent.melatonin_shift}m`;
+      document.getElementById("valCortisol").textContent = `${activeStudent.cortisol_reactivity}/100`;
       document.getElementById("valSocial").textContent = `${activeStudent.social_mins}m`;
       document.getElementById("valStress").textContent = `${activeStudent.stress_resilience}/100`;
       document.getElementById("valStamina").textContent = `${activeStudent.stamina}m`;
 
+      const eq = computeAcademicEquation(activeStudent);
       const { tier, tierDesc, critical, risks } = computeStudentTier(activeStudent);
+
+      // Render Hormonal & Adolescent Academic Impact Banner
+      document.getElementById("hormonalEquationBanner").innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+          <div>
+            <strong>🧬 Kalki Adolescent Neuro-Endocrine Equation — ${activeStudent.name} (${activeStudent.sex}, ${activeStudent.grade})</strong>
+            <div style="color:var(--muted);font-size:0.8rem;margin-top:0.15rem;">
+              <strong>Stage:</strong> ${activeStudent.stage} • <strong>Phase:</strong> ${activeStudent.pubertal_phase}
+            </div>
+          </div>
+          <span class="badge ${tier}">${tier} TRIAGE</span>
+        </div>
+        <div class="equation-formula">
+          Effective Academic Bandwidth (${eq.effectiveBandwidth}/100) = Base Working Memory (${eq.baseWm}) − Circadian/Melatonin Penalty (−${eq.circadianPenalty}) − Cortisol/Micronutrient Penalty (−${eq.endocrineStressPenalty})
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.81rem;color:#e2e8f0;">
+          <strong>Clinical & Academic Mechanism:</strong> ${activeStudent.endocrine_impact}
+        </div>
+      `;
+
+      const studBadge = document.getElementById("studentReadinessBadge");
+      studBadge.className = `badge ${tier}`;
+      studBadge.textContent = `Academic Bandwidth: ${eq.effectiveBandwidth}/100`;
 
       ["teacherTierBadge", "parentTierBadge"].forEach((id) => {
         const b = document.getElementById(id);
         b.className = `badge ${tier}`;
         b.textContent = `${tier} TRIAGE`;
       });
-      document.getElementById("parentSummaryText").textContent = `${activeStudent.name} (${activeStudent.grade}) — ${tierDesc}`;
+      document.getElementById("parentSummaryText").textContent = `${activeStudent.name} (${activeStudent.sex}, ${activeStudent.grade}) — ${tierDesc}`;
 
       const allSignals = [...critical.map(c => `🚨 ${c}`), ...risks.map(r => `⚠️ ${r}`)];
-      if (allSignals.length === 0) allSignals.push("✅ All biological, nutritional, sleep, and digital wellness markers are within healthy ranges.");
+      if (allSignals.length === 0) allSignals.push("✅ All biological, endocrine, nutritional, sleep, and digital wellness markers are within healthy ranges.");
       document.getElementById("riskFactorsList").innerHTML = allSignals.map(s => `<li>${s}</li>`).join("");
       document.getElementById("socioContextList").innerHTML = activeStudent.socio_context.map(c => `<li>${c}</li>`).join("");
 
-      const sprintMins = Math.min(35, Math.max(10, activeStudent.stamina + 2));
+      const sprintMins = eq.optimalSprint;
       document.getElementById("cognitiveBars").innerHTML = [
-        renderBar("Working Memory Index (Spatial Matrix)", activeStudent.working_memory, "/100"),
+        renderBar("Base Working Memory (Spatial Matrix)", activeStudent.working_memory, "/100"),
+        renderBar("Effective Academic Bandwidth (Hormone-Adjusted)", eq.effectiveBandwidth, "/100", "hormone"),
         renderBar("Impulse Control (Go/No-Go Orb)", activeStudent.impulse_control, "/100"),
-        renderBar("Cognitive Flexibility", activeStudent.cognitive_flexibility, "/100"),
-        renderBar("Optimal Focus Sprint Window", sprintMins, " mins")
+        renderBar("HPA-Axis Cortisol Reactivity", activeStudent.cortisol_reactivity, "/100", "hormone"),
+        renderBar("Dopamine Novelty Sensitivity", activeStudent.dopamine_sensitivity, "/100", "hormone")
       ].join("");
 
       document.getElementById("methodologyBox").innerHTML = `
         <strong>Kalki Tailored Learning Prescription (${activeStudent.name}):</strong><br/>
-        • <strong>Primary Modality:</strong> ${activeStudent.dominant_modality}<br/>
-        • <strong>Secondary Modality:</strong> ${activeStudent.secondary_modality}<br/>
-        • <strong>Pacing Rule:</strong> Structure study into <strong>${sprintMins}-minute interactive sprints</strong> followed by a 3-minute kinetic/hydration reset.
+        • <strong>Primary Modality:</strong> ${activeStudent.dominant_modality} | <strong>Secondary:</strong> ${activeStudent.secondary_modality}<br/>
+        • <strong>Endocrine-Adjusted Sprint Window:</strong> <strong>${sprintMins}-minute interactive bursts</strong> followed by a 3-minute kinetic/hydration reset.<br/>
+        • <strong>Best Cognitive Window:</strong> ${
+          activeStudent.melatonin_shift >= 90
+            ? "10:00 AM – 1:00 PM & 4:30 PM – 7:00 PM (Avoid heavy abstract testing in Period 1 due to +" + activeStudent.melatonin_shift + "m melatonin shift)."
+            : "8:30 AM – 12:30 PM (Circadian melatonin curve is well-aligned for morning deep work)."
+        }
       `;
 
       const topTalentEntries = Object.entries(activeStudent.talents).sort((a, b) => b[1] - a[1]);
@@ -865,24 +1136,29 @@
         `🎯 <strong>Focus Sprint Quest (${activeStudent.name}):</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
         `🌟 <strong>Talent Accelerator:</strong> Channel your top aptitude (<strong>${topTalentName} — ${topTalentEntries[0][1]}%</strong>) to master your toughest subject topic.`
       ];
-      if (activeStudent.social_mins >= 45) {
-        quests.push(`🌙 <strong>Digital Sunset Shield:</strong> Dock phones/tablets 45 mins before bed to unlock +20% Working Memory XP tomorrow morning.`);
+      if (activeStudent.melatonin_shift >= 75 || activeStudent.social_mins >= 45) {
+        quests.push(`🌙 <strong>Melatonin & Digital Sunset Shield:</strong> Warm-light cutoff 60 mins before bed to counter your +${activeStudent.melatonin_shift}m adolescent circadian shift and recover +${Math.round(eq.circadianPenalty)} Bandwidth XP!`);
       }
-      if (activeStudent.nutrition < 60) {
-        quests.push(`⚡ <strong>Brain-Fuel Combo:</strong> Log a high-protein breakfast + hydration check-in before school to stop afternoon focus slumps.`);
+      if (activeStudent.nutrition < 65 || activeStudent.growth_flag) {
+        quests.push(`⚡ <strong>Endocrine Brain-Fuel Quest:</strong> Log a high-protein + iron/vitamin-C breakfast to power your Grade 8 growth phase and prevent afternoon brain fog.`);
       }
       document.getElementById("studentQuestsList").innerHTML = quests.map(q => `<li>${q}</li>`).join("");
 
-      // 2. TEACHER VIEW ACCOMMODATIONS
+      // 2. TEACHER VIEW ACCOMMODATIONS (PRIVACY MASKED)
       const teacherItems = [
-        `👩‍🏫 <strong>Student:</strong> ${activeStudent.name} (${activeStudent.grade})`,
+        `👩‍🏫 <strong>Student:</strong> ${activeStudent.name} (${activeStudent.grade}) — <strong>Effective Classroom Bandwidth:</strong> ${eq.effectiveBandwidth}/100`,
         `⏱️ <strong>Cognitive Pacing:</strong> Chunk classroom assignments into <strong>${sprintMins}-minute micro-milestones</strong> aligned with ${activeStudent.dominant_modality} delivery.`,
+        `🕰️ <strong>Circadian Classroom Accommodation:</strong> ${
+          activeStudent.melatonin_shift >= 80
+            ? "Student experiences morning circadian lag in Periods 1–2; use interactive/visual warm-ups early and schedule complex analytical assessments mid-morning."
+            : "High morning cognitive readiness; ideal candidate for Period 1–2 Socratic leadership."
+        }`,
         `🌉 <strong>Talent Bridge Strategy:</strong> Frame abstract lessons through <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong> projects.`,
         `🩺 <strong>Classroom Triage Action (${tier}):</strong> ${
           tier === "RED"
-            ? "Confidentially loop in the School Counselor today; suspend timed high-pressure testing this week."
+            ? "Confidentially loop in the School Counselor today; replace high-stakes timed or public oral evaluations with low-pressure studio check-ins this week."
             : tier === "AMBER"
-            ? "Seat in a high-engagement zone, provide visual/kinesthetic scaffolds, and monitor afternoon energy dips."
+            ? "Seat in a high-engagement zone, provide visual/kinesthetic scaffolds, and allow a mid-morning hydration/protein snack break."
             : "Assign peer-mentoring or advanced Olympiad/creative incubator track."
         }`
       ];
@@ -890,62 +1166,84 @@
 
       // 3. PARENT VIEW CO-PILOT
       const parentItems = [
-        `🥗 <strong>Daily Nutrition & Bio-Fuel:</strong> Morning score is ${activeStudent.nutrition}/100. Provide slow-release protein & micronutrients at breakfast to prevent mid-day glycemic crashes.`,
-        `😴 <strong>Sleep & Adolescent Growth:</strong> Currently averaging ${activeStudent.sleep}h/night during ${activeStudent.stage}. Aim for an 8.5h sleep window.`,
+        `🧬 <strong>Adolescent & Hormonal Impact (${activeStudent.pubertal_phase}):</strong> ${activeStudent.endocrine_impact}`,
+        `🥗 <strong>Micronutrient & Bio-Fuel Prescription:</strong> Status: <em>${activeStudent.micronutrient_status}</em>. Provide slow-release morning protein, iron + Vitamin C, and Omega-3s to recover +${Math.round(eq.endocrineStressPenalty)} points of cognitive bandwidth.`,
+        `😴 <strong>Sleep & Circadian Melatonin Sync:</strong> Averaging ${activeStudent.sleep}h/night with a +${activeStudent.melatonin_shift}m pubertal melatonin delay. Use dim warm lighting after 8:30 PM and morning sunlight exposure within 20 mins of waking.`,
         `🕊️ <strong>Family, Social & Cultural Harmony:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
       ];
       if (tier !== "GREEN") {
-        parentItems.push(`💬 <strong>Empathy & Screen Co-Pilot:</strong> Replace late-night bedroom screen time (${activeStudent.social_mins}m past bedtime) with a calm 10-minute wind-down conversation.`);
+        parentItems.push(`💬 <strong>Co-Regulation & Screen Co-Pilot:</strong> Cortisol reactivity is ${activeStudent.cortisol_reactivity}/100. Avoid punitive lectures at night—co-create a calm bedroom charging station outside the sleeping area.`);
       }
       document.getElementById("parentPlanList").innerHTML = parentItems.map(p => `<li>${p}</li>`).join("");
 
-      // 4. ACADEMY VIEW (INSTITUTIONAL COMMAND CENTER)
-      const cohortTiers = COHORT.map((s) => ({ s, ...computeStudentTier(s) }));
+      // 4. ACADEMY VIEW (GRADE 8 PILOT COMMAND CENTER)
+      const visibleCohort = getFilteredCohort();
+      const cohortTiers = visibleCohort.map((s) => ({ s, eq: computeAcademicEquation(s), ...computeStudentTier(s) }));
       const greenCnt = cohortTiers.filter((x) => x.tier === "GREEN").length;
       const amberCnt = cohortTiers.filter((x) => x.tier === "AMBER").length;
       const redCnt = cohortTiers.filter((x) => x.tier === "RED").length;
+      const avgBandwidth = Math.round(
+        cohortTiers.reduce((acc, x) => acc + x.eq.effectiveBandwidth, 0) / (cohortTiers.length || 1)
+      );
 
+      document.getElementById("academyTierBadge").textContent = `${visibleCohort.length} PILOT STUDENTS`;
       document.getElementById("academyStatsTiles").innerHTML = `
         <div class="stat-tile">
-          <div class="label">Tier 1 — Green (Talent Acceleration)</div>
+          <div class="label">Tier 1 — Green (Thriving)</div>
           <div class="val" style="color:var(--green);">${greenCnt} Students</div>
         </div>
         <div class="stat-tile">
-          <div class="label">Tier 2 — Amber (Coaching Loop)</div>
+          <div class="label">Tier 2 — Amber (Bio-Hormonal Coaching)</div>
           <div class="val" style="color:var(--amber);">${amberCnt} Students</div>
         </div>
         <div class="stat-tile">
-          <div class="label">Tier 3 — Red (Counselor Safeguarding)</div>
+          <div class="label">Tier 3 — Red (Safeguarding Alert)</div>
           <div class="val" style="color:var(--red);">${redCnt} Students</div>
+        </div>
+        <div class="stat-tile">
+          <div class="label">Avg Effective Academic Bandwidth</div>
+          <div class="val" style="color:var(--cyan);">${avgBandwidth}/100</div>
         </div>
       `;
 
       document.getElementById("academyCohortTableBody").innerHTML = cohortTiers
-        .map(({ s, tier: stTier }) => {
+        .map(({ s, eq: sEq, tier: stTier }) => {
           const topT = Object.entries(s.talents).sort((a, b) => b[1] - a[1])[0];
+          const isSelected = s.id === activeStudent.id;
           return `
-            <tr>
+            <tr class="clickable-row" data-sid="${s.id}" style="${isSelected ? "background:rgba(99,102,241,0.18);" : ""}">
               <td><strong>${s.name}</strong></td>
-              <td>${s.grade}</td>
+              <td>${s.sex === "Female" ? "♀ Female" : "♂ Male"}</td>
+              <td>${s.pubertal_phase}</td>
               <td><span class="badge ${stTier}">${stTier}</span></td>
+              <td>${sEq.baseWm} → <strong>${sEq.effectiveBandwidth}/100</strong></td>
               <td>${s.dominant_modality}</td>
               <td>${topT[0]} (${topT[1]}%)</td>
-              <td>${s.sleep}h sleep • ${s.social_mins}m late screen</td>
             </tr>
           `;
         })
         .join("");
 
+      document.querySelectorAll("tr.clickable-row").forEach((row) => {
+        row.addEventListener("click", () => {
+          activeStudentId = row.dataset.sid;
+          activeStudent = COHORT.find((s) => s.id === activeStudentId) || COHORT[0];
+          populateSelect();
+          syncSlidersFromStudent();
+          renderDashboard();
+        });
+      });
+
       const academyItems = [
-        `🏛️ <strong>Institutional Safeguarding & Counselor Queue (${activeStudent.name}):</strong> ${
+        `🏛️ <strong>Institutional Safeguarding & Counselor Queue (${activeStudent.name} — ${activeStudent.sex}):</strong> ${
           tier === "RED"
-            ? "URGENT ESCALATION — Assign School Psychologist & Family Liaison within 24 hours."
+            ? "URGENT ESCALATION — Assign School Psychologist, Adolescent Health Liaison & Parents within 24 hours."
             : tier === "AMBER"
-            ? "ACTIVE COACHING — Enrolled in 14-day bio-rhythm, nutrition, and focus-stamina intervention."
+            ? "ACTIVE COACHING — Enrolled in 14-day Grade 8 bio-rhythm, iron/protein nutrition, and focus-stamina intervention."
             : "OPTIMAL — Enrolled in Academy Honors & Peer Leadership Incubator."
         }`,
-        `🎓 <strong>Academy Talent Lab Placement:</strong> Allocate lab hours in <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong>.`,
-        `📅 <strong>Institutional Policy & Cultural Sync:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
+        `🧬 <strong>Grade 8 Timetable & Endocrine Policy:</strong> Shift heavy quantitative/abstract testing from 8:00 AM to 10:15 AM to accommodate adolescent melatonin phase delay (+${activeStudent.melatonin_shift}m); provide mid-morning protein/iron nutrition station.`,
+        `🎓 <strong>Academy Talent Lab Placement:</strong> Allocate lab hours in <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong>.`
       ];
       document.getElementById("academyPlanList").innerHTML = academyItems.map((a) => `<li>${a}</li>`).join("");
 

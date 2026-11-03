@@ -81,27 +81,32 @@ def init_db() -> None:
             )
             """
         )
-        # Seed from sample_students_cohort.json if empty
-        cur = conn.execute("SELECT COUNT(*) AS cnt FROM students")
-        cnt = cur.fetchone()["cnt"]
-        if cnt == 0 and SEED_FILE.exists():
+        # Seed or sync from sample_students_cohort.json
+        if SEED_FILE.exists():
             seed_data = json.loads(SEED_FILE.read_text())
-            now = time.time()
-            for s in seed_data.get("students", []):
-                conn.execute(
-                    """
-                    INSERT INTO students (student_id, name, age, grade, profile_json, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                    """,
-                    (
-                        s["id"],
-                        s["name"],
-                        s.get("age", 14),
-                        s.get("grade", ""),
-                        json.dumps(s),
-                        now,
-                    ),
-                )
+            seed_students = seed_data.get("students", [])
+            seed_ids = [s["id"] for s in seed_students]
+            cur = conn.execute("SELECT student_id FROM students")
+            existing_ids = {r["student_id"] for r in cur.fetchall()}
+            # If the cohort IDs changed (e.g. Grade 8 Pilot STU-801..806), sync DB
+            if not existing_ids.issuperset(set(seed_ids)):
+                conn.execute("DELETE FROM students")
+                now = time.time()
+                for s in seed_students:
+                    conn.execute(
+                        """
+                        INSERT INTO students (student_id, name, age, grade, profile_json, updated_at)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                        """,
+                        (
+                            s["id"],
+                            s["name"],
+                            s.get("age", 13),
+                            s.get("grade", "8th Grade"),
+                            json.dumps(s),
+                            now,
+                        ),
+                    )
         conn.commit()
 
 
@@ -219,6 +224,7 @@ def record_checkin(student_id: str, payload: Dict[str, Any]) -> Optional[Dict[st
     psych = student.setdefault("psychological_and_digital", {})
     socio = student.setdefault("socio_cultural_and_family", {})
     cog = student.setdefault("cognitive_arcade_telemetry", {})
+    hormonal = student.setdefault("hormonal_and_adolescent_profile", {})
 
     if "sleep_hours" in payload:
         bio["avg_sleep_hours"] = float(payload["sleep_hours"])
@@ -234,6 +240,10 @@ def record_checkin(student_id: str, payload: Dict[str, Any]) -> Optional[Dict[st
         psych["stress_resilience_score"] = int(payload["stress_resilience"])
     if "stamina_mins" in payload:
         cog["sustained_attention_stamina_mins"] = int(payload["stamina_mins"])
+    if "melatonin_shift_mins" in payload:
+        hormonal["circadian_melatonin_shift_mins"] = int(payload["melatonin_shift_mins"])
+    if "cortisol_reactivity" in payload:
+        hormonal["cortisol_awakening_reactivity"] = int(payload["cortisol_reactivity"])
     if "cultural_notes" in payload and payload["cultural_notes"]:
         socio["religious_and_cultural_context"] = str(payload["cultural_notes"])
 

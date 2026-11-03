@@ -22,14 +22,27 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
     bio = student.get("bio_and_nutrition", {})
     psych = student.get("psychological_and_digital", {})
     socio = student.get("socio_cultural_and_family", {})
+    hormonal = student.get("hormonal_and_adolescent_profile", {})
 
     risk_factors: List[str] = []
     critical_flags: List[str] = []
 
-    # 1. Biological, Sleep, Nutrition & Adolescent Growth checks
+    # 1. Biological, Sleep, Nutrition, Adolescent Growth & Hormonal Equation
     sleep_hrs = float(bio.get("avg_sleep_hours", 8.0))
     nutrition_score = int(bio.get("morning_protein_and_hydration_score", 80))
     growth_flag = bool(bio.get("adolescent_growth_or_hormonal_fatigue_flag", False))
+
+    melatonin_shift = int(hormonal.get("circadian_melatonin_shift_mins", 60))
+    cortisol_reac = int(hormonal.get("cortisol_awakening_reactivity", 50))
+    dopamine_sens = int(hormonal.get("dopamine_reward_sensitivity", 70))
+    pubertal_phase = hormonal.get("pubertal_phase", student.get("adolescent_stage", "Adolescence"))
+    micronutrient_status = hormonal.get(
+        "iron_ferritin_and_micronutrient_status", "Standard Adolescent Baseline"
+    )
+    endocrine_impact = hormonal.get(
+        "endocrine_academic_impact",
+        "Adolescent circadian and neuro-endocrine remodeling affects morning alertness and focus stamina.",
+    )
 
     if sleep_hrs < 5.2:
         critical_flags.append(f"Severe sleep deprivation ({sleep_hrs}h/night)")
@@ -45,7 +58,25 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
 
     if growth_flag:
         risk_factors.append(
-            f"Active adolescent growth/hormonal shift ({student.get('adolescent_stage', 'Adolescence')}) increasing baseline energy demand"
+            f"Active adolescent growth/hormonal shift ({pubertal_phase}) increasing baseline energy & micronutrient demand"
+        )
+
+    if melatonin_shift >= 120:
+        critical_flags.append(
+            f"Severe pubertal circadian melatonin phase delay (+{melatonin_shift} mins) causing acute morning prefrontal fog"
+        )
+    elif melatonin_shift >= 75:
+        risk_factors.append(
+            f"Pubertal melatonin phase delay (+{melatonin_shift} mins) reducing Period 1-2 working memory"
+        )
+
+    if cortisol_reac >= 85:
+        critical_flags.append(
+            f"Hyper-reactive HPA-axis cortisol response ({cortisol_reac}/100) triggering test-anxiety / fight-or-flight freeze"
+        )
+    elif cortisol_reac >= 68:
+        risk_factors.append(
+            f"Elevated adolescent cortisol reactivity ({cortisol_reac}/100) amplifying academic stress sensitivity"
         )
 
     # 2. Psychological, Screen Time & Social Media checks
@@ -90,9 +121,17 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
     sorted_talents = sorted(talents.items(), key=lambda kv: kv[1], reverse=True)
     top_talents = [{"domain": k, "score": v} for k, v in sorted_talents[:2]]
 
-    # Tailored Learning Methodology
+    # Tailored Learning Methodology & Adolescent Neuro-Endocrine Equation
+    # Effective Cognitive Bandwidth = Base Working Memory * Sleep/Circadian Factor * Cortisol/Nutrition Factor
+    base_wm = float(cog.get("working_memory_index", 75))
+    circadian_penalty = max(0.0, (melatonin_shift - 45) * 0.15) + max(0.0, (7.5 - sleep_hrs) * 4.0)
+    endocrine_stress_penalty = max(0.0, (cortisol_reac - 55) * 0.22) + max(0.0, (65 - nutrition_score) * 0.18)
+    effective_academic_readiness = int(round(max(25.0, min(99.0, base_wm - circadian_penalty - endocrine_stress_penalty))))
+
     stamina = int(cog.get("sustained_attention_stamina_mins", 20))
-    optimal_sprint = min(max(stamina + 2, 10), 35)
+    # Adjust sprint length if cortisol reactivity or dopamine novelty-seeking is high
+    hormonal_sprint_adj = -2 if (cortisol_reac >= 75 or dopamine_sens >= 85) else 2
+    optimal_sprint = min(max(stamina + hormonal_sprint_adj, 8), 35)
     dom_mod = cog.get("dominant_modality", "visual_spatial")
     sec_mod = cog.get("secondary_modality", "kinesthetic_experiential")
 
@@ -108,22 +147,23 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
         f"Arcade Focus Sprint: {optimal_sprint}-min {dom_mod.replace('_', '-')} bursts followed by a 3-min kinetic recharge.",
         f"Talent Channeling Quest: Apply your top talent ({top_talents[0]['domain'].replace('_', ' ').title()} - {top_talents[0]['score']}%) to unlock your next academic boss challenge.",
     ]
-    if late_social_mins >= 45:
+    if late_social_mins >= 45 or melatonin_shift >= 75:
         student_quests.append(
-            "Digital Sunset Shield: Dock devices 45 mins before sleep to boost tomorrow's Working Memory XP by +20%."
+            f"Melatonin & Digital Sunset Shield: Warm-light cutoff 60 mins before sleep to counter your +{melatonin_shift}m adolescent circadian shift and boost morning Working Memory XP."
         )
-    if nutrition_score < 60:
+    if nutrition_score < 60 or growth_flag:
         student_quests.append(
-            "Brain-Fuel Combo: Log a high-protein + hydration breakfast to prevent afternoon focus crashes."
+            "Endocrine Brain-Fuel Combo: Log a high-protein + iron/electrolyte breakfast to fuel growth-spurt energy and stop afternoon focus crashes."
         )
 
     parent_plan = [
-        f"Bio-Rhythm & Nutrition: Target 8.5h sleep window (currently {sleep_hrs}h). Pair morning meals with sustained protein & micronutrients.",
+        f"Bio-Rhythm & Nutrition: Target 8.5h sleep window (currently {sleep_hrs}h). Micronutrient focus: {micronutrient_status}.",
+        f"Adolescent & Hormonal Context ({pubertal_phase}): {endocrine_impact}",
         f"Cultural & Family Sync: Align evening wind-down and study routines with family rhythm ({socio.get('religious_and_cultural_context', 'Home schedule')}).",
     ]
     if triage_tier in ("AMBER", "RED"):
         parent_plan.append(
-            "Empathy & Screen Co-Pilot: Replace late-night bedroom device access with a calm, non-judgmental check-in; watch for adolescent growth fatigue."
+            "Empathy & Screen Co-Pilot: Replace late-night bedroom device access with a calm, non-judgmental check-in; high cortisol reactivity means punitive pressure will backfire."
         )
 
     teacher_card = {
@@ -168,17 +208,28 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
         "system_name": "Kalki",
         "student_id": student.get("id"),
         "student_name": student.get("name"),
+        "sex": student.get("sex", "Unspecified"),
         "grade": student.get("grade"),
         "triage_tier": triage_tier,
         "triage_label": triage_label,
         "critical_flags": critical_flags,
         "risk_factors": risk_factors,
         "top_talents": top_talents,
+        "hormonal_and_adolescent_equation": {
+            "pubertal_phase": pubertal_phase,
+            "circadian_melatonin_shift_mins": melatonin_shift,
+            "cortisol_awakening_reactivity": cortisol_reac,
+            "dopamine_reward_sensitivity": dopamine_sens,
+            "iron_ferritin_and_micronutrient_status": micronutrient_status,
+            "effective_academic_readiness_score": effective_academic_readiness,
+            "endocrine_academic_impact": endocrine_impact,
+        },
         "tailored_learning_methodology": {
             "dominant_modality": dom_mod,
             "secondary_modality": sec_mod,
             "optimal_focus_sprint_mins": optimal_sprint,
             "working_memory_index": cog.get("working_memory_index"),
+            "effective_academic_readiness_score": effective_academic_readiness,
             "methodology_prescription": modality_playbooks.get(dom_mod, ""),
         },
         "stakeholder_coaching_plans": {
