@@ -6,35 +6,45 @@
   <title>KALKI Mobile — 4-App Showcase (Student, Teacher, Parent & Academy Admin)</title>
   <style>
     :root {
-      --bg: #070b16;
-      --panel: #11182d;
-      --panel-alt: #192340;
-      --border: #2a3966;
-      --text: #eef2ff;
-      --muted: #94a3b8;
-      --accent: #6366f1;
-      --cyan: #06b6d4;
+      --bg: #000000;
+      --panel: #0a0a0c;
+      --panel-alt: #121215;
+      --border: #222226;
+      --border-bright: #36363c;
+      --text: #fafafa;
+      --muted: #8e8e93;
+      --accent: #ffffff;
+      --cyan: #f97316;
       --green: #10b981;
       --amber: #f59e0b;
       --red: #ef4444;
-      --pink: #ec4899;
+      --pink: #e11d48;
+      --grok-orange: #f97316;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(circle at top, #1e1b4b, var(--bg) 68%);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 45% at 50% -15%, rgba(255, 255, 255, 0.085), transparent 70%),
+        radial-gradient(circle at 85% 10%, rgba(249, 115, 22, 0.06), transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
       color: var(--text);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
     header {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(17, 24, 45, 0.9);
+      padding: 0.9rem 1.85rem;
+      background: rgba(0, 0, 0, 0.82);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: sticky;
       top: 0;
       z-index: 30;
@@ -42,29 +52,35 @@
     }
     .brand { display: flex; align-items: center; gap: 0.85rem; }
     .brand-icon {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
-      display: grid; place-items: center; font-size: 1.35rem; font-weight: 800;
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid rgba(255,255,255,0.4);
+      display: grid; place-items: center; font-size: 1.25rem; font-weight: 900;
+      box-shadow: 0 0 24px rgba(255, 255, 255, 0.22);
     }
-    .brand h1 { font-size: 1.15rem; font-weight: 800; }
-    .brand p { font-size: 0.78rem; color: var(--muted); }
-    .controls { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; }
+    .brand h1 { font-size: 1.08rem; font-weight: 700; letter-spacing: -0.025em; color: #ffffff; }
+    .brand p { font-size: 0.74rem; color: var(--muted); }
+    .controls { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
     select, button, a.btn-link {
       background: var(--panel-alt);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 0.45rem 0.85rem;
-      border-radius: 8px;
-      font-size: 0.82rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.79rem;
+      font-weight: 500;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.18s ease;
     }
-    select:hover, button:hover, a.btn-link:hover { border-color: var(--cyan); }
+    select:hover, button:hover, a.btn-link:hover { border-color: var(--border-bright); background: #18181c; }
     .mode-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
       font-weight: 700;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.16);
     }
 
     /* Phone Showcase Grid */
@@ -81,7 +97,7 @@
       grid-template-columns: 1fr;
     }
 
-    /* Realistic iPhone 16 Pro Bezel */
+    /* Realistic Grok Obsidian Titanium iPhone 16 Pro Bezel */
     .phone-column {
       display: flex;
       flex-direction: column;
@@ -89,11 +105,12 @@
       gap: 0.65rem;
     }
     .phone-role-label {
-      font-size: 0.85rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      color: var(--cyan);
-      letter-spacing: 0.03em;
+      color: #a1a1aa;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
       display: flex;
       align-items: center;
       gap: 0.45rem;
@@ -101,10 +118,10 @@
     .phone-frame {
       width: 348px;
       height: 720px;
-      background: #0d1326;
+      background: #030304;
       border-radius: 46px;
-      border: 8px solid #283457;
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65), inset 0 0 0 2px #0f172a;
+      border: 7px solid #242429;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), inset 0 0 0 1px #36363c;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -119,15 +136,16 @@
       align-items: center;
       font-size: 0.72rem;
       font-weight: 700;
-      color: #cbd5e1;
-      background: rgba(13, 19, 38, 0.95);
+      color: #e4e4e7;
+      background: #000000;
       position: relative;
       flex-shrink: 0;
     }
     .dynamic-island {
       width: 96px;
       height: 22px;
-      background: #000;
+      background: #0a0a0c;
+      border: 1px solid #1f1f24;
       border-radius: 999px;
       position: absolute;
       left: 50%;
@@ -138,15 +156,15 @@
     /* App Header inside Phone */
     .app-header {
       padding: 0.75rem 1rem;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(6, 182, 212, 0.12));
+      background: rgba(10, 10, 12, 0.92);
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-shrink: 0;
     }
-    .app-header h3 { font-size: 0.92rem; font-weight: 800; }
-    .app-header p { font-size: 0.7rem; color: var(--muted); }
+    .app-header h3 { font-size: 0.9rem; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; }
+    .app-header p { font-size: 0.68rem; color: var(--muted); }
 
     /* Scrollable Mobile Viewport */
     .app-body {
@@ -168,23 +186,26 @@
       padding: 0.85rem;
     }
     .m-card h4 {
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       margin-bottom: 0.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #f8fafc;
+      color: #a1a1aa;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .badge {
       padding: 0.18rem 0.55rem;
       border-radius: 999px;
-      font-size: 0.66rem;
-      font-weight: 800;
+      font-size: 0.64rem;
+      font-weight: 700;
+      font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
       text-transform: uppercase;
     }
-    .badge.GREEN { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid var(--green); }
-    .badge.AMBER { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid var(--amber); }
-    .badge.RED { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid var(--red); }
+    .badge.GREEN { background: rgba(16, 185, 129, 0.14); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge.AMBER { background: rgba(245, 158, 11, 0.14); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge.RED { background: rgba(239, 68, 68, 0.14); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
 
     .m-kpi-row {
       display: grid;
@@ -195,10 +216,10 @@
       background: var(--panel-alt);
       border-radius: 12px;
       padding: 0.65rem;
-      border: 1px solid rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
     }
-    .m-kpi .lbl { font-size: 0.66rem; color: var(--muted); }
-    .m-kpi .val { font-size: 1rem; font-weight: 800; margin-top: 0.15rem; }
+    .m-kpi .lbl { font-size: 0.64rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+    .m-kpi .val { font-size: 0.98rem; font-weight: 800; margin-top: 0.15rem; color: #ffffff; }
 
     .m-list {
       list-style: none;
@@ -212,7 +233,8 @@
       border-radius: 12px;
       font-size: 0.75rem;
       line-height: 1.4;
-      border-left: 3px solid var(--accent);
+      border: 1px solid var(--border);
+      border-left: 2px solid #ffffff;
     }
 
     .m-bar-row { margin-bottom: 0.5rem; }
@@ -225,21 +247,21 @@
     }
     .m-bar-bg {
       height: 6px;
-      background: #070b16;
+      background: #18181c;
       border-radius: 999px;
       overflow: hidden;
     }
     .m-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      background: linear-gradient(90deg, #ffffff, #a1a1aa);
       border-radius: 999px;
     }
-    .m-bar-fill.pink { background: linear-gradient(90deg, var(--pink), var(--amber)); }
+    .m-bar-fill.pink { background: linear-gradient(90deg, var(--grok-orange), var(--amber)); }
 
     /* Mini Mobile Arcade inside Student App */
     .m-arcade-box {
-      background: #070b16;
-      border: 1px dashed var(--border);
+      background: #050507;
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 0.75rem;
       text-align: center;
@@ -252,10 +274,11 @@
       display: grid;
       place-items: center;
       font-weight: 800;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       cursor: pointer;
       user-select: none;
-      background: #334155;
+      background: #18181c;
+      border: 1px solid var(--border-bright);
       transition: transform 0.1s ease;
     }
     .m-orb:active { transform: scale(0.9); }
@@ -263,7 +286,7 @@
     /* Bottom iOS Tab Bar */
     .tab-bar {
       height: 58px;
-      background: rgba(13, 19, 38, 0.96);
+      background: rgba(5, 5, 7, 0.96);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
@@ -280,7 +303,7 @@
       gap: 2px;
       cursor: pointer;
     }
-    .tab-item.active { color: var(--cyan); font-weight: 700; }
+    .tab-item.active { color: #ffffff; font-weight: 700; }
     .tab-item span.ico { font-size: 1.05rem; }
   </style>
 </head>
