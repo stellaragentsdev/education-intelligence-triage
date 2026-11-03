@@ -324,12 +324,15 @@
       </select>
       <select id="studentSelect"></select>
       <div class="role-tabs" role="tablist" aria-label="Switch View Mode">
-        <button class="role-tab active" data-role="student">🎮 Student</button>
-        <button class="role-tab" data-role="teacher">🏫 Teacher</button>
-        <button class="role-tab" data-role="parent">🏡 Parent</button>
-        <button class="role-tab" data-role="academy">🏛️ Academy</button>
-        <button class="role-tab" data-role="pitch">💼 Investor & School Pitch</button>
+        <button class="role-tab active" data-role="student">🎮 Student View</button>
+        <button class="role-tab" data-role="teacher">👩‍🏫 Class Teacher View</button>
+        <button class="role-tab" data-role="parent">🏡 Parent View</button>
+        <button class="role-tab" data-role="academy">🏛️ Academy Admin View</button>
+        <button class="role-tab" data-role="pitch">💼 ROI & Investment</button>
       </div>
+      <button id="btnStartGuidedDemo" class="btn-primary" style="background:linear-gradient(135deg,#10b981,#06b6d4);color:#08101f;font-weight:800;">
+        ▶️ Guided 4-View Demo
+      </button>
     </div>
   </header>
 
@@ -437,39 +440,60 @@
       </div>
     </aside>
 
-    <!-- Right Column: Role-Scoped Portals (Student, Teacher, Parent, Academy) -->
+    <!-- Right Column: Role-Scoped Portals (Student, Class Teacher, Parent, Academy Admin) -->
     <section id="mainContent">
+      <!-- Guided 4-View School Management Presentation Bar -->
+      <div id="guidedDemoBar" class="card" style="display:none;background:linear-gradient(135deg,#1e1b4b,#0f172a);border:2px solid var(--cyan);box-shadow:0 0 25px rgba(6,182,212,0.25);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.65rem;">
+          <div>
+            <span class="badge GREEN" id="demoStepBadge">STEP 1 OF 4 — STUDENT VIEW</span>
+            <h3 id="demoStepTitle" style="font-size:1.05rem;margin-top:0.35rem;color:#fff;"></h3>
+          </div>
+          <div style="display:flex;gap:0.5rem;">
+            <button id="btnDemoPrev">◀ Prev View</button>
+            <button id="btnDemoNext" class="btn-primary">Next View ▶</button>
+            <button id="btnDemoClose" style="border-color:var(--red);color:#f87171;">✕ Exit Tour</button>
+          </div>
+        </div>
+        <p id="demoStepScript" style="font-size:0.9rem;color:#cbd5e1;background:rgba(11,16,32,0.65);padding:0.75rem 1rem;border-radius:8px;border-left:4px solid var(--cyan);"></p>
+      </div>
+
       <!-- Live Adolescent & Hormonal Academic Impact Equation Banner -->
       <div class="equation-box" id="hormonalEquationBanner"></div>
 
       <!-- Role View 1: STUDENT -->
       <div class="card role-panel" data-panel="student">
         <h2>
-          <span>🎮 Kalki Student Companion — Quests, Bio-Fuel & Brain Blueprint</span>
+          <span>🎮 1. Student View — Gamified Quests, Focus Sprints & Talent Unlocks</span>
           <span class="badge GREEN" id="studentReadinessBadge">Academic Bandwidth: 70%</span>
         </h2>
         <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;">
-          Your brain is rewiring at high speed during Grade 8! Complete these personalized quests to sync your sleep, nutrition, and focus sprints:
+          <strong>What the Student Sees:</strong> Zero clinical stigma or medical jargon. Students play 60-second stealth arcade games, track their XP, and complete daily bio-fuel & focus quests tailored to their brain wiring:
         </p>
+        <div class="grid-3" id="studentKpiTiles"></div>
         <ul class="clean-list" id="studentQuestsList"></ul>
       </div>
 
-      <!-- Role View 2: TEACHER -->
+      <!-- Role View 2: CLASS TEACHER -->
       <div class="card role-panel" data-panel="teacher" style="display:none;">
         <h2>
-          <span>🏫 Kalki Teacher Portal — Classroom & Pedagogical Accommodation Card</span>
+          <span>👩‍🏫 2. Class Teacher View — Pedagogical Accommodations & Whole-Class Modality Grouping</span>
           <span id="teacherTierBadge" class="badge AMBER">AMBER</span>
         </h2>
         <div class="privacy-banner">
-          🔒 <strong>Kalki Privacy Guardrail Active:</strong> Sensitive pubertal, hormonal, medical, family, and religious records are strictly masked in the Teacher view. Showing classroom & learning modality accommodations only.
+          🔒 <strong>Kalki Privacy Guardrail Active (Zero Medical/Hormonal Exposure):</strong> Sensitive pubertal, menstrual/hormonal, clinical, family, and religious records are strictly masked from the Class Teacher. Teachers see <strong>actionable classroom pedagogy, focus sprint lengths, and learning modality clusters</strong> only.
         </div>
-        <ul class="clean-list" id="teacherCardList"></ul>
+        <h3 style="font-size:0.83rem;color:var(--cyan);margin-bottom:0.45rem;">Individual Classroom Accommodation Card (Selected Student)</h3>
+        <ul class="clean-list" id="teacherCardList" style="margin-bottom:1.1rem;"></ul>
+
+        <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Grade 8 Classroom Modality & Seating Clusters (Whole-Class Teacher Radar)</h3>
+        <div class="grid-3" id="teacherClassClusters"></div>
       </div>
 
       <!-- Role View 3: PARENT -->
       <div class="card role-panel" data-panel="parent" style="display:none;">
         <h2>
-          <span>🏡 Kalki Parent Co-Pilot — Adolescent Hormones, Nutrition, Sleep & Home Harmony</span>
+          <span>🏡 3. Parent View — Adolescent Hormones, Daily Nutrition, Sleep & Screen Harmony</span>
           <span id="parentTierBadge" class="badge AMBER">AMBER</span>
         </h2>
         <p id="parentSummaryText" style="font-size:0.87rem;color:var(--muted);margin-bottom:0.85rem;"></p>
@@ -483,16 +507,19 @@
             <ul class="clean-list" id="socioContextList"></ul>
           </div>
         </div>
-        <h3 style="font-size:0.84rem;color:var(--cyan);margin-bottom:0.5rem;">Actionable Parent & Home Playbook</h3>
+        <h3 style="font-size:0.84rem;color:var(--cyan);margin-bottom:0.5rem;">Actionable Parent & Home Co-Pilot Playbook</h3>
         <ul class="clean-list" id="parentPlanList"></ul>
       </div>
 
-      <!-- Role View 4: ACADEMY -->
+      <!-- Role View 4: ACADEMY ADMIN -->
       <div class="card role-panel" data-panel="academy" style="display:none;">
         <h2>
-          <span>🏛️ Kalki Academy Command Center — Grade 8 Pilot Cohort (Male & Female)</span>
+          <span>🏛️ 4. Academy Admin View — Institutional Triage, Safeguarding Queue & Timetable Governance</span>
           <span id="academyTierBadge" class="badge AMBER">6 PILOT STUDENTS</span>
         </h2>
+        <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;">
+          <strong>What School Management & Principals See:</strong> Real-time Green/Amber/Red risk distribution across the cohort, Counselor Safeguarding SLAs, gender-disaggregated adolescent readiness, and institutional timetable optimization.
+        </p>
         <div class="grid-3" id="academyStatsTiles"></div>
         <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Grade 8 Pilot Triage & Endocrine-Academic Matrix (Click any student row to inspect)</h3>
         <table class="cohort-table">
@@ -509,7 +536,7 @@
           </thead>
           <tbody id="academyCohortTableBody"></tbody>
         </table>
-        <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Institutional Governance & Escalation Protocol (Selected Student)</h3>
+        <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Academy Admin Governance & Counselor SLA Protocol (Selected Student)</h3>
         <ul class="clean-list" id="academyPlanList"></ul>
       </div>
 
@@ -1176,8 +1203,25 @@
             .join(" • ")}`
         : `Play any of the 3 Kalki Stealth Arcade games on the left to stream live telemetry into the student's 5D profile.`;
 
-      // 1. STUDENT VIEW QUESTS
+      // 1. STUDENT VIEW QUESTS & KPI TILES
       const topTalentName = topTalentEntries[0][0];
+      const studentKpiEl = document.getElementById("studentKpiTiles");
+      if (studentKpiEl) {
+        studentKpiEl.innerHTML = `
+          <div class="stat-tile">
+            <div class="label">My Superpower Modality</div>
+            <div class="val" style="color:var(--cyan);font-size:1.05rem;">${activeStudent.dominant_modality}</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Optimal Focus Sprint</div>
+            <div class="val" style="color:var(--green);font-size:1.05rem;">${sprintMins} Mins + 3m Break</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Top Talent Track</div>
+            <div class="val" style="color:var(--amber);font-size:1.05rem;">${topTalentName} (${topTalentEntries[0][1]}%)</div>
+          </div>
+        `;
+      }
       const quests = [
         `🎯 <strong>Focus Sprint Quest (${activeStudent.name}):</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
         `🌟 <strong>Talent Accelerator:</strong> Channel your top aptitude (<strong>${topTalentName} — ${topTalentEntries[0][1]}%</strong>) to master your toughest subject topic.`
@@ -1190,7 +1234,7 @@
       }
       document.getElementById("studentQuestsList").innerHTML = quests.map(q => `<li>${q}</li>`).join("");
 
-      // 2. TEACHER VIEW ACCOMMODATIONS (PRIVACY MASKED)
+      // 2. CLASS TEACHER VIEW ACCOMMODATIONS (PRIVACY MASKED) + WHOLE-CLASS MODALITY CLUSTERS
       const teacherItems = [
         `👩‍🏫 <strong>Student:</strong> ${activeStudent.name} (${activeStudent.grade}) — <strong>Effective Classroom Bandwidth:</strong> ${eq.effectiveBandwidth}/100`,
         `⏱️ <strong>Cognitive Pacing:</strong> Chunk classroom assignments into <strong>${sprintMins}-minute micro-milestones</strong> aligned with ${activeStudent.dominant_modality} delivery.`,
@@ -1209,6 +1253,30 @@
         }`
       ];
       document.getElementById("teacherCardList").innerHTML = teacherItems.map(t => `<li>${t}</li>`).join("");
+
+      const teacherClustersEl = document.getElementById("teacherClassClusters");
+      if (teacherClustersEl) {
+        const visualGroup = COHORT.filter((s) => s.dominant_modality.includes("Visual") || s.dominant_modality.includes("Analytical")).map((s) => s.name).join(", ");
+        const kinestheticGroup = COHORT.filter((s) => s.dominant_modality.includes("Kinesthetic")).map((s) => s.name).join(", ");
+        const auditoryGroup = COHORT.filter((s) => s.dominant_modality.includes("Auditory")).map((s) => s.name).join(", ");
+        teacherClustersEl.innerHTML = `
+          <div class="stat-tile">
+            <div class="label">Pod A — Visual & Systems Lab</div>
+            <div class="val" style="font-size:0.9rem;color:var(--cyan);margin-top:0.35rem;">${visualGroup || "None"}</div>
+            <div style="font-size:0.74rem;color:var(--muted);margin-top:0.25rem;">Use 3D diagrams, flowcharts & logic trees</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Pod B — Kinesthetic Sprint Builders</div>
+            <div class="val" style="font-size:0.9rem;color:var(--amber);margin-top:0.35rem;">${kinestheticGroup || "None"}</div>
+            <div style="font-size:0.74rem;color:var(--muted);margin-top:0.25rem;">Use 12-min hands-on builds & movement breaks</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Pod C — Socratic & Narrative Leaders</div>
+            <div class="val" style="font-size:0.9rem;color:var(--green);margin-top:0.35rem;">${auditoryGroup || "None"}</div>
+            <div style="font-size:0.74rem;color:var(--muted);margin-top:0.25rem;">Use peer-teaching, debate & verbal synthesis</div>
+          </div>
+        `;
+      }
 
       // 3. PARENT VIEW CO-PILOT
       const parentItems = [
@@ -1446,6 +1514,76 @@
         document.getElementById("rpgStats").innerHTML = `Logged! Interpersonal Leadership: <strong>${score}%</strong> | Peer Belonging Shift: <strong>${boost >= 0 ? "+" + boost : boost}</strong>`;
         pushArcadeTelemetry("narrative_empathy", score, { belonging_boost: boost });
       });
+    });
+
+    // --- GUIDED 4-VIEW SCHOOL MANAGEMENT PRESENTATION TOUR ---
+    const DEMO_STEPS = [
+      {
+        role: "student",
+        studentId: "STU-801",
+        badge: "VIEW 1 OF 4 — 🎮 STUDENT VIEW",
+        title: "Gamified Stealth Assessment & Personal Quest Log (Zero Clinical Stigma)",
+        script: "🗣️ Say to School Management: \"Here is what the student sees. Instead of stressful psychological forms, Arjun plays 60-second stealth arcade games on the left to measure Working Memory and Impulse Control. On the right, Kalki turns his Visual-Spatial brain wiring and +95m adolescent melatonin shift into fun daily quests—like 16-minute study sprints and a 'Melatonin Digital Sunset Shield' before bed.\""
+      },
+      {
+        role: "teacher",
+        studentId: "STU-802",
+        badge: "VIEW 2 OF 4 — 👩‍🏫 CLASS TEACHER VIEW",
+        title: "Classroom Pedagogy, Circadian Pacing & Whole-Class Modality Pods (PII Masked)",
+        script: "🗣️ Say to School Management: \"Now let's switch to the Class Teacher's view for Ananya Iyer. Notice that Kalki's Privacy Guardrail automatically hides all sensitive hormonal, menstrual, medical, and family records. The teacher only receives what helps in the classroom: her 16-minute Analytical-Systems focus sprint, a Period 1–2 circadian warm-up accommodation, and automatic whole-class grouping into Visual, Kinesthetic, and Socratic pods.\""
+      },
+      {
+        role: "parent",
+        studentId: "STU-802",
+        badge: "VIEW 3 OF 4 — 🏡 PARENT VIEW",
+        title: "Home Co-Pilot: Adolescent Hormones, Iron/Protein Nutrition & Screen Harmony",
+        script: "🗣️ Say to School Management: \"When Ananya's parents open their app, they see why her afternoon energy is dipping despite her 95% Quantitative Logic talent: a post-menarcheal ferritin/iron dip combined with late-night screen time and high cortisol perfectionism. Kalki gives parents a non-judgmental home playbook—pairing Vitamin C + iron at breakfast and replacing punitive night lectures with a calm living-room charging station.\""
+      },
+      {
+        role: "academy",
+        studentId: "STU-804",
+        badge: "VIEW 4 OF 4 — 🏛️ ACADEMY ADMIN VIEW",
+        title: "Principal & School Management Command Center: Cohort Triage & Timetable Governance",
+        script: "🗣️ Say to School Management: \"Finally, here is your Academy Admin Command Center across all Grade 8 Male & Female students. You immediately see who is Green (Thriving), Amber (Coaching Loop), or Red (Urgent Counselor Escalation like Kabir Verma & Maya Lin), along with how much cognitive bandwidth is being lost to adolescent sleep/hormonal shifts—and how the school can recover +25% academic readiness.\""
+      }
+    ];
+
+    let currentDemoStep = 0;
+
+    function applyDemoStep(idx) {
+      currentDemoStep = (idx + DEMO_STEPS.length) % DEMO_STEPS.length;
+      const step = DEMO_STEPS[currentDemoStep];
+      sexFilterVal = "ALL";
+      document.getElementById("sexFilter").value = "ALL";
+      activeStudentId = step.studentId;
+      activeStudent = COHORT.find((s) => s.id === activeStudentId) || COHORT[0];
+      activeRole = step.role;
+
+      document.querySelectorAll(".role-tab").forEach((b) => {
+        b.classList.toggle("active", b.dataset.role === activeRole);
+      });
+
+      document.getElementById("guidedDemoBar").style.display = "block";
+      document.getElementById("demoStepBadge").textContent = step.badge;
+      document.getElementById("demoStepTitle").textContent = step.title;
+      document.getElementById("demoStepScript").textContent = step.script;
+
+      populateSelect();
+      syncSlidersFromStudent();
+      renderDashboard();
+    }
+
+    document.getElementById("btnStartGuidedDemo").addEventListener("click", () => {
+      applyDemoStep(0);
+    });
+    document.getElementById("btnDemoNext").addEventListener("click", () => {
+      applyDemoStep(currentDemoStep + 1);
+    });
+    document.getElementById("btnDemoPrev").addEventListener("click", () => {
+      applyDemoStep(currentDemoStep - 1);
+    });
+    document.getElementById("btnDemoClose").addEventListener("click", () => {
+      document.getElementById("guidedDemoBar").style.display = "none";
     });
 
     loadFromBackend();
