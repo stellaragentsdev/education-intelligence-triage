@@ -328,6 +328,7 @@
         <button class="role-tab" data-role="teacher">🏫 Teacher</button>
         <button class="role-tab" data-role="parent">🏡 Parent</button>
         <button class="role-tab" data-role="academy">🏛️ Academy</button>
+        <button class="role-tab" data-role="pitch">💼 Investor & School Pitch</button>
       </div>
     </div>
   </header>
@@ -510,6 +511,51 @@
         </table>
         <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Institutional Governance & Escalation Protocol (Selected Student)</h3>
         <ul class="clean-list" id="academyPlanList"></ul>
+      </div>
+
+      <!-- Role View 5: INVESTOR & SCHOOL PITCH DECK + ROI CALCULATOR -->
+      <div class="card role-panel" data-panel="pitch" style="display:none;">
+        <h2>
+          <span>💼 Kalki — School Board & Seed Investor Presentation Mode</span>
+          <span class="badge GREEN">90-DAY PILOT READY</span>
+        </h2>
+        <p style="font-size:0.88rem;color:#e2e8f0;margin-bottom:1rem;">
+          <strong>Executive Thesis:</strong> Schools invest 95% of budgets into curriculum delivery and 0% into measuring the <strong>biological, hormonal, nutritional, and cognitive readiness</strong> of the adolescent brain receiving it. <strong>Kalki</strong> bridges that gap with zero-stigma stealth arcade games and 4-portal governance.
+        </p>
+
+        <div class="card" style="background:var(--panel-alt);margin-bottom:1rem;">
+          <h2>📊 Live School Financial & Academic ROI Calculator</h2>
+          <div class="grid-2" style="margin-bottom:0.9rem;">
+            <div class="slider-group">
+              <label><span>Total School Enrollment (Students)</span><strong id="valPitchStudents">600 Students</strong></label>
+              <input type="range" id="pitchStudents" min="100" max="3000" step="50" value="600" />
+            </div>
+            <div class="slider-group">
+              <label><span>Avg Annual Tuition / Fee per Student ($)</span><strong id="valPitchTuition">$4,500</strong></label>
+              <input type="range" id="pitchTuition" min="1000" max="25000" step="500" value="4500" />
+            </div>
+          </div>
+          <div class="grid-3" id="pitchRoiTiles"></div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h3 style="font-size:0.84rem;color:var(--cyan);margin-bottom:0.5rem;">Why Schools & Investors Back Kalki</h3>
+            <ul class="clean-list">
+              <li>🎯 <strong>+22% Effective Academic Bandwidth Gain:</strong> Identifies hidden pubertal melatonin shifts, iron/ferritin dips, and sleep/screen bottlenecks masking student IQ.</li>
+              <li>🛡️ <strong>Proactive Mental Health Safeguarding:</strong> Catches converging Amber & Red bio-psycho-social risk signals weeks before acute burnout or crisis.</li>
+              <li>🔒 <strong>Zero-Trust Role Privacy (COPPA/FERPA/DPDP):</strong> Teachers receive strictly classroom pacing & modality cards; sensitive hormonal/family data stays encrypted for Parents & Counselors.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="font-size:0.84rem;color:var(--pink);margin-bottom:0.5rem;">90-Day Grade 8 Paid Pilot & Investment Tiers</h3>
+            <ul class="clean-list">
+              <li>🚀 <strong>Tier 1 — 90-Day Grade 8 Flagship Pilot ($10,000):</strong> Up to 120 Male & Female Grade 8 students, full 5D baseline, teacher training & board impact report.</li>
+              <li>🏫 <strong>Tier 2 — Full Academy Annual SaaS ($60/student/yr):</strong> All grades, parent co-pilot mobile access, and counselor safeguarding command center.</li>
+              <li>💎 <strong>Tier 3 — Strategic Co-Development & Seed Investment ($150K–$300K):</strong> Founding Partner School equity/revenue-share stake + lifetime 50% licensing discount.</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- Shared Brain-Wiring, Endocrine Modulation & Talent Discovery Graph -->
@@ -1247,8 +1293,44 @@
       ];
       document.getElementById("academyPlanList").innerHTML = academyItems.map((a) => `<li>${a}</li>`).join("");
 
+      // 5. INVESTOR & SCHOOL PITCH ROI CALCULATOR
+      const pitchStudentsEl = document.getElementById("pitchStudents");
+      const pitchTuitionEl = document.getElementById("pitchTuition");
+      if (pitchStudentsEl && pitchTuitionEl) {
+        const nStudents = parseInt(pitchStudentsEl.value, 10);
+        const tuition = parseInt(pitchTuitionEl.value, 10);
+        document.getElementById("valPitchStudents").textContent = `${nStudents} Students`;
+        document.getElementById("valPitchTuition").textContent = `$${tuition.toLocaleString()}`;
+
+        const retainedStudents = Math.max(1, Math.round(nStudents * 0.025));
+        const retainedRevenue = retainedStudents * tuition;
+        const counselorHoursSaved = Math.round(nStudents * 1.25);
+        const annualSaasCost = nStudents * 60;
+        const netRoiMultiple = (retainedRevenue / Math.max(1, annualSaasCost)).toFixed(1);
+
+        document.getElementById("pitchRoiTiles").innerHTML = `
+          <div class="stat-tile">
+            <div class="label">Protected Annual Tuition (2.5% Retention Lift)</div>
+            <div class="val" style="color:var(--green);">$${retainedRevenue.toLocaleString()}/yr</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Counselor & Screening Hours Saved</div>
+            <div class="val" style="color:var(--cyan);">${counselorHoursSaved.toLocaleString()} hrs/yr</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">School Return on Kalki SaaS ($60/student)</div>
+            <div class="val" style="color:var(--amber);">${netRoiMultiple}x ROI</div>
+          </div>
+        `;
+      }
+
       updateRoleVisibility();
     }
+
+    ["pitchStudents", "pitchTuition"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", renderDashboard);
+    });
 
     // --- GAME 1: Impulse Control (Go / No-Go) ---
     let gameActive = false;
