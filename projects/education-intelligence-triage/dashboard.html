@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Intelligence & 5D Student Triage Hub</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #131b33;
+      --panel-alt: #192342;
+      --border: #2a3966;
+      --text: #eef2ff;
+      --muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --cyan: #06b6d4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: radial-gradient(circle at top right, #1e1b4b, var(--bg) 60%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.15rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(19, 27, 51, 0.88);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      gap: 1rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.85rem; }
+    .brand-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      display: grid; place-items: center; font-size: 1.4rem;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .brand h1 { font-size: 1.2rem; font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--muted); }
+    .controls { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    select, button {
+      background: var(--panel-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    select:hover, button:hover { border-color: var(--accent); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #4f46e5);
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .role-tabs, .game-tabs {
+      display: flex;
+      background: var(--bg);
+      padding: 0.22rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      gap: 0.2rem;
+    }
+    .role-tab, .game-tab {
+      border: none;
+      background: transparent;
+      padding: 0.42rem 0.8rem;
+      border-radius: 7px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .role-tab.active, .game-tab.active {
+      background: var(--accent);
+      color: white;
+    }
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 1080px) {
+      main { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge.GREEN { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid var(--green); }
+    .badge.AMBER { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid var(--amber); }
+    .badge.RED { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid var(--red); }
+
+    .metric-row { margin-bottom: 0.75rem; }
+    .metric-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 0.28rem;
+      color: var(--muted);
+    }
+    .metric-label strong { color: var(--text); }
+    .bar-bg {
+      height: 8px;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.15rem;
+    }
+    ul.clean-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    ul.clean-list li {
+      background: var(--panel-alt);
+      padding: 0.7rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      border-left: 3px solid var(--accent);
+    }
+    .arcade-arena {
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 1.1rem;
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+    .arcade-target {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      margin: 0.85rem auto;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s ease;
+    }
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 64px);
+      gap: 8px;
+      justify-content: center;
+      margin: 0.85rem auto;
+    }
+    .matrix-cell {
+      width: 64px;
+      height: 64px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .matrix-cell.lit {
+      background: var(--cyan);
+      box-shadow: 0 0 14px var(--cyan);
+    }
+    .matrix-cell.picked {
+      background: var(--accent);
+    }
+    .rpg-choice {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-top: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.82rem;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .rpg-choice:hover { border-color: var(--cyan); }
+    .privacy-banner {
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid var(--cyan);
+      color: #67e8f9;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+    .slider-group { margin-bottom: 0.68rem; }
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .sync-pill {
+      font-size: 0.74rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid var(--green);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🧠</div>
+      <div>
+        <h1>Education Intelligence & 5D Student Triage Hub</h1>
+        <p>Brain Wiring • Talent Discovery • Bio/Nutrition/Hormones • Mental Health & Screen Time • Family & Cultural Sync</p>
+      </div>
+    </div>
+    <div class="controls">
+      <span id="dbSyncStatus" class="sync-pill">SQLite Telemetry Ready</span>
+      <label for="studentSelect" style="font-size:0.84rem;color:var(--muted);">Student:</label>
+      <select id="studentSelect"></select>
+      <div class="role-tabs" role="tablist">
+        <button class="role-tab active" data-role="all">360° Command</button>
+        <button class="role-tab" data-role="student">🎮 Student Quests</button>
+        <button class="role-tab" data-role="parent">🏡 Parent Co-Pilot</button>
+        <button class="role-tab" data-role="teacher">🏫 Teacher Card</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Column: Multi-Game Stealth Arcade + Bio-Psycho-Social Logger -->
+    <aside>
+      <div class="card">
+        <h2>
+          <span>🕹️ 3-Game Stealth Assessment Arcade</span>
+        </h2>
+        <div class="game-tabs" style="margin-bottom:0.75rem;">
+          <button class="game-tab active" data-game="impulse">1. Impulse Orb</button>
+          <button class="game-tab" data-game="spatial">2. Spatial Matrix</button>
+          <button class="game-tab" data-game="empathy">3. Empathy RPG</button>
+        </div>
+
+        <!-- Game 1: Go / No-Go Impulse Control -->
+        <div id="gamePanel_impulse" class="game-panel">
+          <p style="font-size:0.79rem;color:var(--muted);">
+            Measures <strong>Impulse Control</strong> & <strong>Focus Stamina</strong>. Tap ONLY on <strong>GREEN (TAP!)</strong>; hold back on <strong>RED (HOLD!)</strong>.
+          </p>
+          <div class="arcade-arena">
+            <div id="arcadeOrb" class="arcade-target" style="background:#334155;">START</div>
+            <div id="arcadeStats" style="font-size:0.8rem;color:var(--muted);">
+              Click START for a 10-trial Stealth Brain-Wiring burst.
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 2: Spatial Matrix Working Memory -->
+        <div id="gamePanel_spatial" class="game-panel" style="display:none;">
+          <p style="font-size:0.79rem;color:var(--muted);">
+            Measures <strong>Visual-Spatial Working Memory</strong> & <strong>Systems Engineering Talent</strong>. Memorize the glowing pattern and repeat it!
+          </p>
+          <div class="arcade-arena">
+            <div class="matrix-grid" id="matrixGrid"></div>
+            <button id="btnStartSpatial" class="btn-primary" style="margin-top:0.4rem;">Flash Spatial Pattern</button>
+            <div id="spatialStats" style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">
+              Watch the 4 glowing nodes, then tap them in any order.
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 3: Narrative & Empathy Quest RPG -->
+        <div id="gamePanel_empathy" class="game-panel" style="display:none;">
+          <p style="font-size:0.79rem;color:var(--muted);">
+            Measures <strong>Social-Emotional Leadership</strong>, <strong>Linguistic Framing</strong> & <strong>Peer Belonging</strong>.
+          </p>
+          <div class="arcade-arena" style="text-align:left;">
+            <div id="rpgPrompt" style="font-size:0.84rem;font-weight:600;margin-bottom:0.5rem;">
+              Scenario: During a robotics team sprint, your teammate freezes up after a social media rumor and wants to quit before the demo. What do you do?
+            </div>
+            <button class="rpg-choice" data-score="95" data-boost="8">
+              🤝 A) Pause the build for 5 mins, validate their feelings privately, and co-design a calm visual role they enjoy.
+            </button>
+            <button class="rpg-choice" data-score="76" data-boost="2">
+              ⚙️ B) Take over their tasks yourself so the team still finishes on time without pressuring them.
+            </button>
+            <button class="rpg-choice" data-score="52" data-boost="-5">
+              ⚡ C) Tell them to ignore the drama and push harder because grades depend on the demo.
+            </button>
+            <div id="rpgStats" style="font-size:0.8rem;color:var(--muted);margin-top:0.65rem;">
+              Select a response to log Social-Emotional & Leadership telemetry.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>
+          <span>⚡ 5D Bio-Psycho-Social Check-In</span>
+          <button id="btnSaveCheckin" class="btn-primary" style="padding:0.3rem 0.7rem;font-size:0.76rem;">Save Check-In</button>
+        </h2>
+        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;">
+          Adjust daily sleep, nutrition, screen time, and stress markers. Click <strong>Save Check-In</strong> to persist to SQLite.
+        </p>
+        <div class="slider-group">
+          <label><span>Avg Sleep (Hours/Night)</span><strong id="valSleep">5.8h</strong></label>
+          <input type="range" id="simSleep" min="4.0" max="9.5" step="0.2" value="5.8" />
+        </div>
+        <div class="slider-group">
+          <label><span>Morning Protein & Hydration</span><strong id="valNutrition">45/100</strong></label>
+          <input type="range" id="simNutrition" min="15" max="100" step="5" value="45" />
+        </div>
+        <div class="slider-group">
+          <label><span>Late-Night Social Media (Mins)</span><strong id="valSocial">75m</strong></label>
+          <input type="range" id="simSocial" min="0" max="180" step="5" value="75" />
+        </div>
+        <div class="slider-group">
+          <label><span>Stress Resilience Index</span><strong id="valStress">58/100</strong></label>
+          <input type="range" id="simStress" min="20" max="95" step="2" value="58" />
+        </div>
+        <div class="slider-group">
+          <label><span>Focus Stamina (Arcade Mins)</span><strong id="valStamina">14m</strong></label>
+          <input type="range" id="simStamina" min="6" max="35" step="1" value="14" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Column: Triage Overview, Brain-Wiring, Talents & Role-Scoped Playbooks -->
+    <section id="mainContent">
+      <div class="card" id="triageBannerCard">
+        <h2>
+          <span id="studentHeaderTitle">Student Triage Overview</span>
+          <span id="triageBadge" class="badge AMBER">AMBER</span>
+        </h2>
+        <p id="triageSummaryText" style="font-size:0.9rem;margin-bottom:0.85rem;"></p>
+        <div class="grid-2">
+          <div>
+            <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Converging Bio-Psycho-Social Signals</h3>
+            <ul class="clean-list" id="riskFactorsList"></ul>
+          </div>
+          <div>
+            <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Socio-Cultural, Growth & Family Context</h3>
+            <ul class="clean-list" id="socioContextList"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" id="brainAndTalentGrid">
+        <div class="card">
+          <h2>🧬 Brain-Wiring & Tailored Learning Methodology</h2>
+          <div id="cognitiveBars"></div>
+          <div style="margin-top:0.9rem;padding:0.8rem;background:var(--panel-alt);border-radius:10px;font-size:0.84rem;" id="methodologyBox"></div>
+        </div>
+
+        <div class="card">
+          <h2>🚀 Intrinsic Talent Discovery Graph</h2>
+          <div id="talentBars"></div>
+          <div id="telemetryLogBox" style="margin-top:0.85rem;font-size:0.78rem;color:var(--muted);"></div>
+        </div>
+      </div>
+
+      <!-- Role-Scoped Views -->
+      <div class="card role-panel" data-panel="student">
+        <h2>🎮 Student Companion — Active Quests & Power-Ups</h2>
+        <ul class="clean-list" id="studentQuestsList"></ul>
+      </div>
+
+      <div class="card role-panel" data-panel="parent">
+        <h2>🏡 Parent Co-Pilot — Nutrition, Sleep, Hormones & Screen Harmony</h2>
+        <ul class="clean-list" id="parentPlanList"></ul>
+      </div>
+
+      <div class="card role-panel" data-panel="teacher">
+        <h2>🏫 Teacher & School Counselor Accommodation Card</h2>
+        <div class="privacy-banner">
+          🔒 <strong>Privacy Guardrail Active:</strong> Sensitive biological, hormonal, family, and religious records are masked in the Educator view. Showing strictly classroom & pedagogical accommodations.
+        </div>
+        <ul class="clean-list" id="teacherCardList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const FALLBACK_COHORT = [
+      {
+        id: "STU-101",
+        name: "Arjun Mehta",
+        grade: "8th Grade (Age 13)",
+        stage: "Mid-Adolescence Growth Spurt",
+        dominant_modality: "Visual-Spatial",
+        secondary_modality: "Kinesthetic-Experiential",
+        working_memory: 78,
+        stamina: 14,
+        impulse_control: 62,
+        cognitive_flexibility: 88,
+        sleep: 5.8,
+        nutrition: 45,
+        social_mins: 75,
+        screen_hrs: 5.4,
+        stress_resilience: 58,
+        belonging: 72,
+        growth_flag: true,
+        talents: {
+          "Systems & Engineering": 94,
+          "Quantitative & Pattern Logic": 89,
+          "Creative & Design Synthesis": 82,
+          "Interpersonal & Leadership": 68,
+          "Linguistic & Narrative": 61
+        },
+        socio_context: [
+          "Adolescent Stage: Mid-Adolescence Growth Spurt (elevated sleep & caloric/micronutrient baseline).",
+          "Cultural & Spiritual Rhythm: Evening family prayer at 7:30 PM; vegetarian diet requiring intentional B12/iron/protein pairing.",
+          "Home Environment: Shared study space; high evening device distraction when parents work late."
+        ]
+      },
+      {
+        id: "STU-102",
+        name: "Zara Al-Mansoor",
+        grade: "10th Grade (Age 15)",
+        stage: "Mid-to-Late Adolescence",
+        dominant_modality: "Auditory-Verbal",
+        secondary_modality: "Analytical-Systems",
+        working_memory: 91,
+        stamina: 32,
+        impulse_control: 89,
+        cognitive_flexibility: 85,
+        sleep: 7.6,
+        nutrition: 84,
+        social_mins: 10,
+        screen_hrs: 2.1,
+        stress_resilience: 86,
+        belonging: 91,
+        growth_flag: false,
+        talents: {
+          "Linguistic & Narrative": 96,
+          "Interpersonal & Leadership": 92,
+          "Creative & Design Synthesis": 84,
+          "Quantitative & Pattern Logic": 79,
+          "Systems & Engineering": 74
+        },
+        socio_context: [
+          "Cultural & Spiritual Rhythm: Observes seasonal fasting & daily prayer windows; thrives when deep study blocks align with post-dawn reflection hours.",
+          "Home Environment: Quiet dedicated study corner with collaborative family check-ins."
+        ]
+      },
+      {
+        id: "STU-103",
+        name: "Leo Vance",
+        grade: "9th Grade (Age 14)",
+        stage: "Adolescent Transition",
+        dominant_modality: "Kinesthetic-Experiential",
+        secondary_modality: "Visual-Spatial",
+        working_memory: 64,
+        stamina: 9,
+        impulse_control: 48,
+        cognitive_flexibility: 79,
+        sleep: 4.9,
+        nutrition: 30,
+        social_mins: 135,
+        screen_hrs: 7.8,
+        stress_resilience: 32,
+        belonging: 38,
+        growth_flag: true,
+        talents: {
+          "Creative & Design Synthesis": 95,
+          "Kinesthetic & Rhythm": 91,
+          "Systems & Engineering": 77,
+          "Quantitative & Pattern Logic": 62,
+          "Linguistic & Narrative": 58
+        },
+        socio_context: [
+          "Adolescent Stage: Rapid growth transition + circadian phase delay.",
+          "Family & Social Context: Recent family relocation causing peer isolation (belonging 38/100) and unmonitored late-night gaming/scrolling.",
+          "Grounding Anchors: Values music production, skateboarding, and outdoor kinetic challenges."
+        ]
+      }
+    ];
+
+    let COHORT = JSON.parse(JSON.stringify(FALLBACK_COHORT));
+    let activeIdx = 0;
+    let activeStudent = COHORT[0];
+    let activeRole = "all";
+
+    function mapBackendStudent(item) {
+      const p = item.profile;
+      const cog = p.cognitive_arcade_telemetry || {};
+      const bio = p.bio_and_nutrition || {};
+      const psych = p.psychological_and_digital || {};
+      const socio = p.socio_cultural_and_family || {};
+      const t = p.talent_scores || {};
+      const prettyTalents = {};
+      Object.entries(t).forEach(([k, v]) => {
+        const label = k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        prettyTalents[label] = v;
+      });
+      return {
+        id: p.id,
+        name: p.name,
+        grade: `${p.grade} (Age ${p.age || 14})`,
+        stage: p.adolescent_stage || "Adolescence",
+        dominant_modality: (cog.dominant_modality || "visual_spatial").replace(/_/g, "-"),
+        secondary_modality: (cog.secondary_modality || "kinesthetic_experiential").replace(/_/g, "-"),
+        working_memory: cog.working_memory_index ?? 75,
+        stamina: cog.sustained_attention_stamina_mins ?? 15,
+        impulse_control: cog.impulse_control_go_nogo_score ?? 70,
+        cognitive_flexibility: cog.cognitive_flexibility_score ?? 80,
+        sleep: bio.avg_sleep_hours ?? 7.0,
+        nutrition: bio.morning_protein_and_hydration_score ?? 70,
+        social_mins: psych.late_night_social_media_mins ?? 30,
+        screen_hrs: psych.daily_screen_time_hours ?? 3.0,
+        stress_resilience: psych.stress_resilience_score ?? 70,
+        belonging: socio.peer_belonging_index ?? 75,
+        growth_flag: Boolean(bio.adolescent_growth_or_hormonal_fatigue_flag),
+        talents: prettyTalents,
+        socio_context: [
+          `Adolescent Stage: ${p.adolescent_stage || "Adolescence"} | Peer Belonging: ${socio.peer_belonging_index ?? 75}/100`,
+          `Cultural & Spiritual Context: ${socio.religious_and_cultural_context || "Standard schedule"}`,
+          `Home & Study Environment: ${socio.home_study_environment || "Home study space"} (${socio.family_support_sync || "Active family support"})`
+        ],
+        history: item.history || { arcade_events: [], bio_logs: [] }
+      };
+    }
+
+    async function loadFromBackend() {
+      try {
+        const res = await fetch("/api/edu/students");
+        if (!res.ok) throw new Error("Offline mode");
+        const data = await res.json();
+        if (data.students && data.students.length) {
+          COHORT = data.students.map(mapBackendStudent);
+          activeStudent = COHORT[activeIdx] || COHORT[0];
+          document.getElementById("dbSyncStatus").textContent = "SQLite Live Connected";
+          populateSelect();
+          syncSlidersFromStudent();
+          renderDashboard();
+        }
+      } catch (_err) {
+        document.getElementById("dbSyncStatus").textContent = "Local Sandbox Mode";
+        populateSelect();
+        syncSlidersFromStudent();
+        renderDashboard();
+      }
+    }
+
+    function populateSelect() {
+      const selectEl = document.getElementById("studentSelect");
+      selectEl.innerHTML = "";
+      COHORT.forEach((s, idx) => {
+        const opt = document.createElement("option");
+        opt.value = idx;
+        opt.textContent = `${s.name} — ${s.grade}`;
+        if (idx === activeIdx) opt.selected = true;
+        selectEl.appendChild(opt);
+      });
+    }
+
+    document.getElementById("studentSelect").addEventListener("change", (e) => {
+      activeIdx = Number(e.target.value);
+      activeStudent = COHORT[activeIdx];
+      syncSlidersFromStudent();
+      renderDashboard();
+    });
+
+    // Role Tabs
+    document.querySelectorAll(".role-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".role-tab").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeRole = btn.dataset.role;
+        updateRoleVisibility();
+      });
+    });
+
+    // Arcade Game Switcher Tabs
+    document.querySelectorAll(".game-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".game-tab").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const g = btn.dataset.game;
+        document.querySelectorAll(".game-panel").forEach((p) => (p.style.display = "none"));
+        document.getElementById(`gamePanel_${g}`).style.display = "block";
+      });
+    });
+
+    function updateRoleVisibility() {
+      const privacyMaskedCards = document.getElementById("triageBannerCard");
+      privacyMaskedCards.style.display = activeRole === "teacher" ? "none" : "block";
+      document.querySelectorAll(".role-panel").forEach((panel) => {
+        panel.style.display = activeRole === "all" || panel.dataset.panel === activeRole ? "block" : "none";
+      });
+    }
+
+    function syncSlidersFromStudent() {
+      document.getElementById("simSleep").value = activeStudent.sleep;
+      document.getElementById("simNutrition").value = activeStudent.nutrition;
+      document.getElementById("simSocial").value = activeStudent.social_mins;
+      document.getElementById("simStress").value = activeStudent.stress_resilience;
+      document.getElementById("simStamina").value = activeStudent.stamina;
+    }
+
+    ["simSleep", "simNutrition", "simSocial", "simStress", "simStamina"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", () => {
+        activeStudent.sleep = parseFloat(document.getElementById("simSleep").value);
+        activeStudent.nutrition = parseInt(document.getElementById("simNutrition").value, 10);
+        activeStudent.social_mins = parseInt(document.getElementById("simSocial").value, 10);
+        activeStudent.stress_resilience = parseInt(document.getElementById("simStress").value, 10);
+        activeStudent.stamina = parseInt(document.getElementById("simStamina").value, 10);
+        renderDashboard();
+      });
+    });
+
+    document.getElementById("btnSaveCheckin").addEventListener("click", async () => {
+      const statusEl = document.getElementById("dbSyncStatus");
+      statusEl.textContent = "Saving Check-In...";
+      try {
+        const res = await fetch("/api/edu/checkin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            student_id: activeStudent.id,
+            sleep_hours: activeStudent.sleep,
+            nutrition_score: activeStudent.nutrition,
+            late_night_social_mins: activeStudent.social_mins,
+            stress_resilience: activeStudent.stress_resilience,
+            stamina_mins: activeStudent.stamina
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          COHORT[activeIdx] = mapBackendStudent(data);
+          activeStudent = COHORT[activeIdx];
+          statusEl.textContent = "Check-In Saved to SQLite ✓";
+          renderDashboard();
+        } else {
+          statusEl.textContent = "Updated Locally ✓";
+        }
+      } catch (_e) {
+        statusEl.textContent = "Updated Locally ✓";
+      }
+    });
+
+    async function pushArcadeTelemetry(gameType, score, metrics) {
+      try {
+        const res = await fetch("/api/edu/arcade-telemetry", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            student_id: activeStudent.id,
+            game_type: gameType,
+            score: score,
+            metrics: metrics
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          COHORT[activeIdx] = mapBackendStudent(data);
+          activeStudent = COHORT[activeIdx];
+          document.getElementById("dbSyncStatus").textContent = "Arcade Telemetry Persisted ✓";
+          renderDashboard();
+        }
+      } catch (_e) {
+        renderDashboard();
+      }
+    }
+
+    function renderBar(label, val, suffix = "%") {
+      const pct = Math.min(100, Math.max(5, val));
+      return `
+        <div class="metric-row">
+          <div class="metric-label"><span>${label}</span><strong>${val}${suffix}</strong></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+        </div>
+      `;
+    }
+
+    function renderDashboard() {
+      document.getElementById("valSleep").textContent = `${activeStudent.sleep}h`;
+      document.getElementById("valNutrition").textContent = `${activeStudent.nutrition}/100`;
+      document.getElementById("valSocial").textContent = `${activeStudent.social_mins}m`;
+      document.getElementById("valStress").textContent = `${activeStudent.stress_resilience}/100`;
+      document.getElementById("valStamina").textContent = `${activeStudent.stamina}m`;
+
+      const critical = [];
+      const risks = [];
+
+      if (activeStudent.sleep < 5.2) critical.push(`Critical sleep deprivation (${activeStudent.sleep}h/night) impairing prefrontal memory consolidation.`);
+      else if (activeStudent.sleep < 6.8) risks.push(`Adolescent sleep debt (${activeStudent.sleep}h vs 8.5h optimal).`);
+
+      if (activeStudent.nutrition < 40) critical.push(`Severe morning nutritional deficit (${activeStudent.nutrition}/100) causing glycemic & focus crashes.`);
+      else if (activeStudent.nutrition < 60) risks.push(`Suboptimal morning protein/hydration (${activeStudent.nutrition}/100).`);
+
+      if (activeStudent.social_mins >= 120) critical.push(`Severe late-night social media circadian disruption (${activeStudent.social_mins}m past bedtime).`);
+      else if (activeStudent.social_mins >= 45) risks.push(`Elevated late-night social media dopamine load (${activeStudent.social_mins}m past bedtime).`);
+
+      if (activeStudent.stress_resilience < 40) critical.push(`Acute emotional & stress overload (resilience ${activeStudent.stress_resilience}/100).`);
+      else if (activeStudent.stress_resilience < 65) risks.push(`Moderate emotional strain (resilience ${activeStudent.stress_resilience}/100).`);
+
+      if (activeStudent.belonging < 45) critical.push(`Peer isolation alert (Belonging Index ${activeStudent.belonging}/100).`);
+      if (activeStudent.growth_flag) risks.push(`Active adolescent growth/hormonal shift (${activeStudent.stage}) increasing baseline energy demand.`);
+
+      let tier = "GREEN";
+      let tierDesc = "TIER 1 (GREEN) — Bio-rhythms & emotional regulation are well-aligned. Focus on autonomous talent acceleration and stretch challenges.";
+      if (critical.length > 0) {
+        tier = "RED";
+        tierDesc = "TIER 3 (RED) — Urgent Counselor & Family Safeguarding Triage. Pause high-stakes academic pressure and stabilize sleep, nutrition, and emotional safety.";
+      } else if (risks.length >= 2) {
+        tier = "AMBER";
+        tierDesc = "TIER 2 (AMBER) — Converging bio-psycho-social stressors detected. Launching a 14-day synchronized Student, Parent & Teacher coaching loop.";
+      }
+
+      document.getElementById("studentHeaderTitle").textContent = `${activeStudent.name} (${activeStudent.grade})`;
+      const badge = document.getElementById("triageBadge");
+      badge.className = `badge ${tier}`;
+      badge.textContent = `${tier} TRIAGE`;
+      document.getElementById("triageSummaryText").textContent = tierDesc;
+
+      const allSignals = [...critical.map(c => `🚨 ${c}`), ...risks.map(r => `⚠️ ${r}`)];
+      if (allSignals.length === 0) allSignals.push("✅ All biological, nutritional, sleep, and digital wellness markers are within healthy ranges.");
+      document.getElementById("riskFactorsList").innerHTML = allSignals.map(s => `<li>${s}</li>`).join("");
+      document.getElementById("socioContextList").innerHTML = activeStudent.socio_context.map(c => `<li>${c}</li>`).join("");
+
+      const sprintMins = Math.min(35, Math.max(10, activeStudent.stamina + 2));
+      document.getElementById("cognitiveBars").innerHTML = [
+        renderBar("Working Memory Index (Spatial Matrix)", activeStudent.working_memory, "/100"),
+        renderBar("Impulse Control (Go/No-Go Orb)", activeStudent.impulse_control, "/100"),
+        renderBar("Cognitive Flexibility", activeStudent.cognitive_flexibility, "/100"),
+        renderBar("Optimal Focus Sprint Window", sprintMins, " mins")
+      ].join("");
+
+      document.getElementById("methodologyBox").innerHTML = `
+        <strong>Tailored Learning Prescription:</strong><br/>
+        • <strong>Primary Modality:</strong> ${activeStudent.dominant_modality}<br/>
+        • <strong>Secondary Modality:</strong> ${activeStudent.secondary_modality}<br/>
+        • <strong>Pacing Rule:</strong> Structure study into <strong>${sprintMins}-minute interactive sprints</strong> followed by a 3-minute kinetic/hydration reset.
+      `;
+
+      const topTalentEntries = Object.entries(activeStudent.talents).sort((a, b) => b[1] - a[1]);
+      document.getElementById("talentBars").innerHTML = topTalentEntries
+        .map(([k, v]) => renderBar(k, v, "%"))
+        .join("");
+
+      const recentEvents = (activeStudent.history && activeStudent.history.arcade_events) || [];
+      document.getElementById("telemetryLogBox").innerHTML = recentEvents.length
+        ? `<strong>Latest Persisted Arcade Telemetry:</strong> ${recentEvents
+            .slice(0, 2)
+            .map((ev) => `${ev.game_type} (${ev.score}/100)`)
+            .join(" • ")}`
+        : `Play any of the 3 Stealth Arcade games on the left to stream live telemetry into the student's 5D profile.`;
+
+      const topTalentName = topTalentEntries[0][0];
+      const quests = [
+        `🎯 <strong>Focus Sprint Quest:</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
+        `🌟 <strong>Talent Accelerator:</strong> Channel your top aptitude (<strong>${topTalentName} — ${topTalentEntries[0][1]}%</strong>) to master your toughest subject topic.`
+      ];
+      if (activeStudent.social_mins >= 45) {
+        quests.push(`🌙 <strong>Digital Sunset Shield:</strong> Dock phones/tablets 45 mins before bed to unlock +20% Working Memory XP tomorrow morning.`);
+      }
+      if (activeStudent.nutrition < 60) {
+        quests.push(`⚡ <strong>Brain-Fuel Combo:</strong> Log a high-protein breakfast + hydration check-in before school to stop afternoon focus slumps.`);
+      }
+      document.getElementById("studentQuestsList").innerHTML = quests.map(q => `<li>${q}</li>`).join("");
+
+      const parentItems = [
+        `🥗 <strong>Daily Nutrition & Bio-Fuel:</strong> Morning score is ${activeStudent.nutrition}/100. Provide slow-release protein & micronutrients at breakfast to prevent mid-day glycemic crashes.`,
+        `😴 <strong>Sleep & Adolescent Growth:</strong> Currently averaging ${activeStudent.sleep}h/night during ${activeStudent.stage}. Aim for an 8.5h sleep window.`,
+        `🕊️ <strong>Family, Social & Cultural Harmony:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
+      ];
+      if (tier !== "GREEN") {
+        parentItems.push(`💬 <strong>Empathy & Screen Co-Pilot:</strong> Replace late-night bedroom screen time (${activeStudent.social_mins}m past bedtime) with a calm 10-minute wind-down conversation.`);
+      }
+      document.getElementById("parentPlanList").innerHTML = parentItems.map(p => `<li>${p}</li>`).join("");
+
+      const teacherItems = [
+        `⏱️ <strong>Cognitive Pacing:</strong> Chunk classroom assignments into <strong>${sprintMins}-minute micro-milestones</strong> aligned with ${activeStudent.dominant_modality} delivery.`,
+        `🌉 <strong>Talent Bridge Strategy:</strong> Frame abstract lessons through <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong> projects.`,
+        `🩺 <strong>Classroom Triage Action (${tier}):</strong> ${
+          tier === "RED"
+            ? "Confidentially loop in the School Counselor today; suspend timed high-pressure testing this week."
+            : tier === "AMBER"
+            ? "Seat in a high-engagement zone, provide visual/kinesthetic scaffolds, and monitor afternoon energy dips."
+            : "Assign peer-mentoring or advanced Olympiad/creative incubator track."
+        }`
+      ];
+      document.getElementById("teacherCardList").innerHTML = teacherItems.map(t => `<li>${t}</li>`).join("");
+
+      updateRoleVisibility();
+    }
+
+    // --- GAME 1: Impulse Control (Go / No-Go) ---
+    let gameActive = false;
+    let gameTimer = null;
+    let currentSignal = "NONE";
+    let hits = 0;
+    let falseAlarms = 0;
+
+    const orb = document.getElementById("arcadeOrb");
+    const statsEl = document.getElementById("arcadeStats");
+
+    orb.addEventListener("click", () => {
+      if (!gameActive) {
+        startArcadeAssessment();
+        return;
+      }
+      if (currentSignal === "GO") {
+        hits++;
+        orb.style.transform = "scale(0.9)";
+        setTimeout(() => (orb.style.transform = "scale(1)"), 100);
+      } else if (currentSignal === "NOGO") {
+        falseAlarms++;
+      }
+    });
+
+    function startArcadeAssessment() {
+      gameActive = true;
+      hits = 0;
+      falseAlarms = 0;
+      let steps = 0;
+      statsEl.textContent = "Assessment running... Tap GREEN (TAP!), ignore RED (HOLD!)";
+
+      gameTimer = setInterval(() => {
+        steps++;
+        if (steps > 10) {
+          clearInterval(gameTimer);
+          gameActive = false;
+          currentSignal = "NONE";
+          orb.style.background = "#334155";
+          orb.textContent = "RETRY";
+          const newImpulse = Math.min(98, Math.max(35, 70 + hits * 4 - falseAlarms * 12));
+          activeStudent.impulse_control = newImpulse;
+          statsEl.innerHTML = `Hits: <strong>${hits}</strong> | Errors: <strong>${falseAlarms}</strong> → Impulse Control: <strong>${newImpulse}/100</strong>`;
+          pushArcadeTelemetry("go_nogo_impulse", newImpulse, { hits, false_alarms: falseAlarms });
+          return;
+        }
+        const isGo = Math.random() > 0.35;
+        currentSignal = isGo ? "GO" : "NOGO";
+        orb.style.background = isGo ? "#10b981" : "#ef4444";
+        orb.textContent = isGo ? "TAP!" : "HOLD!";
+      }, 1000);
+    }
+
+    // --- GAME 2: Spatial Matrix Working Memory ---
+    const matrixGrid = document.getElementById("matrixGrid");
+    const spatialStats = document.getElementById("spatialStats");
+    let targetCells = [];
+    let pickedCells = [];
+    let spatialAccepting = false;
+
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement("div");
+      cell.className = "matrix-cell";
+      cell.dataset.idx = i;
+      cell.addEventListener("click", () => {
+        if (!spatialAccepting) return;
+        const idx = Number(cell.dataset.idx);
+        if (pickedCells.includes(idx)) return;
+        pickedCells.push(idx);
+        cell.classList.add("picked");
+        if (pickedCells.length === targetCells.length) {
+          spatialAccepting = false;
+          const correct = pickedCells.filter((c) => targetCells.includes(c)).length;
+          const newWm = Math.min(98, Math.max(48, 55 + correct * 11));
+          activeStudent.working_memory = newWm;
+          activeStudent.talents["Systems & Engineering"] = Math.max(
+            activeStudent.talents["Systems & Engineering"] || 75,
+            newWm
+          );
+          spatialStats.innerHTML = `Matched <strong>${correct}/${targetCells.length}</strong> nodes → Spatial Working Memory: <strong>${newWm}/100</strong>`;
+          pushArcadeTelemetry("spatial_matrix", newWm, { correct, total: targetCells.length });
+        }
+      });
+      matrixGrid.appendChild(cell);
+    }
+
+    document.getElementById("btnStartSpatial").addEventListener("click", () => {
+      pickedCells = [];
+      targetCells = [];
+      spatialAccepting = false;
+      const cells = document.querySelectorAll(".matrix-cell");
+      cells.forEach((c) => c.classList.remove("lit", "picked"));
+      while (targetCells.length < 4) {
+        const r = Math.floor(Math.random() * 9);
+        if (!targetCells.includes(r)) targetCells.push(r);
+      }
+      targetCells.forEach((idx) => cells[idx].classList.add("lit"));
+      spatialStats.textContent = "Memorizing pattern...";
+      setTimeout(() => {
+        cells.forEach((c) => c.classList.remove("lit"));
+        spatialAccepting = true;
+        spatialStats.textContent = "Now tap the 4 cells that flashed!";
+      }, 1100);
+    });
+
+    // --- GAME 3: Narrative & Empathy Quest RPG ---
+    document.querySelectorAll(".rpg-choice").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const score = Number(btn.dataset.score);
+        const boost = Number(btn.dataset.boost);
+        activeStudent.talents["Interpersonal & Leadership"] = score;
+        activeStudent.belonging = Math.min(100, Math.max(25, activeStudent.belonging + boost));
+        document.getElementById("rpgStats").innerHTML = `Logged! Interpersonal Leadership: <strong>${score}%</strong> | Peer Belonging Shift: <strong>${boost >= 0 ? "+" + boost : boost}</strong>`;
+        pushArcadeTelemetry("narrative_empathy", score, { belonging_boost: boost });
+      });
+    });
+
+    loadFromBackend();
+  </script>
+</body>
+</html>

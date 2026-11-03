@@ -1,0 +1,19 @@
+# Python & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Local Ollama binaries & model weights
+bin/
+.ollama/
+
+# Runtime logs & local chat history
+app/server.log
+app/chats.json
+
+# macOS & Editor metadata
+.DS_Store
+.azure/

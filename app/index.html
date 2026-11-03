@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stellar Studio | Local AI Copilot & Workflow Orchestrator</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Markdown & Syntax Highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-gradient: radial-gradient(circle at 50% -20%, #1a1e36 0%, #080b12 70%);
+      --bg: #080b12;
+      --sidebar-bg: rgba(13, 18, 30, 0.85);
+      --panel-bg: rgba(19, 26, 43, 0.75);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --panel-border-hover: rgba(124, 140, 255, 0.3);
+      --card-bg: rgba(25, 35, 58, 0.5);
+      
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+      
+      --code-bg: #0d1117;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+
+    .app-shell { display: flex; width: 100vw; height: 100vh; backdrop-filter: blur(20px); }
+
+    sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 14px;
+      z-index: 10;
+    }
+
+    .brand { display: flex; align-items: center; justify-content: space-between; }
+    .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16.5px; }
+    .logo-icon { width: 32px; height: 32px; border-radius: 10px; background: var(--accent-gradient); display: grid; place-items: center; font-size: 16px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35); }
+
+    .status-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; padding: 4px 8px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+
+    .project-card { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--panel-border); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .project-card label { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .btn-new-chat { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 12px; background: var(--card-bg); border: 1px solid var(--panel-border); border-radius: var(--radius-md); color: var(--text); font-weight: 600; font-size: 13.5px; cursor: pointer; }
+    .btn-new-chat:hover { border-color: var(--accent); }
+
+    .chat-history { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+    .chat-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: var(--radius-sm); color: var(--text-muted); font-size: 13px; cursor: pointer; }
+    .chat-item.active { background: rgba(99, 102, 241, 0.15); color: var(--text); border-left: 3px solid var(--accent); font-weight: 500; }
+    .chat-item-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+
+    main { flex: 1; display: flex; flex-direction: column; height: 100vh; position: relative; }
+
+    header { height: 60px; border-bottom: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: rgba(13, 18, 30, 0.4); backdrop-filter: blur(10px); }
+
+    .nav-tabs { display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.6); padding: 4px; border-radius: var(--radius-sm); border: 1px solid var(--panel-border); }
+    .tab-btn { padding: 6px 14px; border-radius: 6px; border: none; background: transparent; color: var(--text-muted); font-weight: 500; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--accent); color: white; box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3); }
+
+    .custom-select { background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 13px; outline: none; cursor: pointer; }
+
+    .view-section { flex: 1; display: none; flex-direction: column; height: calc(100vh - 60px); overflow: hidden; }
+    .view-section.active { display: flex; }
+
+    /* Chat Assistant View */
+    .messages-container { flex: 1; overflow-y: auto; padding: 24px max(20px, calc((100% - 880px) / 2)); display: flex; flex-direction: column; gap: 20px; }
+    .welcome-hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin: auto 0; padding: 30px 20px; }
+    .hero-icon { width: 54px; height: 54px; border-radius: 16px; background: var(--accent-gradient); display: grid; place-items: center; font-size: 28px; box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); margin-bottom: 16px; }
+
+    .message-row { display: flex; gap: 14px; opacity: 0; animation: fadeIn 0.3s forwards ease; }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .msg-avatar { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-weight: 700; font-size: 13.5px; flex-shrink: 0; }
+    .user-avatar { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--panel-border); }
+    .assistant-avatar { background: var(--accent-gradient); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
+
+    .msg-content-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .msg-header { font-size: 12px; color: var(--text-dim); }
+    .msg-body { font-size: 14.5px; line-height: 1.65; overflow-wrap: break-word; }
+    .msg-body pre { background: var(--code-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin: 10px 0; overflow: hidden; }
+
+    .composer-container { padding: 10px max(20px, calc((100% - 900px) / 2)) 16px; background: linear-gradient(to top, var(--bg) 80%, transparent); }
+    .composer-box { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: var(--radius-lg); padding: 8px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+    textarea { width: 100%; background: transparent; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 14.5px; resize: none; min-height: 40px; max-height: 180px; }
+    .btn-send { width: 34px; height: 34px; border-radius: 8px; background: var(--accent-gradient); border: none; color: white; font-size: 15px; cursor: pointer; display: grid; place-items: center; }
+
+    /* Drag & Drop n8n Workflow Studio View */
+    .canvas-layout { display: flex; width: 100%; height: 100%; }
+
+    .node-palette {
+      width: 240px;
+      background: rgba(13, 18, 30, 0.9);
+      border-right: 1px solid var(--panel-border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .palette-item {
+      padding: 10px;
+      background: var(--card-bg);
+      border: 1px dashed var(--panel-border-hover);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .palette-item:hover { background: rgba(99, 102, 241, 0.15); border-color: var(--accent); }
+
+    .canvas-grid {
+      flex: 1;
+      position: relative;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+      overflow: auto;
+    }
+
+    .canvas-node {
+      position: absolute;
+      width: 220px;
+      background: #0f172a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      z-index: 2;
+    }
+    .canvas-node.selected { border-color: var(--accent); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+    .canvas-node.running { border-color: #38bdf8; box-shadow: 0 0 20px #38bdf8; }
+
+    .cnode-header { padding: 8px 12px; background: rgba(255, 255, 255, 0.05); font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--panel-border); display: flex; justify-content: space-between; }
+    .cnode-body { padding: 10px; font-size: 12px; color: var(--text-muted); }
+
+    .port { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid white; position: absolute; cursor: crosshair; }
+    .port-in { top: 50%; left: -6px; transform: translateY(-50%); }
+    .port-out { top: 50%; right: -6px; transform: translateY(-50%); }
+
+    svg.connections-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+    /* Copilot Studio Knowledge & Skills Base View */
+    .copilot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px; overflow-y: auto; }
+    .studio-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: var(--radius-lg); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+
+    .btn-add { background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+    /* Modal Backdrop */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); display: none; place-items: center; z-index: 100; }
+    .modal-backdrop.active { display: grid; }
+    .modal-card { background: #0f172a; border: 1px solid var(--panel-border); border-radius: var(--radius-lg); width: 90%; max-width: 520px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .input-field { width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--panel-border); border-radius: 6px; color: white; font-size: 13.5px; outline: none; }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar Navigation -->
+  <sidebar>
+    <div class="brand">
+      <div class="brand-logo">
+        <div class="logo-icon">✦</div>
+        <span>Stellar Studio</span>
+      </div>
+      <div id="statusBadge" class="status-badge"><div class="status-dot"></div><span>Online</span></div>
+    </div>
+
+    <div class="project-card">
+      <label>Active Copilot Project</label>
+      <select id="projectSelect" class="custom-select" onchange="switchActiveProject(this.value)">
+        <option value="startup-grant-assistant">🚀 Startup Grant Assistant</option>
+        <option value="code-architect">💻 Full-Stack Code Architect</option>
+      </select>
+    </div>
+
+    <button class="btn-new-chat" onclick="createChatSession()">
+      <span>＋ New Chat</span>
+      <span class="kbd">⌘N</span>
+    </button>
+
+    <div class="chat-history" id="chatHistory"></div>
+  </sidebar>
+
+  <!-- Main Workspace Views -->
+  <main>
+    <header>
+      <div class="nav-tabs">
+        <button id="tabChat" class="tab-btn active" onclick="switchActiveTab('chat')">💬 Chat Assistant</button>
+        <button id="tabWorkflow" class="tab-btn" onclick="switchActiveTab('workflow')">⚡ Workflow Canvas</button>
+        <button id="tabProject" class="tab-btn" onclick="switchActiveTab('project')">🧠 Knowledge & Skills</button>
+      </div>
+
+      <select id="modelSelect" class="custom-select" onchange="switchActiveModel(this.value)">
+        <option value="qwen2.5-coder:1.5b">qwen2.5-coder:1.5b</option>
+      </select>
+    </header>
+
+    <!-- TAB 1: CHAT ASSISTANT STUDIO -->
+    <div id="viewChat" class="view-section active">
+      <div id="messagesContainer" class="messages-container">
+        <div id="welcomeHero" class="welcome-hero">
+          <div class="hero-icon">✦</div>
+          <h1 id="heroTitle">Startup Grant & Application Assistant</h1>
+          <p id="heroDesc">Drafting persuasive grant applications and accelerator forms locally with Ollama.</p>
+        </div>
+      </div>
+
+      <div class="composer-container">
+        <div class="composer-box">
+          <textarea id="promptInput" rows="1" placeholder="Message your local AI… (Cmd+Enter to send)" oninput="autoResizeTextarea(this)"></textarea>
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <span style="font-size:11px; color:var(--text-dim)">Local Ollama AI</span>
+            <button id="sendBtn" class="btn-send" onclick="sendChatMessage()">↑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: INTERACTIVE DRAG AND DROP WORKFLOW CANVAS -->
+    <div id="viewWorkflow" class="view-section">
+      <div class="canvas-layout">
+        <!-- Palette -->
+        <div class="node-palette">
+          <h4 style="font-size:13px; font-weight:700">Node Palette</h4>
+          <p style="font-size:11px; color:var(--text-muted)">Drag nodes onto canvas:</p>
+
+          <div class="palette-item" draggable="true" ondragstart="onNodeDragStart(event, 'trigger')">🎬 Trigger Input</div>
+          <div class="palette-item" draggable="true" ondragstart="onNodeDragStart(event, 'knowledge')">📚 Inject Knowledge</div>
+          <div class="palette-item" draggable="true" ondragstart="onNodeDragStart(event, 'llm')">🤖 Ollama Agent</div>
+          <div class="palette-item" draggable="true" ondragstart="onNodeDragStart(event, 'tool')">🛠️ Python Tool</div>
+          <div class="palette-item" draggable="true" ondragstart="onNodeDragStart(event, 'output')">💾 Output Result</div>
+
+          <button class="btn-add" style="margin-top:auto" onclick="executeWorkflowGraph()">▶ Run Workflow Canvas</button>
+        </div>
+
+        <!-- Grid Canvas -->
+        <div class="canvas-grid" id="canvasGrid" ondragover="event.preventDefault()" ondrop="onNodeCanvasDrop(event)">
+          <svg class="connections-svg" id="svgCanvas"></svg>
+        </div>
+      </div>
+
+      <div style="background:var(--code-bg); padding:10px 16px; border-top:1px solid var(--panel-border); font-family:'Fira Code',monospace; font-size:12px; height:120px; overflow-y:auto" id="canvasLog">
+        Workflow console ready. Drag nodes onto canvas and click "Run Workflow Canvas".
+      </div>
+    </div>
+
+    <!-- TAB 3: COPILOT KNOWLEDGE & SKILLS BASE -->
+    <div id="viewProject" class="view-section">
+      <div class="copilot-grid">
+        <!-- Knowledge Files Card -->
+        <div class="studio-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <h3>📚 Knowledge Base Files</h3>
+            <button class="btn-add" onclick="openKnowledgeModal()">+ Add Knowledge File</button>
+          </div>
+          <p style="font-size:12px; color:var(--text-muted)">Files stored in project knowledge/ folder:</p>
+          <div id="knowledgeList" style="display:flex; flex-direction:column; gap:8px"></div>
+        </div>
+
+        <!-- Skills Templates Card -->
+        <div class="studio-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <h3>🎯 Skills & Prompt Templates</h3>
+            <button class="btn-add" onclick="openSkillModal()">+ Create Skill (.md)</button>
+          </div>
+          <p style="font-size:12px; color:var(--text-muted)">Markdown skills in skills/ folder:</p>
+          <div id="skillsList" style="display:flex; flex-direction:column; gap:8px"></div>
+        </div>
+
+        <!-- System Instructions Card -->
+        <div class="studio-card" style="grid-column: 1 / -1">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <h3>📄 Project System Instructions (instructions.md)</h3>
+            <button class="btn-add" onclick="saveProjectInstructions()">💾 Save Instructions</button>
+          </div>
+          <textarea id="instructionsEditor" class="input-field" rows="6" style="font-family:'Fira Code',monospace; font-size:13px"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Modal: Add Knowledge -->
+<div id="addKnowledgeModal" class="modal-backdrop">
+  <div class="modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center">
+      <h3>Add Knowledge File</h3>
+      <button class="action-btn" onclick="closeKnowledgeModal()">✕</button>
+    </div>
+    <input type="text" id="kFilenameInput" class="input-field" placeholder="Filename (e.g. market_research.json or docs.md)">
+    <textarea id="kContentInput" class="input-field" rows="6" placeholder="Paste knowledge content, json dataset, or markdown info..."></textarea>
+    <div style="display:flex; justify-content:flex-end; gap:8px">
+      <button class="btn-add" style="background:var(--card-bg)" onclick="closeKnowledgeModal()">Cancel</button>
+      <button class="btn-add" onclick="saveKnowledgeFile()">Save Knowledge File</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Add Skill -->
+<div id="addSkillModal" class="modal-backdrop">
+  <div class="modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center">
+      <h3>Create Skill (.md)</h3>
+      <button class="action-btn" onclick="closeSkillModal()">✕</button>
+    </div>
+    <input type="text" id="sFilenameInput" class="input-field" placeholder="Skill Name (e.g. code_audit.md)">
+    <textarea id="sContentInput" class="input-field" rows="6" placeholder="Write skill markdown template & system prompt instructions..."></textarea>
+    <div style="display:flex; justify-content:flex-end; gap:8px">
+      <button class="btn-add" style="background:var(--card-bg)" onclick="closeSkillModal()">Cancel</button>
+      <button class="btn-add" onclick="saveSkillFile()">Save Skill File</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let activeProjectId = 'startup-grant-assistant';
+  let currentProjectDetails = null;
+  let activeModel = 'qwen2.5-coder:1.5b';
+  let chats = [];
+  let currentChatId = null;
+
+  // Drag and Drop Canvas State
+  let canvasNodes = [];
+  let canvasConnections = [];
+  let selectedPortNodeId = null;
+
+  const projectSelect = document.getElementById('projectSelect');
+  const modelSelect = document.getElementById('modelSelect');
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    await checkOllamaStatus();
+    await loadProjectsList();
+    await loadProjectData(activeProjectId);
+    await loadChatsList();
+
+    // Default Canvas Node Layout
+    canvasNodes = [
+      { id: 'node_1', type: 'trigger', name: '🎬 Trigger Input', x: 40, y: 60, config: { default: 'Draft a YC pitch response.' } },
+      { id: 'node_2', type: 'knowledge', name: '📚 Inject Context', x: 300, y: 60, config: { file: 'startup_profile.json' } },
+      { id: 'node_3', type: 'llm', name: '🤖 Ollama Agent', x: 560, y: 60, config: { model: activeModel, system_instruction: 'You are a top accelerator strategist.' } },
+      { id: 'node_4', type: 'output', name: '💾 Final Output', x: 820, y: 60, config: {} }
+    ];
+    canvasConnections = [
+      { from: 'node_1', to: 'node_2' },
+      { from: 'node_2', to: 'node_3' },
+      { from: 'node_3', to: 'node_4' }
+    ];
+    renderCanvasNodes();
+  });
+
+  function autoResizeTextarea(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 180) + 'px'; }
+
+  function switchActiveTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+
+    if (tabName === 'chat') {
+      document.getElementById('tabChat').classList.add('active');
+      document.getElementById('viewChat').classList.add('active');
+    } else if (tabName === 'workflow') {
+      document.getElementById('tabWorkflow').classList.add('active');
+      document.getElementById('viewWorkflow').classList.add('active');
+      renderCanvasNodes();
+    } else if (tabName === 'project') {
+      document.getElementById('tabProject').classList.add('active');
+      document.getElementById('viewProject').classList.add('active');
+      renderKnowledgeAndSkillsBase();
+    }
+  }
+
+  async function checkOllamaStatus() {
+    try {
+      const r = await fetch('/api/status');
+      const data = await r.json();
+      if (data.models && data.models.length) {
+        modelSelect.innerHTML = data.models.map(m => `<option value="${m}">${m}</option>`).join('');
+      }
+    } catch {}
+  }
+
+  async function loadProjectsList() {
+    try {
+      const r = await fetch('/api/projects');
+      const list = await r.json();
+      if (list.length) {
+        projectSelect.innerHTML = list.map(p => `<option value="${p.id}">${p.icon || '📁'} ${p.name}</option>`).join('');
+      }
+    } catch {}
+  }
+
+  async function loadProjectData(id) {
+    activeProjectId = id;
+    try {
+      const r = await fetch(`/api/projects/${id}`);
+      currentProjectDetails = await r.json();
+      document.getElementById('heroTitle').innerText = currentProjectDetails.name;
+      document.getElementById('instructionsEditor').value = currentProjectDetails.instructions_content || '';
+    } catch {}
+  }
+
+  async function switchActiveProject(id) {
+    await loadProjectData(id);
+    renderKnowledgeAndSkillsBase();
+  }
+
+  function switchActiveModel(val) { activeModel = val; }
+
+  // Knowledge & Skills Management
+  function openKnowledgeModal() { document.getElementById('addKnowledgeModal').classList.add('active'); }
+  function closeKnowledgeModal() { document.getElementById('addKnowledgeModal').classList.remove('active'); }
+  function openSkillModal() { document.getElementById('addSkillModal').classList.add('active'); }
+  function closeSkillModal() { document.getElementById('addSkillModal').classList.remove('active'); }
+
+  async function saveKnowledgeFile() {
+    const filename = document.getElementById('kFilenameInput').value.trim();
+    const content = document.getElementById('kContentInput').value;
+    if (!filename) return alert('Please enter a valid filename.');
+
+    await fetch(`/api/projects/${activeProjectId}/knowledge`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, content })
+    });
+    closeKnowledgeModal();
+    await loadProjectData(activeProjectId);
+    renderKnowledgeAndSkillsBase();
+  }
+
+  async function deleteKnowledgeFile(fname) {
+    if (!confirm(`Delete knowledge file "${fname}"?`)) return;
+    await fetch(`/api/projects/${activeProjectId}/knowledge/${encodeURIComponent(fname)}`, { method: 'DELETE' });
+    await loadProjectData(activeProjectId);
+    renderKnowledgeAndSkillsBase();
+  }
+
+  async function saveSkillFile() {
+    const filename = document.getElementById('sFilenameInput').value.trim();
+    const content = document.getElementById('sContentInput').value;
+    if (!filename) return alert('Please enter a skill filename.');
+
+    await fetch(`/api/projects/${activeProjectId}/skills`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, content })
+    });
+    closeSkillModal();
+    await loadProjectData(activeProjectId);
+    renderKnowledgeAndSkillsBase();
+  }
+
+  async function deleteSkillFile(fname) {
+    if (!confirm(`Delete skill template "${fname}"?`)) return;
+    await fetch(`/api/projects/${activeProjectId}/skills/${encodeURIComponent(fname)}`, { method: 'DELETE' });
+    await loadProjectData(activeProjectId);
+    renderKnowledgeAndSkillsBase();
+  }
+
+  async function saveProjectInstructions() {
+    const content = document.getElementById('instructionsEditor').value;
+    await fetch(`/api/projects/${activeProjectId}/instructions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    });
+    alert('System Instructions saved to instructions.md!');
+  }
+
+  function renderKnowledgeAndSkillsBase() {
+    if (!currentProjectDetails) return;
+
+    const kList = document.getElementById('knowledgeList');
+    kList.innerHTML = (currentProjectDetails.knowledge_files || []).map(kf => `
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:8px">
+        <span style="font-size:13px; font-weight:600">📄 ${kf.name} (${kf.content?.length || 0} bytes)</span>
+        <button class="action-btn" style="color:#f87171" onclick="deleteKnowledgeFile('${kf.name}')">Delete</button>
+      </div>
+    `).join('') || '<span style="color:var(--text-muted); font-size:12px">No knowledge files yet. Click "+ Add Knowledge File".</span>';
+
+    const sList = document.getElementById('skillsList');
+    sList.innerHTML = (currentProjectDetails.skills_files || []).map(sf => `
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:8px">
+        <span style="font-size:13px; font-weight:600">🎯 ${sf.name}</span>
+        <button class="action-btn" style="color:#f87171" onclick="deleteSkillFile('${sf.name}')">Delete</button>
+      </div>
+    `).join('') || '<span style="color:var(--text-muted); font-size:12px">No skill files yet. Click "+ Create Skill".</span>';
+  }
+
+  // Interactive Drag & Drop Workflow Canvas Logic
+  function onNodeDragStart(e, type) {
+    e.dataTransfer.setData('nodeType', type);
+  }
+
+  function onNodeCanvasDrop(e) {
+    e.preventDefault();
+    const type = e.dataTransfer.getData('nodeType');
+    if (!type) return;
+
+    const rect = document.getElementById('canvasGrid').getBoundingClientRect();
+    const x = e.clientX - rect.left - 100;
+    const y = e.clientY - rect.top - 20;
+
+    const id = 'node_' + Date.now();
+    const names = { trigger: '🎬 Trigger', knowledge: '📚 Knowledge', llm: '🤖 Ollama Agent', tool: '🛠️ Python Tool', output: '💾 Output' };
+    
+    canvasNodes.push({
+      id,
+      type,
+      name: names[type] || type,
+      x: Math.max(20, x),
+      y: Math.max(20, y),
+      config: {}
+    });
+
+    renderCanvasNodes();
+  }
+
+  function renderCanvasNodes() {
+    const grid = document.getElementById('canvasGrid');
+    grid.querySelectorAll('.canvas-node').forEach(el => el.remove());
+
+    canvasNodes.forEach(node => {
+      const el = document.createElement('div');
+      el.className = 'canvas-node';
+      el.id = node.id;
+      el.style.left = `${node.x}px`;
+      el.style.top = `${node.y}px`;
+
+      el.innerHTML = `
+        <div class="cnode-header">
+          <span>${node.name}</span>
+          <button class="action-btn" onclick="removeCanvasNode('${node.id}')">✕</button>
+        </div>
+        <div class="cnode-body">
+          ${node.type === 'trigger' ? 'Input Trigger' : ''}
+          ${node.type === 'knowledge' ? 'Inject Knowledge Context' : ''}
+          ${node.type === 'llm' ? `Ollama Agent (${activeModel})` : ''}
+          ${node.type === 'tool' ? 'Python Tool Execution' : ''}
+          ${node.type === 'output' ? 'Result Output' : ''}
+        </div>
+        <div class="port port-in" onclick="onNodePortClick('${node.id}', 'in')"></div>
+        <div class="port port-out" onclick="onNodePortClick('${node.id}', 'out')"></div>
+      `;
+
+      attachNodeDragEvents(el, node);
+      grid.appendChild(el);
+    });
+
+    drawConnectorLines();
+  }
+
+  function attachNodeDragEvents(el, nodeObj) {
+    let isDragging = false, startX, startY;
+    el.querySelector('.cnode-header').onmousedown = (e) => {
+      isDragging = true;
+      startX = e.clientX - nodeObj.x;
+      startY = e.clientY - nodeObj.y;
+      document.onmousemove = (e) => {
+        if (!isDragging) return;
+        nodeObj.x = e.clientX - startX;
+        nodeObj.y = e.clientY - startY;
+        el.style.left = `${nodeObj.x}px`;
+        el.style.top = `${nodeObj.y}px`;
+        drawConnectorLines();
+      };
+      document.onmouseup = () => { isDragging = false; document.onmousemove = null; };
+    };
+  }
+
+  function onNodePortClick(nodeId, portType) {
+    if (portType === 'out') {
+      selectedPortNodeId = nodeId;
+    } else if (portType === 'in' && selectedPortNodeId) {
+      if (selectedPortNodeId !== nodeId) {
+        canvasConnections.push({ from: selectedPortNodeId, to: nodeId });
+        selectedPortNodeId = null;
+        drawConnectorLines();
+      }
+    }
+  }
+
+  function removeCanvasNode(id) {
+    canvasNodes = canvasNodes.filter(n => n.id !== id);
+    canvasConnections = canvasConnections.filter(c => c.from !== id && c.to !== id);
+    renderCanvasNodes();
+  }
+
+  function drawConnectorLines() {
+    const svg = document.getElementById('svgCanvas');
+    svg.innerHTML = '';
+
+    canvasConnections.forEach(c => {
+      const fromNode = canvasNodes.find(n => n.id === c.from);
+      const toNode = canvasNodes.find(n => n.id === c.to);
+      if (fromNode && toNode) {
+        const x1 = fromNode.x + 220;
+        const y1 = fromNode.y + 35;
+        const x2 = toNode.x;
+        const y2 = toNode.y + 35;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const dx = Math.abs(x2 - x1) / 2;
+        path.setAttribute('d', `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+        path.setAttribute('stroke', '#6366f1');
+        path.setAttribute('stroke-width', '3');
+        path.setAttribute('fill', 'none');
+        svg.appendChild(path);
+      }
+    });
+  }
+
+  async function executeWorkflowGraph() {
+    const logBox = document.getElementById('canvasLog');
+    logBox.innerText = '⚡ Executing Workflow Canvas Graph...\n';
+
+    try {
+      const r = await fetch('/api/workflows/execute-graph', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project_id: activeProjectId,
+          nodes: canvasNodes,
+          connections: canvasConnections,
+          input: 'Draft a pitch for Stellar.'
+        })
+      });
+      const data = await r.json();
+
+      logBox.innerText += `\n✅ Execution Finished!\n\nExecution Logs:\n`;
+      data.logs?.forEach(l => {
+        logBox.innerText += `[Node: ${l.node_name}] -> ${l.status}\nResult: ${l.output || ''}\n\n`;
+      });
+      logBox.innerText += `\nFinal Output:\n${data.final_output}`;
+
+    } catch (e) {
+      logBox.innerText += `\n❌ Execution Error: ${e.message}`;
+    }
+  }
+
+  // Standard Chat Logic
+  async function loadChatsList() {
+    try { const r = await fetch('/api/chats'); chats = await r.json(); } catch { chats = []; }
+    renderSidebarChats();
+  }
+  function saveChats() { fetch('/api/chats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(chats) }); renderSidebarChats(); }
+  function createChatSession() { const id = 'chat_' + Date.now(); chats.unshift({ id, title: 'New Conversation', messages: [] }); currentChatId = id; saveChats(); renderChatMessages(); }
+  function selectChatSession(id) { currentChatId = id; renderSidebarChats(); renderChatMessages(); }
+  function getCurrentChatSession() { return chats.find(c => c.id === currentChatId); }
+
+  function renderSidebarChats() {
+    const h = document.getElementById('chatHistory');
+    h.innerHTML = '';
+    chats.forEach(c => {
+      const d = document.createElement('div');
+      d.className = `chat-item ${c.id === currentChatId ? 'active' : ''}`;
+      d.onclick = () => selectChatSession(c.id);
+      d.innerHTML = `<span class="chat-item-title">${c.title}</span>`;
+      h.appendChild(d);
+    });
+  }
+
+  function renderChatMessages() {
+    const c = getCurrentChatSession();
+    const container = document.getElementById('messagesContainer');
+    container.innerHTML = '';
+    if (!c || !c.messages.length) { container.appendChild(document.getElementById('welcomeHero')); return; }
+
+    c.messages.forEach(m => {
+      const row = document.createElement('div');
+      row.className = 'message-row';
+      const isUser = m.role === 'user';
+      row.innerHTML = `<div class="msg-avatar ${isUser?'user-avatar':'assistant-avatar'}">${isUser?'Y':'✦'}</div><div class="msg-content-wrap"><div class="msg-body">${marked.parse(m.content||'')}</div></div>`;
+      container.appendChild(row);
+    });
+  }
+
+  async function sendChatMessage() {
+    const text = document.getElementById('promptInput').value.trim();
+    if (!text) return;
+    let c = getCurrentChatSession();
+    if (!c) { createChatSession(); c = getCurrentChatSession(); }
+    if (!c.messages.length) c.title = text.slice(0, 25);
+    c.messages.push({ role: 'user', content: text });
+    document.getElementById('promptInput').value = '';
+    const amsg = { role: 'assistant', content: '' };
+    c.messages.push(amsg);
+    saveChats(); renderChatMessages();
+
+    const r = await fetch('/api/chat/stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: activeModel, project_id: activeProjectId, messages: c.messages.slice(0, -1) })
+    });
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n\n');
+      buf = lines.pop() || '';
+      for (const line of lines) {
+        const trimmed = line.replace(/^data:\s*/, '').trim();
+        if (!trimmed) continue;
+        try {
+          const j = JSON.parse(trimmed);
+          if (j.message?.content) { amsg.content += j.message.content; renderChatMessages(); }
+        } catch {}
+      }
+    }
+    saveChats();
+  }
+</script>
+</body>
+</html>

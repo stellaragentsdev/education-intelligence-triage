@@ -1,0 +1,45 @@
+{
+  "name": "Grant Application Generator Pipeline",
+  "description": "Automated pipeline: Inject Startup Knowledge -> Run Local LLM Reasoner -> Polish Output",
+  "nodes": [
+    {
+      "id": "node_1",
+      "type": "trigger",
+      "name": "User Input Trigger",
+      "config": {
+        "label": "Grant Application Question",
+        "default": "Draft a 100-word response explaining what our startup Stellar does for a YC application."
+      }
+    },
+    {
+      "id": "node_2",
+      "type": "knowledge",
+      "name": "Load Startup Context",
+      "config": {
+        "file": "startup_profile.json"
+      }
+    },
+    {
+      "id": "node_3",
+      "type": "llm",
+      "name": "Ollama LLM Generator",
+      "config": {
+        "model": "qwen2.5-coder:1.5b",
+        "system_instruction": "You are a top-tier YC Grant Writer. Use the provided startup profile context to draft a compelling application answer."
+      }
+    },
+    {
+      "id": "node_4",
+      "type": "output",
+      "name": "Final Draft Output",
+      "config": {
+        "format": "markdown"
+      }
+    }
+  ],
+  "connections": [
+    { "from": "node_1", "to": "node_2" },
+    { "from": "node_2", "to": "node_3" },
+    { "from": "node_3", "to": "node_4" }
+  ]
+}

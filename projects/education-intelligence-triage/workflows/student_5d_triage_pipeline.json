@@ -1,0 +1,45 @@
+{
+  "name": "5D Holistic Student Triage & Coaching Pipeline",
+  "description": "Ingest 5D Student Telemetry (Arcade Games, Bio/Sleep/Nutrition, Social Media, Family/Cultural) -> Run Deterministic Triage Engine -> Synthesize Role-Scoped Student, Parent & Teacher Playbooks",
+  "nodes": [
+    {
+      "id": "node_1",
+      "type": "trigger",
+      "name": "Student Check-In & Arcade Telemetry Trigger",
+      "config": {
+        "label": "Student Case / Triage Prompt",
+        "default": "Run a full 5D holistic triage and tailored learning methodology plan for Arjun Mehta (STU-101) and Leo Vance (STU-103)."
+      }
+    },
+    {
+      "id": "node_2",
+      "type": "tool",
+      "name": "5D Deterministic Triage & Brain-Wiring Engine",
+      "config": {
+        "script": "triage_engine.py"
+      }
+    },
+    {
+      "id": "node_3",
+      "type": "llm",
+      "name": "Neuro-Pedagogical & Clinical Coaching Synthesizer",
+      "config": {
+        "model": "qwen2.5-coder:1.5b",
+        "system_instruction": "You are the Holistic Education Intelligence & Triage System. Using the 5D Triage Engine JSON report provided, write a clear, compassionate, and actionable report with: 1) Triage Status (Green/Amber/Red) & Bio-Psycho-Social Root-Cause Correlation, 2) Brain-Wiring & Tailored Learning Methodology, 3) Talent Channeling Pathway, and 4) Three Role-Scoped Playbooks: Student Gamified Quest Log, Parent Home/Nutrition/Sleep Co-Pilot, and Teacher Classroom Accommodation Card."
+      }
+    },
+    {
+      "id": "node_4",
+      "type": "output",
+      "name": "Multi-Stakeholder Triage & Coaching Report",
+      "config": {
+        "format": "markdown"
+      }
+    }
+  ],
+  "connections": [
+    { "from": "node_1", "to": "node_2" },
+    { "from": "node_2", "to": "node_3" },
+    { "from": "node_3", "to": "node_4" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "startup-grant-assistant",
+  "name": "Startup Grant & Application Assistant",
+  "icon": "🚀",
+  "description": "Draft, polish, and review grant applications, accelerator forms (YC, Techstars), and Cloud Credit requests.",
+  "default_model": "qwen2.5-coder:1.5b",
+  "system_instruction": "instructions.md",
+  "knowledge": ["startup_profile.json"],
+  "skills": ["yc_grant_application.md"],
+  "tools": ["web_search.py", "python_runner.py"],
+  "workflows": ["grant_writer_pipeline.json"]
+}

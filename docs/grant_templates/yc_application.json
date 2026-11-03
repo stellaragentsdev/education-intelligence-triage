@@ -1,0 +1,20 @@
+{
+  "program": "Y Combinator",
+  "questions": [
+    {
+      "id": "company_overview",
+      "prompt": "Describe what your company does in 50 words or less.",
+      "word_limit": 50
+    },
+    {
+      "id": "problem_and_solution",
+      "prompt": "What is the problem you are solving, and how does your product solve it?",
+      "word_limit": 200
+    },
+    {
+      "id": "secret_sauce",
+      "prompt": "What is unique about your approach or technology?",
+      "word_limit": 150
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "code-architect",
+  "name": "Full-Stack Code Architect",
+  "icon": "💻",
+  "description": "Refactor code, conduct automated code reviews, generate unit tests, and execute Python code snippets.",
+  "default_model": "qwen2.5-coder:1.5b",
+  "system_instruction": "instructions.md",
+  "knowledge": ["architecture.md"],
+  "skills": ["refactor_code.md"],
+  "tools": ["python_runner.py"],
+  "workflows": ["code_review_pipeline.json"]
+}

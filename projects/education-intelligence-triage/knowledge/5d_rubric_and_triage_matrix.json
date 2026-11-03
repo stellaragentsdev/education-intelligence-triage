@@ -1,0 +1,76 @@
+{
+  "framework_version": "1.0.0",
+  "dimensions": {
+    "cognitive_brain_wiring": {
+      "metrics": [
+        "working_memory_index",
+        "sustained_attention_stamina_mins",
+        "impulse_control_go_nogo_score",
+        "processing_speed_ms",
+        "cognitive_flexibility_score"
+      ],
+      "learning_modalities": {
+        "visual_spatial": "Learns via diagrams, spatial sandboxes, color-coded mind maps, and 3D simulations.",
+        "auditory_verbal": "Learns via Socratic dialogue, storytelling, rhythm, and peer teaching.",
+        "kinesthetic_experiential": "Learns via hands-on building, movement breaks, rapid 12-min sprints, and arcade mechanics.",
+        "analytical_systems": "Learns via first-principles decomposition, rule discovery, and logic trees."
+      }
+    },
+    "talent_discovery": {
+      "domains": [
+        "systems_and_engineering",
+        "creative_and_design_synthesis",
+        "linguistic_and_narrative",
+        "interpersonal_and_leadership",
+        "kinesthetic_and_rhythm",
+        "quantitative_and_pattern_logic"
+      ]
+    },
+    "biological_and_nutrition": {
+      "metrics": [
+        "avg_sleep_hours",
+        "sleep_consistency_score",
+        "morning_protein_and_hydration_score",
+        "glycemic_spike_risk",
+        "adolescent_growth_or_hormonal_fatigue_flag",
+        "physical_activity_mins"
+      ]
+    },
+    "psychological_and_digital": {
+      "metrics": [
+        "stress_resilience_score",
+        "mood_valence_trend",
+        "daily_screen_time_hours",
+        "late_night_social_media_mins",
+        "social_comparison_vulnerability",
+        "frustration_recovery_rate"
+      ]
+    },
+    "socio_cultural_and_family": {
+      "factors": [
+        "family_support_sync",
+        "home_study_environment_quietness",
+        "peer_belonging_index",
+        "religious_and_cultural_rhythm_alignment",
+        "fasting_or_spiritual_schedule_active"
+      ]
+    }
+  },
+  "triage_tiers": {
+    "GREEN": {
+      "code": "TIER_1_OPTIMIZE",
+      "label": "Green — Thriving & Talent Acceleration",
+      "criteria": "Balanced bio-rhythms, stable mood, healthy screen boundaries. Focus on unlocking advanced talent quests and optimizing learning velocity."
+    },
+    "AMBER": {
+      "code": "TIER_2_COACHING",
+      "label": "Amber — Multi-Factor Coaching Intervention",
+      "criteria": "2+ converging risk signals (e.g., sleep < 6.5h, late-night social media > 45m, low nutritional energy, or growing game frustration). Triggers synchronized Parent + Teacher + Student habit quests."
+    },
+    "RED": {
+      "code": "TIER_3_CLINICAL_ESCALATION",
+      "label": "Red — Urgent Counselor & Family Safeguarding",
+      "criteria": "Acute emotional distress, severe burnout, persistent isolation, or safety/self-harm indicators. Immediate human counselor triage required."
+    }
+  }
+}

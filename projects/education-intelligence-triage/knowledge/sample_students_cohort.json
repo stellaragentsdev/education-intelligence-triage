@@ -1,0 +1,136 @@
+{
+  "students": [
+    {
+      "id": "STU-101",
+      "name": "Arjun Mehta",
+      "age": 13,
+      "grade": "8th Grade",
+      "adolescent_stage": "Mid-Adolescence Growth Spurt",
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 78,
+        "sustained_attention_stamina_mins": 14,
+        "impulse_control_go_nogo_score": 62,
+        "cognitive_flexibility_score": 88,
+        "dominant_modality": "visual_spatial",
+        "secondary_modality": "kinesthetic_experiential"
+      },
+      "talent_scores": {
+        "systems_and_engineering": 94,
+        "quantitative_and_pattern_logic": 89,
+        "creative_and_design_synthesis": 82,
+        "interpersonal_and_leadership": 68,
+        "linguistic_and_narrative": 61
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 5.8,
+        "sleep_consistency_score": 52,
+        "morning_protein_and_hydration_score": 45,
+        "glycemic_spike_risk": "High (refined carb breakfast + afternoon energy drink)",
+        "adolescent_growth_or_hormonal_fatigue_flag": true,
+        "physical_activity_mins": 25
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 58,
+        "mood_valence_trend": "Declining over 10 days",
+        "daily_screen_time_hours": 5.4,
+        "late_night_social_media_mins": 75,
+        "social_comparison_vulnerability": "Moderate-High",
+        "frustration_recovery_rate": 54
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "High intent, both parents working late",
+        "home_study_environment": "Shared room, high evening device noise",
+        "peer_belonging_index": 72,
+        "religious_and_cultural_context": "Evening family prayer at 7:30 PM; vegetarian diet requiring intentional B12/iron/protein pairing"
+      }
+    },
+    {
+      "id": "STU-102",
+      "name": "Zara Al-Mansoor",
+      "age": 15,
+      "grade": "10th Grade",
+      "adolescent_stage": "Mid-to-Late Adolescence",
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 91,
+        "sustained_attention_stamina_mins": 32,
+        "impulse_control_go_nogo_score": 89,
+        "cognitive_flexibility_score": 85,
+        "dominant_modality": "auditory_verbal",
+        "secondary_modality": "analytical_systems"
+      },
+      "talent_scores": {
+        "linguistic_and_narrative": 96,
+        "interpersonal_and_leadership": 92,
+        "creative_and_design_synthesis": 84,
+        "systems_and_engineering": 74,
+        "quantitative_and_pattern_logic": 79
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 7.6,
+        "sleep_consistency_score": 88,
+        "morning_protein_and_hydration_score": 84,
+        "glycemic_spike_risk": "Low",
+        "adolescent_growth_or_hormonal_fatigue_flag": false,
+        "physical_activity_mins": 45
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 86,
+        "mood_valence_trend": "Stable & Positive",
+        "daily_screen_time_hours": 2.1,
+        "late_night_social_media_mins": 10,
+        "social_comparison_vulnerability": "Low",
+        "frustration_recovery_rate": 90
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "Strong collaborative routines",
+        "home_study_environment": "Quiet dedicated study corner",
+        "peer_belonging_index": 91,
+        "religious_and_cultural_context": "Observes seasonal fasting and daily prayer windows; thrives when deep study blocks align with post-dawn reflection hours"
+      }
+    },
+    {
+      "id": "STU-103",
+      "name": "Leo Vance",
+      "age": 14,
+      "grade": "9th Grade",
+      "adolescent_stage": "Adolescent Transition",
+      "cognitive_arcade_telemetry": {
+        "working_memory_index": 64,
+        "sustained_attention_stamina_mins": 9,
+        "impulse_control_go_nogo_score": 48,
+        "cognitive_flexibility_score": 79,
+        "dominant_modality": "kinesthetic_experiential",
+        "secondary_modality": "visual_spatial"
+      },
+      "talent_scores": {
+        "creative_and_design_synthesis": 95,
+        "kinesthetic_and_rhythm": 91,
+        "systems_and_engineering": 77,
+        "linguistic_and_narrative": 58,
+        "quantitative_and_pattern_logic": 62
+      },
+      "bio_and_nutrition": {
+        "avg_sleep_hours": 4.9,
+        "sleep_consistency_score": 34,
+        "morning_protein_and_hydration_score": 30,
+        "glycemic_spike_risk": "Severe (skips breakfast, high caffeine/sugar gaming snacks)",
+        "adolescent_growth_or_hormonal_fatigue_flag": true,
+        "physical_activity_mins": 15
+      },
+      "psychological_and_digital": {
+        "stress_resilience_score": 32,
+        "mood_valence_trend": "Critical drop — high apathy & rage-quit spikes in tasks",
+        "daily_screen_time_hours": 7.8,
+        "late_night_social_media_mins": 135,
+        "social_comparison_vulnerability": "High (cyber-peer conflict indicators)",
+        "frustration_recovery_rate": 28
+      },
+      "socio_cultural_and_family": {
+        "family_support_sync": "Strained — recent family relocation",
+        "home_study_environment": "Isolated bedroom with unmonitored late-night screens",
+        "peer_belonging_index": 38,
+        "religious_and_cultural_context": "Secular household; values music, skateboarding, and nature grounding"
+      }
+    }
+  ]
+}

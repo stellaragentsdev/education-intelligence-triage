@@ -1,0 +1,19 @@
+{
+  "startup_name": "Stellar",
+  "founder_name": "Founder",
+  "one_liner": "AI-powered platform empowering solo founders to scale operations, cloud infrastructure, and growth.",
+  "problem": "Solo founders struggle with balancing software development, cloud operations, marketing, sales, and fundraising simultaneously.",
+  "solution": "An autonomous AI fleet managed by a central Jarvis agent that coordinates development, cloud management (AWS/Azure), SEO, and startup applications.",
+  "target_market": "Solo developers, tech founders, small product teams, and indie hackers.",
+  "tech_stack": {
+    "cloud": ["AWS", "Azure"],
+    "hosting_and_domains": ["Hostinger"],
+    "ai_engine": ["Antigravity", "Gemini 3.6", "Claude", "Local Qwen/Llama"],
+    "crm_and_ops": ["Zoho"]
+  },
+  "credits_available": {
+    "aws": "Active",
+    "azure": "Active",
+    "zoho": "Active"
+  }
+}
