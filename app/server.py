@@ -264,6 +264,11 @@ class Handler(BaseHTTPRequestHandler):
             if dash.exists():
                 self._send(200, "text/html; charset=utf-8", dash.read_bytes())
                 return
+        if self.path in ("/kalki-mobile", "/mobile"):
+            mob = PROJECTS_DIR / "education-intelligence-triage" / "mobile.html"
+            if mob.exists():
+                self._send(200, "text/html; charset=utf-8", mob.read_bytes())
+                return
         if self.path == "/api/edu/students":
             try:
                 edu_tools = str(PROJECTS_DIR / "education-intelligence-triage" / "tools")

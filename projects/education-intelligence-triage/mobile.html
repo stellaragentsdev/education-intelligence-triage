@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KALKI Mobile — 4-App Showcase (Student, Teacher, Parent & Academy Admin)</title>
+  <style>
+    :root {
+      --bg: #070b16;
+      --panel: #11182d;
+      --panel-alt: #192340;
+      --border: #2a3966;
+      --text: #eef2ff;
+      --muted: #94a3b8;
+      --accent: #6366f1;
+      --cyan: #06b6d4;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --pink: #ec4899;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #1e1b4b, var(--bg) 68%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(17, 24, 45, 0.9);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      gap: 1rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.85rem; }
+    .brand-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      display: grid; place-items: center; font-size: 1.35rem; font-weight: 800;
+    }
+    .brand h1 { font-size: 1.15rem; font-weight: 800; }
+    .brand p { font-size: 0.78rem; color: var(--muted); }
+    .controls { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; }
+    select, button, a.btn-link {
+      background: var(--panel-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    select:hover, button:hover, a.btn-link:hover { border-color: var(--cyan); }
+    .mode-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Phone Showcase Grid */
+    .showcase-wrapper {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(335px, 1fr));
+      gap: 1.75rem;
+      justify-items: center;
+    }
+    .showcase-wrapper.single-phone {
+      grid-template-columns: 1fr;
+    }
+
+    /* Realistic iPhone 16 Pro Bezel */
+    .phone-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .phone-role-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .phone-frame {
+      width: 348px;
+      height: 720px;
+      background: #0d1326;
+      border-radius: 46px;
+      border: 8px solid #283457;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65), inset 0 0 0 2px #0f172a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Dynamic Island & Status Bar */
+    .status-bar {
+      height: 40px;
+      padding: 0 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(13, 19, 38, 0.95);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dynamic-island {
+      width: 96px;
+      height: 22px;
+      background: #000;
+      border-radius: 999px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 8px;
+    }
+
+    /* App Header inside Phone */
+    .app-header {
+      padding: 0.75rem 1rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(6, 182, 212, 0.12));
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .app-header h3 { font-size: 0.92rem; font-weight: 800; }
+    .app-header p { font-size: 0.7rem; color: var(--muted); }
+
+    /* Scrollable Mobile Viewport */
+    .app-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .app-body::-webkit-scrollbar { width: 4px; }
+    .app-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+
+    /* Mobile Cards & Pills */
+    .m-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.85rem;
+    }
+    .m-card h4 {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #f8fafc;
+    }
+    .badge {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .badge.GREEN { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid var(--green); }
+    .badge.AMBER { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid var(--amber); }
+    .badge.RED { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid var(--red); }
+
+    .m-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem;
+    }
+    .m-kpi {
+      background: var(--panel-alt);
+      border-radius: 12px;
+      padding: 0.65rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .m-kpi .lbl { font-size: 0.66rem; color: var(--muted); }
+    .m-kpi .val { font-size: 1rem; font-weight: 800; margin-top: 0.15rem; }
+
+    .m-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .m-list li {
+      background: var(--panel-alt);
+      padding: 0.6rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      border-left: 3px solid var(--accent);
+    }
+
+    .m-bar-row { margin-bottom: 0.5rem; }
+    .m-bar-lbl {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .m-bar-bg {
+      height: 6px;
+      background: #070b16;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .m-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      border-radius: 999px;
+    }
+    .m-bar-fill.pink { background: linear-gradient(90deg, var(--pink), var(--amber)); }
+
+    /* Mini Mobile Arcade inside Student App */
+    .m-arcade-box {
+      background: #070b16;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .m-orb {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      margin: 0.5rem auto;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.78rem;
+      cursor: pointer;
+      user-select: none;
+      background: #334155;
+      transition: transform 0.1s ease;
+    }
+    .m-orb:active { transform: scale(0.9); }
+
+    /* Bottom iOS Tab Bar */
+    .tab-bar {
+      height: 58px;
+      background: rgba(13, 19, 38, 0.96);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      flex-shrink: 0;
+      padding-bottom: 6px;
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+    }
+    .tab-item.active { color: var(--cyan); font-weight: 700; }
+    .tab-item span.ico { font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">📱</div>
+      <div>
+        <h1>KALKI Mobile — 4-App Stakeholder Showcase</h1>
+        <p>Live Mobile Views for Student, Class Teacher, Parent & Academy Admin (Grade 8 Male & Female Pilot)</p>
+      </div>
+    </div>
+    <div class="controls">
+      <label for="mobileStudentSelect" style="font-size:0.8rem;color:var(--muted);">Active Grade 8 Student:</label>
+      <select id="mobileStudentSelect"></select>
+      <button class="mode-btn active" data-layout="all">📱📱📱📱 Side-by-Side (All 4 Apps)</button>
+      <button class="mode-btn" data-layout="student">🎮 Student App</button>
+      <button class="mode-btn" data-layout="teacher">👩‍🏫 Teacher App</button>
+      <button class="mode-btn" data-layout="parent">🏡 Parent App</button>
+      <button class="mode-btn" data-layout="academy">🏛️ Admin App</button>
+      <a href="/kalki" class="btn-link">🖥️ Back to Desktop Command Center</a>
+    </div>
+  </header>
+
+  <main class="showcase-wrapper" id="showcaseGrid">
+    <!-- PHONE 1: STUDENT MOBILE APP -->
+    <div class="phone-column" data-app="student">
+      <div class="phone-role-label">🎮 1. Student Companion App</div>
+      <div class="phone-frame">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="dynamic-island"></div>
+          <span>5G 100%</span>
+        </div>
+        <div class="app-header">
+          <div>
+            <h3 id="sAppName">Arjun's Quest Hub</h3>
+            <p id="sAppSub">Level 12 • Visual-Spatial Explorer</p>
+          </div>
+          <span class="badge GREEN" id="sAppBadge">XP +240</span>
+        </div>
+        <div class="app-body">
+          <div class="m-kpi-row" id="sAppKpis"></div>
+
+          <div class="m-card">
+            <h4><span>🕹️ 60s Stealth Impulse Orb</span><span style="font-size:0.68rem;color:var(--cyan);">Live Telemetry</span></h4>
+            <div class="m-arcade-box">
+              <div id="mOrb" class="m-orb">TAP TO PLAY</div>
+              <div id="mOrbStat" style="font-size:0.7rem;color:var(--muted);">
+                Tap GREEN (GO!), hold on RED (WAIT!)
+              </div>
+            </div>
+          </div>
+
+          <div class="m-card">
+            <h4><span>⚡ Today's Power-Up Quests</span></h4>
+            <ul class="m-list" id="sAppQuests"></ul>
+          </div>
+
+          <div class="m-card">
+            <h4><span>🚀 My Top Talent Tracks</span></h4>
+            <div id="sAppTalents"></div>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="ico">🎯</span><span>Quests</span></div>
+          <div class="tab-item"><span class="ico">🕹️</span><span>Arcade</span></div>
+          <div class="tab-item"><span class="ico">🧬</span><span>Brain Map</span></div>
+          <div class="tab-item"><span class="ico">🏆</span><span>Badges</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE 2: CLASS TEACHER MOBILE APP -->
+    <div class="phone-column" data-app="teacher">
+      <div class="phone-role-label">👩‍🏫 2. Class Teacher App</div>
+      <div class="phone-frame">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="dynamic-island"></div>
+          <span>5G 100%</span>
+        </div>
+        <div class="app-header">
+          <div>
+            <h3>Kalki Classroom Co-Pilot</h3>
+            <p id="tAppSub">Grade 8 Section A • Pedagogical View</p>
+          </div>
+          <span class="badge AMBER" id="tAppBadge">AMBER</span>
+        </div>
+        <div class="app-body">
+          <div class="m-card" style="background:rgba(6,182,212,0.12);border-color:var(--cyan);">
+            <p style="font-size:0.72rem;color:#67e8f9;">
+              🔒 <strong>Privacy Shield Active:</strong> Medical, pubertal, hormonal & family records are masked. Showing classroom pacing & modality cards only.
+            </p>
+          </div>
+
+          <div class="m-kpi-row" id="tAppKpis"></div>
+
+          <div class="m-card">
+            <h4><span>📋 Student Accommodation Card</span></h4>
+            <ul class="m-list" id="tAppAccommodations"></ul>
+          </div>
+
+          <div class="m-card">
+            <h4><span>🧩 Grade 8 Seating & Modality Pods</span></h4>
+            <ul class="m-list" id="tAppPods"></ul>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="ico">👩‍🏫</span><span>Class</span></div>
+          <div class="tab-item"><span class="ico">🧩</span><span>Pods</span></div>
+          <div class="tab-item"><span class="ico">⏱️</span><span>Sprints</span></div>
+          <div class="tab-item"><span class="ico">🩺</span><span>Nudge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE 3: PARENT MOBILE APP -->
+    <div class="phone-column" data-app="parent">
+      <div class="phone-role-label">🏡 3. Parent Co-Pilot App</div>
+      <div class="phone-frame">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="dynamic-island"></div>
+          <span>5G 100%</span>
+        </div>
+        <div class="app-header">
+          <div>
+            <h3 id="pAppTitle">Parent Home Co-Pilot</h3>
+            <p id="pAppSub">Bio-Rhythm, Nutrition & Hormones</p>
+          </div>
+          <span class="badge AMBER" id="pAppBadge">AMBER</span>
+        </div>
+        <div class="app-body">
+          <div class="m-card" style="border-color:rgba(236,72,153,0.5);">
+            <h4><span>🧬 Adolescent & Endocrine Insight</span></h4>
+            <p id="pAppHormoneText" style="font-size:0.74rem;color:#f9a8d4;line-height:1.45;"></p>
+          </div>
+
+          <div class="m-card">
+            <h4><span>⚠️ Converging Daily Signals</span></h4>
+            <ul class="m-list" id="pAppSignals"></ul>
+          </div>
+
+          <div class="m-card">
+            <h4><span>🥗 Tonight & Tomorrow Home Plan</span></h4>
+            <ul class="m-list" id="pAppPlaybook"></ul>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="ico">🏡</span><span>Home Plan</span></div>
+          <div class="tab-item"><span class="ico">🥗</span><span>Nutrition</span></div>
+          <div class="tab-item"><span class="ico">🌙</span><span>Sleep Sync</span></div>
+          <div class="tab-item"><span class="ico">💬</span><span>Counselor</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE 4: ACADEMY ADMIN MOBILE APP -->
+    <div class="phone-column" data-app="academy">
+      <div class="phone-role-label">🏛️ 4. Academy Admin App</div>
+      <div class="phone-frame">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="dynamic-island"></div>
+          <span>5G 100%</span>
+        </div>
+        <div class="app-header">
+          <div>
+            <h3>Principal & Admin Radar</h3>
+            <p>Grade 8 Pilot • Institutional Triage</p>
+          </div>
+          <span class="badge GREEN">LIVE</span>
+        </div>
+        <div class="app-body">
+          <div class="m-kpi-row" id="aAppKpis"></div>
+
+          <div class="m-card">
+            <h4><span>🚨 Grade 8 Cohort Triage Tap-List</span><span style="font-size:0.65rem;color:var(--muted);">Tap to switch</span></h4>
+            <ul class="m-list" id="aAppCohortList"></ul>
+          </div>
+
+          <div class="m-card">
+            <h4><span>🏛️ Institutional Governance Action</span></h4>
+            <ul class="m-list" id="aAppActions"></ul>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="ico">📊</span><span>Triage</span></div>
+          <div class="tab-item"><span class="ico">🛡️</span><span>Safeguard</span></div>
+          <div class="tab-item"><span class="ico">🎓</span><span>Talent Labs</span></div>
+          <div class="tab-item"><span class="ico">💼</span><span>ROI</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const FALLBACK_COHORT = [
+      {
+        id: "STU-801",
+        name: "Arjun Mehta",
+        sex: "Male",
+        grade: "8th Grade (Age 13)",
+        stage: "Tanner Stage 3 — Peak Height Velocity",
+        pubertal_phase: "Rapid Somatic Growth & Early Testosterone Surge",
+        melatonin_shift: 95,
+        cortisol_reactivity: 68,
+        dopamine_sensitivity: 82,
+        micronutrient_status: "Borderline-Low Ferritin (Vegetarian + Growth Spurt)",
+        endocrine_impact: "+95m delayed melatonin onset causes morning prefrontal fog (Periods 1–2); rising testosterone & reward-seeking increase restlessness in passive lectures.",
+        dominant_modality: "Visual-Spatial",
+        secondary_modality: "Kinesthetic-Experiential",
+        working_memory: 78,
+        stamina: 14,
+        impulse_control: 62,
+        sleep: 5.8,
+        nutrition: 45,
+        social_mins: 75,
+        stress_resilience: 58,
+        belonging: 72,
+        growth_flag: true,
+        talents: {
+          "Systems & Engineering": 94,
+          "Quantitative Logic": 89,
+          "Creative Synthesis": 82
+        }
+      },
+      {
+        id: "STU-802",
+        name: "Ananya Iyer",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Post-Menarcheal Early Stabilization",
+        pubertal_phase: "Late Luteal Progesterone Dip & Ferritin Depletion",
+        melatonin_shift: 75,
+        cortisol_reactivity: 78,
+        dopamine_sensitivity: 70,
+        micronutrient_status: "Low Iron/Ferritin + Magnesium Deficit (Cyclical Fatigue)",
+        endocrine_impact: "Cyclical iron/ferritin dip reduces cerebral oxygenation & working-memory stamina by ~20%; elevated HPA-axis cortisol amplifies test-anxiety perfectionism.",
+        dominant_modality: "Analytical-Systems",
+        secondary_modality: "Visual-Spatial",
+        working_memory: 82,
+        stamina: 18,
+        impulse_control: 84,
+        sleep: 6.2,
+        nutrition: 50,
+        social_mins: 60,
+        stress_resilience: 52,
+        belonging: 76,
+        growth_flag: true,
+        talents: {
+          "Quantitative Logic": 95,
+          "Systems & Engineering": 91,
+          "Linguistic Narrative": 86
+        }
+      },
+      {
+        id: "STU-803",
+        name: "Zoya Khan",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Mid-Adolescence Balanced Endocrine Rhythm",
+        pubertal_phase: "Follicular Estrogen Cognitive Peak & Regulated Cortisol",
+        melatonin_shift: 45,
+        cortisol_reactivity: 42,
+        dopamine_sensitivity: 68,
+        micronutrient_status: "Optimal Ferritin, Vitamin D & Omega-3 Balance",
+        endocrine_impact: "Regulated circadian cortisol curve and stable estrogen-supported verbal/hippocampal memory consolidation enable 30+ min Socratic study blocks.",
+        dominant_modality: "Auditory-Verbal",
+        secondary_modality: "Analytical-Systems",
+        working_memory: 92,
+        stamina: 30,
+        impulse_control: 90,
+        sleep: 8.1,
+        nutrition: 86,
+        social_mins: 5,
+        stress_resilience: 88,
+        belonging: 92,
+        growth_flag: false,
+        talents: {
+          "Linguistic Narrative": 96,
+          "Interpersonal Leadership": 93,
+          "Creative Synthesis": 85
+        }
+      },
+      {
+        id: "STU-804",
+        name: "Kabir Verma",
+        sex: "Male",
+        grade: "8th Grade (Age 14)",
+        stage: "Mid-Pubertal Testosterone & Dopamine Remodeling",
+        pubertal_phase: "Acute Circadian Phase Delay + Dopamine Novelty Seeking",
+        melatonin_shift: 140,
+        cortisol_reactivity: 88,
+        dopamine_sensitivity: 95,
+        micronutrient_status: "Severe Vitamin D, Zinc & Omega-3 Deficit (Skipped Meals)",
+        endocrine_impact: "+140m melatonin delay + late-night gaming causes acute morning executive dysfunction (impulse 46/100); chronic cortisol triggers task rage-quits.",
+        dominant_modality: "Kinesthetic-Experiential",
+        secondary_modality: "Visual-Spatial",
+        working_memory: 64,
+        stamina: 9,
+        impulse_control: 46,
+        sleep: 4.8,
+        nutrition: 28,
+        social_mins: 145,
+        stress_resilience: 31,
+        belonging: 36,
+        growth_flag: true,
+        talents: {
+          "Creative Synthesis": 95,
+          "Kinesthetic Rhythm": 92,
+          "Systems & Engineering": 79
+        }
+      },
+      {
+        id: "STU-805",
+        name: "Maya Lin",
+        sex: "Female",
+        grade: "8th Grade (Age 13)",
+        stage: "Early-to-Mid Pubertal HPA-Axis Sensitization",
+        pubertal_phase: "Estrogen/Progesterone Fluctuation + Hyper-Reactive Cortisol",
+        melatonin_shift: 125,
+        cortisol_reactivity: 92,
+        dopamine_sensitivity: 86,
+        micronutrient_status: "Depleted B-Complex, Iron & Protein (Meal Skipping)",
+        endocrine_impact: "Elevated social-evaluative threat sensitivity (oxytocin/cortisol coupling) + caloric restriction impairs recall during public classroom evaluations.",
+        dominant_modality: "Visual-Spatial",
+        secondary_modality: "Auditory-Verbal",
+        working_memory: 70,
+        stamina: 11,
+        impulse_control: 68,
+        sleep: 5.0,
+        nutrition: 32,
+        social_mins: 130,
+        stress_resilience: 35,
+        belonging: 41,
+        growth_flag: true,
+        talents: {
+          "Creative Synthesis": 97,
+          "Visual & Spatial Arts": 94,
+          "Linguistic Narrative": 89
+        }
+      },
+      {
+        id: "STU-806",
+        name: "Rohan Nair",
+        sex: "Male",
+        grade: "8th Grade (Age 13)",
+        stage: "Tanner Stage 3 — Athletics-Regulated Endocrine Profile",
+        pubertal_phase: "Growth Hormone & BDNF Boost via Daily Aerobic Exercise",
+        melatonin_shift: 50,
+        cortisol_reactivity: 45,
+        dopamine_sensitivity: 74,
+        micronutrient_status: "Strong Protein/Electrolyte Balance (Track & Field)",
+        endocrine_impact: "Morning athletics upregulates BDNF and stabilizes baseline dopamine, unlocking peak problem-solving velocity right after movement.",
+        dominant_modality: "Kinesthetic-Experiential",
+        secondary_modality: "Analytical-Systems",
+        working_memory: 87,
+        stamina: 26,
+        impulse_control: 85,
+        sleep: 8.0,
+        nutrition: 88,
+        social_mins: 15,
+        stress_resilience: 84,
+        belonging: 90,
+        growth_flag: false,
+        talents: {
+          "Kinesthetic Rhythm": 94,
+          "Systems & Engineering": 90,
+          "Interpersonal Leadership": 88
+        }
+      }
+    ];
+
+    let COHORT = JSON.parse(JSON.stringify(FALLBACK_COHORT));
+    let activeStudent = COHORT[0];
+
+    function computeMetrics(s) {
+      const sleepPenalty = Math.max(0, (7.5 - s.sleep) * 4.0);
+      const circadianPenalty = Math.max(0, (s.melatonin_shift - 45) * 0.15) + sleepPenalty;
+      const endocrinePenalty = Math.max(0, (s.cortisol_reactivity - 55) * 0.22) + Math.max(0, (65 - s.nutrition) * 0.18);
+      const bandwidth = Math.round(Math.max(25, Math.min(99, s.working_memory - circadianPenalty - endocrinePenalty)));
+      const sprintAdj = s.cortisol_reactivity >= 75 || s.dopamine_sensitivity >= 85 ? -2 : 2;
+      const sprintMins = Math.min(35, Math.max(8, s.stamina + sprintAdj));
+
+      let tier = "GREEN";
+      if (s.sleep < 5.2 || s.nutrition < 40 || s.melatonin_shift >= 120 || s.cortisol_reactivity >= 85 || s.social_mins >= 120 || s.stress_resilience < 40 || s.belonging < 45) {
+        tier = "RED";
+      } else if (s.sleep < 6.8 || s.nutrition < 60 || s.melatonin_shift >= 75 || s.cortisol_reactivity >= 68 || s.social_mins >= 45 || s.growth_flag) {
+        tier = "AMBER";
+      }
+      return { bandwidth, sprintMins, tier, circadianPenalty: Math.round(circadianPenalty) };
+    }
+
+    const sel = document.getElementById("mobileStudentSelect");
+    function populateDropdown() {
+      sel.innerHTML = "";
+      COHORT.forEach((s) => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.sex === "Female" ? "♀" : "♂"}) — ${computeMetrics(s).tier}`;
+        if (s.id === activeStudent.id) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
+    sel.addEventListener("change", (e) => {
+      activeStudent = COHORT.find((s) => s.id === e.target.value) || COHORT[0];
+      renderMobileApps();
+    });
+
+    // Layout mode switcher (All 4 phones vs single zoomed phone)
+    document.querySelectorAll(".mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".mode-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const layout = btn.dataset.layout;
+        const grid = document.getElementById("showcaseGrid");
+        grid.classList.toggle("single-phone", layout !== "all");
+        document.querySelectorAll(".phone-column").forEach((col) => {
+          col.style.display = layout === "all" || col.dataset.app === layout ? "flex" : "none";
+        });
+      });
+    });
+
+    function renderMobileApps() {
+      const m = computeMetrics(activeStudent);
+      const topTalents = Object.entries(activeStudent.talents).sort((a, b) => b[1] - a[1]);
+      const topTalentName = topTalents[0][0];
+
+      // 1. STUDENT APP
+      document.getElementById("sAppName").textContent = `${activeStudent.name.split(" ")[0]}'s Kalki Hub`;
+      document.getElementById("sAppSub").textContent = `${activeStudent.dominant_modality} • ${activeStudent.grade}`;
+      const sBadge = document.getElementById("sAppBadge");
+      sBadge.className = `badge ${m.tier}`;
+      sBadge.textContent = `BW ${m.bandwidth}%`;
+
+      document.getElementById("sAppKpis").innerHTML = `
+        <div class="m-kpi">
+          <div class="lbl">Focus Sprint</div>
+          <div class="val" style="color:var(--cyan);">${m.sprintMins} Mins</div>
+        </div>
+        <div class="m-kpi">
+          <div class="lbl">Impulse Score</div>
+          <div class="val" style="color:var(--green);">${activeStudent.impulse_control}/100</div>
+        </div>
+      `;
+
+      document.getElementById("sAppQuests").innerHTML = [
+        `🎯 <strong>${m.sprintMins}-Min ${activeStudent.dominant_modality} Sprint:</strong> Complete 2 bursts + 3m movement recharge.`,
+        `🌙 <strong>Melatonin Sunset Shield:</strong> Dock phone 60m before bed to recover +${m.circadianPenalty} Bandwidth XP!`,
+        `⚡ <strong>Morning Brain-Fuel:</strong> High-protein + iron/hydration breakfast check-in.`
+      ].map((q) => `<li>${q}</li>`).join("");
+
+      document.getElementById("sAppTalents").innerHTML = topTalents
+        .map(
+          ([k, v]) => `
+          <div class="m-bar-row">
+            <div class="m-bar-lbl"><span>${k}</span><strong>${v}%</strong></div>
+            <div class="m-bar-bg"><div class="m-bar-fill" style="width:${v}%"></div></div>
+          </div>
+        `
+        )
+        .join("");
+
+      // 2. CLASS TEACHER APP
+      document.getElementById("tAppSub").textContent = `${activeStudent.name} (${activeStudent.sex === "Female" ? "♀" : "♂"}) • Grade 8`;
+      const tBadge = document.getElementById("tAppBadge");
+      tBadge.className = `badge ${m.tier}`;
+      tBadge.textContent = m.tier;
+
+      document.getElementById("tAppKpis").innerHTML = `
+        <div class="m-kpi">
+          <div class="lbl">Classroom Bandwidth</div>
+          <div class="val" style="color:var(--amber);">${m.bandwidth}/100</div>
+        </div>
+        <div class="m-kpi">
+          <div class="lbl">Task Chunk Size</div>
+          <div class="val" style="color:var(--cyan);">${m.sprintMins} Mins</div>
+        </div>
+      `;
+
+      document.getElementById("tAppAccommodations").innerHTML = [
+        `📐 <strong>Primary Modality:</strong> Deliver concepts via <strong>${activeStudent.dominant_modality}</strong> scaffolds.`,
+        `🕰️ <strong>Circadian Pacing:</strong> ${
+          activeStudent.melatonin_shift >= 75
+            ? "Morning lag in Periods 1–2; use visual warm-ups early & test mid-morning."
+            : "High Period 1–2 readiness; assign morning Socratic lead."
+        }`,
+        `🌉 <strong>Talent Bridge:</strong> Anchor lessons in <strong>${topTalentName}</strong> (${topTalents[0][1]}%).`,
+        `🩺 <strong>Teacher Action (${m.tier}):</strong> ${
+          m.tier === "RED"
+            ? "Loop in Counselor today; pause high-pressure timed oral grading."
+            : m.tier === "AMBER"
+            ? "Seat in front engagement zone; allow mid-morning hydration/snack reset."
+            : "Assign peer mentor / Olympiad stretch lab."
+        }`
+      ].map((x) => `<li>${x}</li>`).join("");
+
+      document.getElementById("tAppPods").innerHTML = [
+        `<li><strong>Pod A (Visual/Systems):</strong> Arjun, Ananya, Maya</li>`,
+        `<li><strong>Pod B (Kinesthetic Sprints):</strong> Kabir, Rohan</li>`,
+        `<li><strong>Pod C (Socratic Verbal):</strong> Zoya</li>`
+      ].join("");
+
+      // 3. PARENT CO-PILOT APP
+      document.getElementById("pAppTitle").textContent = `${activeStudent.name.split(" ")[0]}'s Home Co-Pilot`;
+      document.getElementById("pAppSub").textContent = `${activeStudent.pubertal_phase}`;
+      const pBadge = document.getElementById("pAppBadge");
+      pBadge.className = `badge ${m.tier}`;
+      pBadge.textContent = m.tier;
+
+      document.getElementById("pAppHormoneText").innerHTML = `
+        <strong>${activeStudent.stage}:</strong> ${activeStudent.endocrine_impact}<br/>
+        <span style="color:var(--cyan);">• Micronutrients: ${activeStudent.micronutrient_status}</span>
+      `;
+
+      document.getElementById("pAppSignals").innerHTML = [
+        `😴 <strong>Sleep & Melatonin:</strong> ${activeStudent.sleep}h avg sleep with +${activeStudent.melatonin_shift}m pubertal melatonin delay.`,
+        `🥗 <strong>Morning Nutrition Score:</strong> ${activeStudent.nutrition}/100 • Cortisol Reactivity: ${activeStudent.cortisol_reactivity}/100.`,
+        `📱 <strong>Late-Night Social Media:</strong> ${activeStudent.social_mins} mins past bedtime.`
+      ].map((x) => `<li>${x}</li>`).join("");
+
+      document.getElementById("pAppPlaybook").innerHTML = [
+        `🍳 <strong>Tomorrow's Breakfast:</strong> Pair slow-release protein + Iron & Vitamin C to prevent afternoon focus crash.`,
+        `💡 <strong>8:30 PM Dim-Light Sync:</strong> Counter the +${activeStudent.melatonin_shift}m melatonin delay with warm lighting & living-room device dock.`,
+        `💛 <strong>Empathy First:</strong> Cortisol reactivity is ${activeStudent.cortisol_reactivity}/100—use calm co-regulation instead of late-night grade lectures.`
+      ].map((x) => `<li>${x}</li>`).join("");
+
+      // 4. ACADEMY ADMIN APP
+      const allMetrics = COHORT.map((s) => ({ s, ...computeMetrics(s) }));
+      const redCount = allMetrics.filter((x) => x.tier === "RED").length;
+      const amberCount = allMetrics.filter((x) => x.tier === "AMBER").length;
+      const greenCount = allMetrics.filter((x) => x.tier === "GREEN").length;
+
+      document.getElementById("aAppKpis").innerHTML = `
+        <div class="m-kpi">
+          <div class="lbl">Green / Amber / Red</div>
+          <div class="val"><span style="color:var(--green);">${greenCount}G</span> • <span style="color:var(--amber);">${amberCount}A</span> • <span style="color:var(--red);">${redCount}R</span></div>
+        </div>
+        <div class="m-kpi">
+          <div class="lbl">Selected Bandwidth</div>
+          <div class="val" style="color:var(--cyan);">${activeStudent.working_memory} → ${m.bandwidth}%</div>
+        </div>
+      `;
+
+      document.getElementById("aAppCohortList").innerHTML = allMetrics
+        .map(
+          ({ s, tier, bandwidth }) => `
+          <li data-sid="${s.id}" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;${
+            s.id === activeStudent.id ? "border-left-color:var(--cyan);background:#223056;" : ""
+          }">
+            <span><strong>${s.name}</strong> (${s.sex === "Female" ? "♀" : "♂"}) • BW ${bandwidth}%</span>
+            <span class="badge ${tier}">${tier}</span>
+          </li>
+        `
+        )
+        .join("");
+
+      document.querySelectorAll("#aAppCohortList li").forEach((li) => {
+        li.addEventListener("click", () => {
+          activeStudent = COHORT.find((s) => s.id === li.dataset.sid) || COHORT[0];
+          populateDropdown();
+          renderMobileApps();
+        });
+      });
+
+      document.getElementById("aAppActions").innerHTML = [
+        `🛡️ <strong>Safeguarding SLA (${activeStudent.name}):</strong> ${
+          m.tier === "RED"
+            ? "URGENT 24h School Psychologist & Parent escalation."
+            : m.tier === "AMBER"
+            ? "14-Day Bio-Hormonal & Nutrition Coaching Loop active."
+            : "Enrolled in Olympiad & Peer Mentor Track."
+        }`,
+        `⏰ <strong>Grade 8 Timetable Policy:</strong> Schedule heavy STEM exams at 10:15 AM (post-melatonin fog window).`
+      ].map((x) => `<li>${x}</li>`).join("");
+    }
+
+    // Mini Mobile Orb Game inside Student Phone
+    let mGameOn = false;
+    let mTimer = null;
+    let mState = "NONE";
+    let mHits = 0;
+    let mErrs = 0;
+    const mOrb = document.getElementById("mOrb");
+    const mOrbStat = document.getElementById("mOrbStat");
+
+    mOrb.addEventListener("click", () => {
+      if (!mGameOn) {
+        mGameOn = true;
+        mHits = 0;
+        mErrs = 0;
+        let step = 0;
+        mOrbStat.textContent = "Tap GREEN, hold on RED!";
+        mTimer = setInterval(() => {
+          step++;
+          if (step > 8) {
+            clearInterval(mTimer);
+            mGameOn = false;
+            mState = "NONE";
+            mOrb.style.background = "#334155";
+            mOrb.textContent = "PLAY AGAIN";
+            const score = Math.min(98, Math.max(40, 72 + mHits * 4 - mErrs * 12));
+            activeStudent.impulse_control = score;
+            mOrbStat.innerHTML = `Synced! Impulse Score: <strong>${score}/100</strong>`;
+            renderMobileApps();
+            return;
+          }
+          const go = Math.random() > 0.35;
+          mState = go ? "GO" : "NOGO";
+          mOrb.style.background = go ? "#10b981" : "#ef4444";
+          mOrb.textContent = go ? "TAP!" : "HOLD!";
+        }, 950);
+        return;
+      }
+      if (mState === "GO") mHits++;
+      else if (mState === "NOGO") mErrs++;
+    });
+
+    populateDropdown();
+    renderMobileApps();
+  </script>
+</body>
+</html>
