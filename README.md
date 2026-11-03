@@ -1,6 +1,6 @@
-# Education Intelligence & 5D Holistic Student Triage System
+# Kalki — Education Intelligence & 5D Holistic Student Triage System
 
-An AI-powered **Neuro-Pedagogical, Talent Discovery & Holistic Student Triage System** built for schools, educators, parents, and students.
+**Kalki** is an AI-powered **Neuro-Pedagogical, Talent Discovery & Holistic Student Triage Intelligence System** built for **Students, Teachers, Parents, and Academies**.
 
 ## Overview
 

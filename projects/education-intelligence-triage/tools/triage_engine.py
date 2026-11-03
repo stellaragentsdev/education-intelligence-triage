@@ -146,7 +146,26 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
         ),
     }
 
+    academy_card = {
+        "institutional_triage_tier": triage_tier,
+        "counselor_safeguarding_queue": (
+            "URGENT: Assign School Psychologist & Family Liaison within 24h"
+            if triage_tier == "RED"
+            else (
+                "ACTIVE: 14-Day Bio-Psycho-Social Coaching Check-In"
+                if triage_tier == "AMBER"
+                else "ROUTINE: Talent Incubator & Olympiad Track"
+            )
+        ),
+        "academy_talent_stream": f"{top_talents[0]['domain'].replace('_', ' ').title()} & {top_talents[1]['domain'].replace('_', ' ').title()} Lab",
+        "curriculum_modality_cluster": dom_mod.replace("_", "-").title(),
+        "schedule_and_policy_alignment": socio.get(
+            "religious_and_cultural_context", "Standard Academy Schedule"
+        ),
+    }
+
     return {
+        "system_name": "Kalki",
         "student_id": student.get("id"),
         "student_name": student.get("name"),
         "grade": student.get("grade"),
@@ -166,6 +185,7 @@ def evaluate_student_5d(student: Dict[str, Any]) -> Dict[str, Any]:
             "student_gamified_quests": student_quests,
             "parent_home_copilot": parent_plan,
             "teacher_classroom_accommodation": teacher_card,
+            "academy_governance_card": academy_card,
         },
     }
 

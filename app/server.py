@@ -259,7 +259,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/" or self.path == "/index.html":
             self._send(200, "text/html; charset=utf-8", (ROOT / "index.html").read_bytes())
             return
-        if self.path == "/education-triage":
+        if self.path in ("/education-triage", "/kalki"):
             dash = PROJECTS_DIR / "education-intelligence-triage" / "dashboard.html"
             if dash.exists():
                 self._send(200, "text/html; charset=utf-8", dash.read_bytes())

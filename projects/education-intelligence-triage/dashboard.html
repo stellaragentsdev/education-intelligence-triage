@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Education Intelligence & 5D Student Triage Hub</title>
+  <title>KALKI — Education Intelligence & 5D Student Triage System</title>
   <style>
     :root {
       --bg: #0b1020;
@@ -43,12 +43,13 @@
     }
     .brand { display: flex; align-items: center; gap: 0.85rem; }
     .brand-icon {
-      width: 44px; height: 44px; border-radius: 12px;
+      width: 46px; height: 46px; border-radius: 12px;
       background: linear-gradient(135deg, var(--accent), var(--cyan));
-      display: grid; place-items: center; font-size: 1.4rem;
+      display: grid; place-items: center; font-size: 1.45rem;
       box-shadow: 0 0 20px var(--accent-glow);
+      font-weight: 800;
     }
-    .brand h1 { font-size: 1.2rem; font-weight: 700; }
+    .brand h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.02em; }
     .brand p { font-size: 0.8rem; color: var(--muted); }
     .controls { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
     select, button {
@@ -74,19 +75,21 @@
       border-radius: 10px;
       border: 1px solid var(--border);
       gap: 0.2rem;
+      flex-wrap: wrap;
     }
     .role-tab, .game-tab {
       border: none;
       background: transparent;
-      padding: 0.42rem 0.8rem;
+      padding: 0.45rem 0.85rem;
       border-radius: 7px;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--muted);
     }
     .role-tab.active, .game-tab.active {
       background: var(--accent);
       color: white;
+      box-shadow: 0 0 12px var(--accent-glow);
     }
     main {
       max-width: 1440px;
@@ -152,6 +155,20 @@
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 1.15rem;
     }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .stat-tile {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+    .stat-tile .label { font-size: 0.76rem; color: var(--muted); }
+    .stat-tile .val { font-size: 1.35rem; font-weight: 800; margin-top: 0.2rem; }
     ul.clean-list {
       list-style: none;
       display: flex;
@@ -246,26 +263,43 @@
       color: #34d399;
       border: 1px solid var(--green);
     }
+    table.cohort-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-bottom: 1rem;
+    }
+    table.cohort-table th, table.cohort-table td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    table.cohort-table th {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <div class="brand-icon">🧠</div>
+      <div class="brand-icon">⚡</div>
       <div>
-        <h1>Education Intelligence & 5D Student Triage Hub</h1>
+        <h1>KALKI — Education Intelligence & 5D Triage System</h1>
         <p>Brain Wiring • Talent Discovery • Bio/Nutrition/Hormones • Mental Health & Screen Time • Family & Cultural Sync</p>
       </div>
     </div>
     <div class="controls">
-      <span id="dbSyncStatus" class="sync-pill">SQLite Telemetry Ready</span>
+      <span id="dbSyncStatus" class="sync-pill">Kalki Core Online</span>
       <label for="studentSelect" style="font-size:0.84rem;color:var(--muted);">Student:</label>
       <select id="studentSelect"></select>
-      <div class="role-tabs" role="tablist">
-        <button class="role-tab active" data-role="all">360° Command</button>
-        <button class="role-tab" data-role="student">🎮 Student Quests</button>
-        <button class="role-tab" data-role="parent">🏡 Parent Co-Pilot</button>
-        <button class="role-tab" data-role="teacher">🏫 Teacher Card</button>
+      <div class="role-tabs" role="tablist" aria-label="Switch View Mode">
+        <button class="role-tab active" data-role="student">🎮 Student</button>
+        <button class="role-tab" data-role="teacher">🏫 Teacher</button>
+        <button class="role-tab" data-role="parent">🏡 Parent</button>
+        <button class="role-tab" data-role="academy">🏛️ Academy</button>
       </div>
     </div>
   </header>
@@ -275,7 +309,7 @@
     <aside>
       <div class="card">
         <h2>
-          <span>🕹️ 3-Game Stealth Assessment Arcade</span>
+          <span>🕹️ Kalki Stealth Assessment Arcade</span>
         </h2>
         <div class="game-tabs" style="margin-bottom:0.75rem;">
           <button class="game-tab active" data-game="impulse">1. Impulse Orb</button>
@@ -366,15 +400,40 @@
       </div>
     </aside>
 
-    <!-- Right Column: Triage Overview, Brain-Wiring, Talents & Role-Scoped Playbooks -->
+    <!-- Right Column: Role-Scoped Portals (Student, Teacher, Parent, Academy) -->
     <section id="mainContent">
-      <div class="card" id="triageBannerCard">
+      <!-- Role View 1: STUDENT -->
+      <div class="card role-panel" data-panel="student">
         <h2>
-          <span id="studentHeaderTitle">Student Triage Overview</span>
-          <span id="triageBadge" class="badge AMBER">AMBER</span>
+          <span>🎮 Kalki Student Companion — Quests, Power-Ups & Brain Blueprint</span>
+          <span class="badge GREEN">XP Level 12</span>
         </h2>
-        <p id="triageSummaryText" style="font-size:0.9rem;margin-bottom:0.85rem;"></p>
-        <div class="grid-2">
+        <p style="font-size:0.86rem;color:var(--muted);margin-bottom:0.9rem;">
+          Welcome to your personal Kalki Quest Log! Complete your daily study sprints and bio-fuel quests to level up your focus shield and unlock talent labs.
+        </p>
+        <ul class="clean-list" id="studentQuestsList"></ul>
+      </div>
+
+      <!-- Role View 2: TEACHER -->
+      <div class="card role-panel" data-panel="teacher" style="display:none;">
+        <h2>
+          <span>🏫 Kalki Teacher Portal — Classroom & Pedagogical Accommodation Card</span>
+          <span id="teacherTierBadge" class="badge AMBER">AMBER</span>
+        </h2>
+        <div class="privacy-banner">
+          🔒 <strong>Kalki Privacy Guardrail Active:</strong> Sensitive biological, hormonal, medical, family, and religious records are strictly masked in the Teacher view. Showing classroom & learning modality accommodations only.
+        </div>
+        <ul class="clean-list" id="teacherCardList"></ul>
+      </div>
+
+      <!-- Role View 3: PARENT -->
+      <div class="card role-panel" data-panel="parent" style="display:none;">
+        <h2>
+          <span>🏡 Kalki Parent Co-Pilot — Nutrition, Sleep, Hormones & Home Harmony</span>
+          <span id="parentTierBadge" class="badge AMBER">AMBER</span>
+        </h2>
+        <p id="parentSummaryText" style="font-size:0.88rem;color:var(--muted);margin-bottom:0.85rem;"></p>
+        <div class="grid-2" style="margin-bottom:1rem;">
           <div>
             <h3 style="font-size:0.83rem;color:var(--muted);margin-bottom:0.45rem;">Converging Bio-Psycho-Social Signals</h3>
             <ul class="clean-list" id="riskFactorsList"></ul>
@@ -384,11 +443,39 @@
             <ul class="clean-list" id="socioContextList"></ul>
           </div>
         </div>
+        <h3 style="font-size:0.85rem;color:var(--cyan);margin-bottom:0.5rem;">Actionable Home Playbook</h3>
+        <ul class="clean-list" id="parentPlanList"></ul>
       </div>
 
+      <!-- Role View 4: ACADEMY -->
+      <div class="card role-panel" data-panel="academy" style="display:none;">
+        <h2>
+          <span>🏛️ Kalki Academy Command Center — Institutional Triage & Talent Governance</span>
+          <span id="academyTierBadge" class="badge AMBER">COHORT LIVE</span>
+        </h2>
+        <div class="grid-3" id="academyStatsTiles"></div>
+        <h3 style="font-size:0.84rem;color:var(--muted);margin-bottom:0.45rem;">Academy Cohort Triage Matrix</h3>
+        <table class="cohort-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Grade</th>
+              <th>Triage Tier</th>
+              <th>Dominant Modality</th>
+              <th>Top Talent Stream</th>
+              <th>Sleep / Screen</th>
+            </tr>
+          </thead>
+          <tbody id="academyCohortTableBody"></tbody>
+        </table>
+        <h3 style="font-size:0.84rem;color:var(--muted);margin-bottom:0.45rem;">Institutional Governance & Escalation Protocol (Selected Student)</h3>
+        <ul class="clean-list" id="academyPlanList"></ul>
+      </div>
+
+      <!-- Shared Brain-Wiring & Talent Discovery Graph -->
       <div class="grid-2" id="brainAndTalentGrid">
         <div class="card">
-          <h2>🧬 Brain-Wiring & Tailored Learning Methodology</h2>
+          <h2>🧬 Kalki Brain-Wiring & Tailored Learning Methodology</h2>
           <div id="cognitiveBars"></div>
           <div style="margin-top:0.9rem;padding:0.8rem;background:var(--panel-alt);border-radius:10px;font-size:0.84rem;" id="methodologyBox"></div>
         </div>
@@ -398,25 +485,6 @@
           <div id="talentBars"></div>
           <div id="telemetryLogBox" style="margin-top:0.85rem;font-size:0.78rem;color:var(--muted);"></div>
         </div>
-      </div>
-
-      <!-- Role-Scoped Views -->
-      <div class="card role-panel" data-panel="student">
-        <h2>🎮 Student Companion — Active Quests & Power-Ups</h2>
-        <ul class="clean-list" id="studentQuestsList"></ul>
-      </div>
-
-      <div class="card role-panel" data-panel="parent">
-        <h2>🏡 Parent Co-Pilot — Nutrition, Sleep, Hormones & Screen Harmony</h2>
-        <ul class="clean-list" id="parentPlanList"></ul>
-      </div>
-
-      <div class="card role-panel" data-panel="teacher">
-        <h2>🏫 Teacher & School Counselor Accommodation Card</h2>
-        <div class="privacy-banner">
-          🔒 <strong>Privacy Guardrail Active:</strong> Sensitive biological, hormonal, family, and religious records are masked in the Educator view. Showing strictly classroom & pedagogical accommodations.
-        </div>
-        <ul class="clean-list" id="teacherCardList"></ul>
       </div>
     </section>
   </main>
@@ -520,7 +588,37 @@
     let COHORT = JSON.parse(JSON.stringify(FALLBACK_COHORT));
     let activeIdx = 0;
     let activeStudent = COHORT[0];
-    let activeRole = "all";
+    let activeRole = "student";
+
+    function computeStudentTier(s) {
+      const critical = [];
+      const risks = [];
+      if (s.sleep < 5.2) critical.push(`Critical sleep deprivation (${s.sleep}h/night) impairing prefrontal memory consolidation.`);
+      else if (s.sleep < 6.8) risks.push(`Adolescent sleep debt (${s.sleep}h vs 8.5h optimal).`);
+
+      if (s.nutrition < 40) critical.push(`Severe morning nutritional deficit (${s.nutrition}/100) causing glycemic & focus crashes.`);
+      else if (s.nutrition < 60) risks.push(`Suboptimal morning protein/hydration (${s.nutrition}/100).`);
+
+      if (s.social_mins >= 120) critical.push(`Severe late-night social media circadian disruption (${s.social_mins}m past bedtime).`);
+      else if (s.social_mins >= 45) risks.push(`Elevated late-night social media dopamine load (${s.social_mins}m past bedtime).`);
+
+      if (s.stress_resilience < 40) critical.push(`Acute emotional & stress overload (resilience ${s.stress_resilience}/100).`);
+      else if (s.stress_resilience < 65) risks.push(`Moderate emotional strain (resilience ${s.stress_resilience}/100).`);
+
+      if (s.belonging < 45) critical.push(`Peer isolation alert (Belonging Index ${s.belonging}/100).`);
+      if (s.growth_flag) risks.push(`Active adolescent growth/hormonal shift (${s.stage}) increasing baseline energy demand.`);
+
+      let tier = "GREEN";
+      let tierDesc = "TIER 1 (GREEN) — Bio-rhythms & emotional regulation are well-aligned. Focus on autonomous talent acceleration and stretch challenges.";
+      if (critical.length > 0) {
+        tier = "RED";
+        tierDesc = "TIER 3 (RED) — Urgent Counselor & Family Safeguarding Triage. Pause high-stakes academic pressure and stabilize sleep, nutrition, and emotional safety.";
+      } else if (risks.length >= 2) {
+        tier = "AMBER";
+        tierDesc = "TIER 2 (AMBER) — Converging bio-psycho-social stressors detected. Launching a 14-day synchronized Student, Parent, Teacher & Academy coaching loop.";
+      }
+      return { tier, tierDesc, critical, risks };
+    }
 
     function mapBackendStudent(item) {
       const p = item.profile;
@@ -570,13 +668,13 @@
         if (data.students && data.students.length) {
           COHORT = data.students.map(mapBackendStudent);
           activeStudent = COHORT[activeIdx] || COHORT[0];
-          document.getElementById("dbSyncStatus").textContent = "SQLite Live Connected";
+          document.getElementById("dbSyncStatus").textContent = "Kalki SQLite Live";
           populateSelect();
           syncSlidersFromStudent();
           renderDashboard();
         }
       } catch (_err) {
-        document.getElementById("dbSyncStatus").textContent = "Local Sandbox Mode";
+        document.getElementById("dbSyncStatus").textContent = "Kalki Local Mode";
         populateSelect();
         syncSlidersFromStudent();
         renderDashboard();
@@ -602,7 +700,7 @@
       renderDashboard();
     });
 
-    // Role Tabs
+    // Role Tabs: Student, Teacher, Parent, Academy
     document.querySelectorAll(".role-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".role-tab").forEach((b) => b.classList.remove("active"));
@@ -624,10 +722,8 @@
     });
 
     function updateRoleVisibility() {
-      const privacyMaskedCards = document.getElementById("triageBannerCard");
-      privacyMaskedCards.style.display = activeRole === "teacher" ? "none" : "block";
       document.querySelectorAll(".role-panel").forEach((panel) => {
-        panel.style.display = activeRole === "all" || panel.dataset.panel === activeRole ? "block" : "none";
+        panel.style.display = panel.dataset.panel === activeRole ? "block" : "none";
       });
     }
 
@@ -670,7 +766,7 @@
           const data = await res.json();
           COHORT[activeIdx] = mapBackendStudent(data);
           activeStudent = COHORT[activeIdx];
-          statusEl.textContent = "Check-In Saved to SQLite ✓";
+          statusEl.textContent = "Check-In Saved to Kalki DB ✓";
           renderDashboard();
         } else {
           statusEl.textContent = "Updated Locally ✓";
@@ -696,7 +792,7 @@
           const data = await res.json();
           COHORT[activeIdx] = mapBackendStudent(data);
           activeStudent = COHORT[activeIdx];
-          document.getElementById("dbSyncStatus").textContent = "Arcade Telemetry Persisted ✓";
+          document.getElementById("dbSyncStatus").textContent = "Kalki Arcade Synced ✓";
           renderDashboard();
         }
       } catch (_e) {
@@ -721,39 +817,14 @@
       document.getElementById("valStress").textContent = `${activeStudent.stress_resilience}/100`;
       document.getElementById("valStamina").textContent = `${activeStudent.stamina}m`;
 
-      const critical = [];
-      const risks = [];
+      const { tier, tierDesc, critical, risks } = computeStudentTier(activeStudent);
 
-      if (activeStudent.sleep < 5.2) critical.push(`Critical sleep deprivation (${activeStudent.sleep}h/night) impairing prefrontal memory consolidation.`);
-      else if (activeStudent.sleep < 6.8) risks.push(`Adolescent sleep debt (${activeStudent.sleep}h vs 8.5h optimal).`);
-
-      if (activeStudent.nutrition < 40) critical.push(`Severe morning nutritional deficit (${activeStudent.nutrition}/100) causing glycemic & focus crashes.`);
-      else if (activeStudent.nutrition < 60) risks.push(`Suboptimal morning protein/hydration (${activeStudent.nutrition}/100).`);
-
-      if (activeStudent.social_mins >= 120) critical.push(`Severe late-night social media circadian disruption (${activeStudent.social_mins}m past bedtime).`);
-      else if (activeStudent.social_mins >= 45) risks.push(`Elevated late-night social media dopamine load (${activeStudent.social_mins}m past bedtime).`);
-
-      if (activeStudent.stress_resilience < 40) critical.push(`Acute emotional & stress overload (resilience ${activeStudent.stress_resilience}/100).`);
-      else if (activeStudent.stress_resilience < 65) risks.push(`Moderate emotional strain (resilience ${activeStudent.stress_resilience}/100).`);
-
-      if (activeStudent.belonging < 45) critical.push(`Peer isolation alert (Belonging Index ${activeStudent.belonging}/100).`);
-      if (activeStudent.growth_flag) risks.push(`Active adolescent growth/hormonal shift (${activeStudent.stage}) increasing baseline energy demand.`);
-
-      let tier = "GREEN";
-      let tierDesc = "TIER 1 (GREEN) — Bio-rhythms & emotional regulation are well-aligned. Focus on autonomous talent acceleration and stretch challenges.";
-      if (critical.length > 0) {
-        tier = "RED";
-        tierDesc = "TIER 3 (RED) — Urgent Counselor & Family Safeguarding Triage. Pause high-stakes academic pressure and stabilize sleep, nutrition, and emotional safety.";
-      } else if (risks.length >= 2) {
-        tier = "AMBER";
-        tierDesc = "TIER 2 (AMBER) — Converging bio-psycho-social stressors detected. Launching a 14-day synchronized Student, Parent & Teacher coaching loop.";
-      }
-
-      document.getElementById("studentHeaderTitle").textContent = `${activeStudent.name} (${activeStudent.grade})`;
-      const badge = document.getElementById("triageBadge");
-      badge.className = `badge ${tier}`;
-      badge.textContent = `${tier} TRIAGE`;
-      document.getElementById("triageSummaryText").textContent = tierDesc;
+      ["teacherTierBadge", "parentTierBadge"].forEach((id) => {
+        const b = document.getElementById(id);
+        b.className = `badge ${tier}`;
+        b.textContent = `${tier} TRIAGE`;
+      });
+      document.getElementById("parentSummaryText").textContent = `${activeStudent.name} (${activeStudent.grade}) — ${tierDesc}`;
 
       const allSignals = [...critical.map(c => `🚨 ${c}`), ...risks.map(r => `⚠️ ${r}`)];
       if (allSignals.length === 0) allSignals.push("✅ All biological, nutritional, sleep, and digital wellness markers are within healthy ranges.");
@@ -769,7 +840,7 @@
       ].join("");
 
       document.getElementById("methodologyBox").innerHTML = `
-        <strong>Tailored Learning Prescription:</strong><br/>
+        <strong>Kalki Tailored Learning Prescription (${activeStudent.name}):</strong><br/>
         • <strong>Primary Modality:</strong> ${activeStudent.dominant_modality}<br/>
         • <strong>Secondary Modality:</strong> ${activeStudent.secondary_modality}<br/>
         • <strong>Pacing Rule:</strong> Structure study into <strong>${sprintMins}-minute interactive sprints</strong> followed by a 3-minute kinetic/hydration reset.
@@ -782,15 +853,16 @@
 
       const recentEvents = (activeStudent.history && activeStudent.history.arcade_events) || [];
       document.getElementById("telemetryLogBox").innerHTML = recentEvents.length
-        ? `<strong>Latest Persisted Arcade Telemetry:</strong> ${recentEvents
+        ? `<strong>Latest Persisted Kalki Arcade Telemetry:</strong> ${recentEvents
             .slice(0, 2)
             .map((ev) => `${ev.game_type} (${ev.score}/100)`)
             .join(" • ")}`
-        : `Play any of the 3 Stealth Arcade games on the left to stream live telemetry into the student's 5D profile.`;
+        : `Play any of the 3 Kalki Stealth Arcade games on the left to stream live telemetry into the student's 5D profile.`;
 
+      // 1. STUDENT VIEW QUESTS
       const topTalentName = topTalentEntries[0][0];
       const quests = [
-        `🎯 <strong>Focus Sprint Quest:</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
+        `🎯 <strong>Focus Sprint Quest (${activeStudent.name}):</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
         `🌟 <strong>Talent Accelerator:</strong> Channel your top aptitude (<strong>${topTalentName} — ${topTalentEntries[0][1]}%</strong>) to master your toughest subject topic.`
       ];
       if (activeStudent.social_mins >= 45) {
@@ -801,17 +873,9 @@
       }
       document.getElementById("studentQuestsList").innerHTML = quests.map(q => `<li>${q}</li>`).join("");
 
-      const parentItems = [
-        `🥗 <strong>Daily Nutrition & Bio-Fuel:</strong> Morning score is ${activeStudent.nutrition}/100. Provide slow-release protein & micronutrients at breakfast to prevent mid-day glycemic crashes.`,
-        `😴 <strong>Sleep & Adolescent Growth:</strong> Currently averaging ${activeStudent.sleep}h/night during ${activeStudent.stage}. Aim for an 8.5h sleep window.`,
-        `🕊️ <strong>Family, Social & Cultural Harmony:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
-      ];
-      if (tier !== "GREEN") {
-        parentItems.push(`💬 <strong>Empathy & Screen Co-Pilot:</strong> Replace late-night bedroom screen time (${activeStudent.social_mins}m past bedtime) with a calm 10-minute wind-down conversation.`);
-      }
-      document.getElementById("parentPlanList").innerHTML = parentItems.map(p => `<li>${p}</li>`).join("");
-
+      // 2. TEACHER VIEW ACCOMMODATIONS
       const teacherItems = [
+        `👩‍🏫 <strong>Student:</strong> ${activeStudent.name} (${activeStudent.grade})`,
         `⏱️ <strong>Cognitive Pacing:</strong> Chunk classroom assignments into <strong>${sprintMins}-minute micro-milestones</strong> aligned with ${activeStudent.dominant_modality} delivery.`,
         `🌉 <strong>Talent Bridge Strategy:</strong> Frame abstract lessons through <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong> projects.`,
         `🩺 <strong>Classroom Triage Action (${tier}):</strong> ${
@@ -823,6 +887,67 @@
         }`
       ];
       document.getElementById("teacherCardList").innerHTML = teacherItems.map(t => `<li>${t}</li>`).join("");
+
+      // 3. PARENT VIEW CO-PILOT
+      const parentItems = [
+        `🥗 <strong>Daily Nutrition & Bio-Fuel:</strong> Morning score is ${activeStudent.nutrition}/100. Provide slow-release protein & micronutrients at breakfast to prevent mid-day glycemic crashes.`,
+        `😴 <strong>Sleep & Adolescent Growth:</strong> Currently averaging ${activeStudent.sleep}h/night during ${activeStudent.stage}. Aim for an 8.5h sleep window.`,
+        `🕊️ <strong>Family, Social & Cultural Harmony:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
+      ];
+      if (tier !== "GREEN") {
+        parentItems.push(`💬 <strong>Empathy & Screen Co-Pilot:</strong> Replace late-night bedroom screen time (${activeStudent.social_mins}m past bedtime) with a calm 10-minute wind-down conversation.`);
+      }
+      document.getElementById("parentPlanList").innerHTML = parentItems.map(p => `<li>${p}</li>`).join("");
+
+      // 4. ACADEMY VIEW (INSTITUTIONAL COMMAND CENTER)
+      const cohortTiers = COHORT.map((s) => ({ s, ...computeStudentTier(s) }));
+      const greenCnt = cohortTiers.filter((x) => x.tier === "GREEN").length;
+      const amberCnt = cohortTiers.filter((x) => x.tier === "AMBER").length;
+      const redCnt = cohortTiers.filter((x) => x.tier === "RED").length;
+
+      document.getElementById("academyStatsTiles").innerHTML = `
+        <div class="stat-tile">
+          <div class="label">Tier 1 — Green (Talent Acceleration)</div>
+          <div class="val" style="color:var(--green);">${greenCnt} Students</div>
+        </div>
+        <div class="stat-tile">
+          <div class="label">Tier 2 — Amber (Coaching Loop)</div>
+          <div class="val" style="color:var(--amber);">${amberCnt} Students</div>
+        </div>
+        <div class="stat-tile">
+          <div class="label">Tier 3 — Red (Counselor Safeguarding)</div>
+          <div class="val" style="color:var(--red);">${redCnt} Students</div>
+        </div>
+      `;
+
+      document.getElementById("academyCohortTableBody").innerHTML = cohortTiers
+        .map(({ s, tier: stTier }) => {
+          const topT = Object.entries(s.talents).sort((a, b) => b[1] - a[1])[0];
+          return `
+            <tr>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.grade}</td>
+              <td><span class="badge ${stTier}">${stTier}</span></td>
+              <td>${s.dominant_modality}</td>
+              <td>${topT[0]} (${topT[1]}%)</td>
+              <td>${s.sleep}h sleep • ${s.social_mins}m late screen</td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      const academyItems = [
+        `🏛️ <strong>Institutional Safeguarding & Counselor Queue (${activeStudent.name}):</strong> ${
+          tier === "RED"
+            ? "URGENT ESCALATION — Assign School Psychologist & Family Liaison within 24 hours."
+            : tier === "AMBER"
+            ? "ACTIVE COACHING — Enrolled in 14-day bio-rhythm, nutrition, and focus-stamina intervention."
+            : "OPTIMAL — Enrolled in Academy Honors & Peer Leadership Incubator."
+        }`,
+        `🎓 <strong>Academy Talent Lab Placement:</strong> Allocate lab hours in <strong>${topTalentName}</strong> and <strong>${topTalentEntries[1][0]}</strong>.`,
+        `📅 <strong>Institutional Policy & Cultural Sync:</strong> ${activeStudent.socio_context[1] || activeStudent.socio_context[0]}`
+      ];
+      document.getElementById("academyPlanList").innerHTML = academyItems.map((a) => `<li>${a}</li>`).join("");
 
       updateRoleVisibility();
     }

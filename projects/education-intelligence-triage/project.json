@@ -1,8 +1,8 @@
 {
   "id": "education-intelligence-triage",
-  "name": "Education Intelligence & Student Triage System",
-  "icon": "🧠",
-  "description": "Holistic K-12 AI Triage & Neuro-Pedagogical System: Measures 5D student metrics (cognitive brain-wiring, talent, bio/nutrition/sleep, mental health/screen time, and family/cultural factors) via arcade games & quests to generate tailored learning methodologies and coaching.",
+  "name": "Kalki — Education Intelligence & Student Triage System",
+  "icon": "⚡",
+  "description": "Kalki Holistic K-12 AI Triage & Neuro-Pedagogical System: Measures 5D student metrics (cognitive brain-wiring, talent, bio/nutrition/sleep, mental health/screen time, and family/cultural factors) via arcade games & quests to generate tailored learning methodologies and coaching for Student, Teacher, Parent, and Academy views.",
   "default_model": "qwen2.5-coder:1.5b",
   "system_instruction": "instructions.md",
   "knowledge": [
