@@ -323,10 +323,21 @@
           <span class="badge GREEN" id="sAppBadge">XP +240</span>
         </div>
         <div class="app-body">
+          <!-- Classmate Streak Story Rings -->
+          <div id="mStoryBar" style="display:flex;gap:0.55rem;overflow-x:auto;padding-bottom:0.25rem;"></div>
+
           <div class="m-kpi-row" id="sAppKpis"></div>
 
+          <div class="m-card" style="border-color:rgba(245,158,11,0.45);">
+            <h4>
+              <span>🏆 Grade 8 Live Arena</span>
+              <span style="font-size:0.65rem;color:var(--amber);">Class • Grade • School</span>
+            </h4>
+            <ul class="m-list" id="sAppLeaderboard"></ul>
+          </div>
+
           <div class="m-card">
-            <h4><span>🕹️ 60s Stealth Impulse Orb</span><span style="font-size:0.68rem;color:var(--cyan);">Live Telemetry</span></h4>
+            <h4><span>🕹️ 60s Stealth Impulse Orb</span><span style="font-size:0.68rem;color:var(--cyan);">1v1 Brain Duel</span></h4>
             <div class="m-arcade-box">
               <div id="mOrb" class="m-orb">TAP TO PLAY</div>
               <div id="mOrbStat" style="font-size:0.7rem;color:var(--muted);">
@@ -712,23 +723,85 @@
       const topTalents = Object.entries(activeStudent.talents).sort((a, b) => b[1] - a[1]);
       const topTalentName = topTalents[0][0];
 
-      // 1. STUDENT APP
-      document.getElementById("sAppName").textContent = `${activeStudent.name.split(" ")[0]}'s Kalki Hub`;
-      document.getElementById("sAppSub").textContent = `${activeStudent.dominant_modality} • ${activeStudent.grade}`;
+      // 1. STUDENT APP (WITH COMPETITIVE ARENA & STREAK STORIES)
+      if (!window.mBonusXp) window.mBonusXp = {};
+      function calcMobileXp(st) {
+        const mt = computeMetrics(st);
+        const topVal = Object.entries(st.talents).sort((a, b) => b[1] - a[1])[0][1];
+        return Math.round(mt.bandwidth * 18 + topVal * 12 + st.impulse_control * 8 + (window.mBonusXp[st.id] || 0));
+      }
+
+      const rankedPeers = COHORT.map((st) => ({
+        id: st.id,
+        name: st.name,
+        xp: calcMobileXp(st),
+        streak: Math.max(3, Math.round(st.sleep * 2 + (st.nutrition > 60 ? 5 : 1)))
+      })).sort((a, b) => b.xp - a.xp);
+
+      const myRank = rankedPeers.findIndex((p) => p.id === activeStudent.id) + 1;
+      const myPeerObj = rankedPeers.find((p) => p.id === activeStudent.id) || rankedPeers[0];
+
+      document.getElementById("sAppName").textContent = `${activeStudent.name.split(" ")[0]}'s Kalki Arena`;
+      document.getElementById("sAppSub").textContent = `Rank #${myRank} in Grade 8 • 🔥 ${myPeerObj.streak}d Streak`;
       const sBadge = document.getElementById("sAppBadge");
       sBadge.className = `badge ${m.tier}`;
-      sBadge.textContent = `BW ${m.bandwidth}%`;
+      sBadge.textContent = `${myPeerObj.xp.toLocaleString()} XP`;
+
+      document.getElementById("mStoryBar").innerHTML = COHORT.map((st) => {
+        const ini = st.name.split(" ").map((w) => w[0]).join("");
+        const stDays = Math.max(3, Math.round(st.sleep * 2 + (st.nutrition > 60 ? 5 : 1)));
+        const activeRing = st.id === activeStudent.id ? "border:2px solid var(--cyan);" : "border:2px solid var(--pink);";
+        return `
+          <div data-story-id="${st.id}" style="display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;min-width:52px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--panel-alt);${activeRing}display:grid;place-items:center;font-size:0.72rem;font-weight:800;">${ini}</div>
+            <span style="font-size:0.62rem;color:#cbd5e1;">${st.name.split(" ")[0]}</span>
+            <span style="font-size:0.58rem;color:var(--amber);">🔥${stDays}d</span>
+          </div>
+        `;
+      }).join("");
+
+      document.querySelectorAll("#mStoryBar [data-story-id]").forEach((el) => {
+        el.addEventListener("click", () => {
+          activeStudent = COHORT.find((s) => s.id === el.dataset.storyId) || COHORT[0];
+          populateDropdown();
+          renderMobileApps();
+        });
+      });
 
       document.getElementById("sAppKpis").innerHTML = `
+        <div class="m-kpi">
+          <div class="lbl">Grade 8 Rank</div>
+          <div class="val" style="color:var(--amber);">#${myRank} of ${rankedPeers.length} 🏆</div>
+        </div>
         <div class="m-kpi">
           <div class="lbl">Focus Sprint</div>
           <div class="val" style="color:var(--cyan);">${m.sprintMins} Mins</div>
         </div>
-        <div class="m-kpi">
-          <div class="lbl">Impulse Score</div>
-          <div class="val" style="color:var(--green);">${activeStudent.impulse_control}/100</div>
-        </div>
       `;
+
+      document.getElementById("sAppLeaderboard").innerHTML = rankedPeers
+        .slice(0, 4)
+        .map((p, idx) => {
+          const isMe = p.id === activeStudent.id;
+          const medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `#${idx + 1}`;
+          return `
+            <li style="display:flex;justify-content:space-between;align-items:center;${isMe ? "border-left-color:var(--cyan);background:#1e2b4f;" : ""}">
+              <span>${medal} <strong>${p.name.split(" ")[0]}</strong> ${isMe ? "(You)" : ""} • 🔥${p.streak}d</span>
+              <span style="display:flex;align-items:center;gap:6px;">
+                <strong style="color:var(--amber);">${p.xp} XP</strong>
+                ${!isMe ? `<button class="m-duel-btn" data-id="${activeStudent.id}" style="padding:2px 6px;font-size:0.62rem;background:var(--pink);border:none;border-radius:6px;color:#fff;">⚔️ Duel</button>` : ""}
+              </span>
+            </li>
+          `;
+        })
+        .join("");
+
+      document.querySelectorAll(".m-duel-btn").forEach((b) => {
+        b.addEventListener("click", () => {
+          window.mBonusXp[activeStudent.id] = (window.mBonusXp[activeStudent.id] || 0) + 120;
+          renderMobileApps();
+        });
+      });
 
       document.getElementById("sAppQuests").innerHTML = [
         `🎯 <strong>${m.sprintMins}-Min ${activeStudent.dominant_modality} Sprint:</strong> Complete 2 bursts + 3m movement recharge.`,

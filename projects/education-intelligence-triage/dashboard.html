@@ -303,6 +303,135 @@
     }
     tr.clickable-row { cursor: pointer; transition: background 0.15s ease; }
     tr.clickable-row:hover { background: rgba(99, 102, 241, 0.12); }
+
+    /* Social-Dopamine & Competitive Arena Styles */
+    .stories-bar {
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      padding: 0.5rem 0.25rem 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .story-ring {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      min-width: 72px;
+      text-align: center;
+    }
+    .story-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #f59e0b, #ec4899, #6366f1);
+      display: grid;
+      place-items: center;
+      transition: transform 0.18s ease;
+    }
+    .story-ring:hover .story-avatar { transform: scale(1.08); }
+    .story-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .story-name { font-size: 0.72rem; color: var(--text); font-weight: 600; }
+    .story-streak { font-size: 0.66rem; color: var(--amber); font-weight: 700; }
+
+    .scope-tabs {
+      display: inline-flex;
+      background: var(--bg);
+      padding: 0.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      gap: 0.2rem;
+    }
+    .scope-tab {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 0.32rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .scope-tab.active {
+      background: linear-gradient(135deg, var(--pink), var(--accent));
+      color: #fff;
+    }
+    .lb-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--panel-alt);
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .lb-row.me {
+      border-color: var(--cyan);
+      background: rgba(6, 182, 212, 0.12);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+    }
+    .lb-rank {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      background: var(--bg);
+    }
+    . hype-btn {
+      background: rgba(236, 72, 153, 0.15);
+      border: 1px solid var(--pink);
+      color: #f9a8d4;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .duel-btn {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      border: none;
+      color: #fff;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .dopamine-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: #fff;
+      padding: 0.85rem 1.25rem;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.45);
+      z-index: 100;
+      display: none;
+      animation: popIn 0.25s ease;
+    }
+    @keyframes popIn {
+      from { transform: translateY(20px) scale(0.9); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -464,16 +593,48 @@
       <!-- Live Adolescent & Hormonal Academic Impact Equation Banner -->
       <div class="equation-box" id="hormonalEquationBanner"></div>
 
-      <!-- Role View 1: STUDENT -->
+      <!-- Role View 1: STUDENT (PRO-SOCIAL DOPAMINE & COMPETITIVE ARENA) -->
       <div class="card role-panel" data-panel="student">
         <h2>
-          <span>🎮 1. Student View — Gamified Quests, Focus Sprints & Talent Unlocks</span>
-          <span class="badge GREEN" id="studentReadinessBadge">Academic Bandwidth: 70%</span>
+          <span>🎮 1. Student View — Social Streak Feed, Live Classmate Arena & Quests</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="badge AMBER" id="studentStreakBadge">🔥 14-Day Streak</span>
+            <span class="badge GREEN" id="studentReadinessBadge">Academic Bandwidth: 70%</span>
+          </div>
         </h2>
-        <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;">
-          <strong>What the Student Sees:</strong> Zero clinical stigma or medical jargon. Students play 60-second stealth arcade games, track their XP, and complete daily bio-fuel & focus quests tailored to their brain wiring:
+        <p style="font-size:0.83rem;color:var(--muted);margin-bottom:0.65rem;">
+          <strong>Healthy Dopamine Replacement Engine:</strong> Replaces addictive social-media scrolling with live <strong>Grade 8 Streak Stories</strong>, <strong>Class/Grade/School Leaderboards</strong>, <strong>1v1 Brain-Wiring Duels</strong>, and <strong>Mystery XP Chests</strong>:
         </p>
+
+        <!-- Social Story Rings (Like Instagram/Snap Streaks for Focus & Talent) -->
+        <div class="stories-bar" id="studentStoriesBar"></div>
+
         <div class="grid-3" id="studentKpiTiles"></div>
+
+        <!-- Competitive Leaderboard + Live Peer Hype Feed -->
+        <div class="grid-2" style="margin-bottom:1.1rem;">
+          <div class="card" style="background:var(--bg);margin-bottom:0;">
+            <h2>
+              <span>🏆 Live Arena Leaderboard</span>
+              <div class="scope-tabs">
+                <button class="scope-tab active" data-scope="class">Class 8-A</button>
+                <button class="scope-tab" data-scope="grade">Grade 8</button>
+                <button class="scope-tab" data-scope="school">All School</button>
+              </div>
+            </h2>
+            <div id="studentLeaderboardList"></div>
+          </div>
+
+          <div class="card" style="background:var(--bg);margin-bottom:0;">
+            <h2>
+              <span>⚡ Live Schoolmate Hype Feed & 1v1 Duels</span>
+              <button id="btnMysteryDrop" class="duel-btn">🎁 Claim Daily Dopamine Drop</button>
+            </h2>
+            <ul class="clean-list" id="studentSocialFeedList"></ul>
+          </div>
+        </div>
+
+        <h3 style="font-size:0.84rem;color:var(--cyan);margin-bottom:0.5rem;">🎯 Active Daily Power-Up Quests (Tap to Complete & Climb Rank!)</h3>
         <ul class="clean-list" id="studentQuestsList"></ul>
       </div>
 
@@ -1206,36 +1367,199 @@
             .join(" • ")}`
         : `Play any of the 3 Kalki Stealth Arcade games on the left to stream live telemetry into the student's 5D profile.`;
 
-      // 1. STUDENT VIEW QUESTS & KPI TILES
+      // 1. STUDENT VIEW QUESTS, KPI TILES & SOCIAL DOPAMINE ARENA
       const topTalentName = topTalentEntries[0][0];
+      if (!window.studentBonusXp) window.studentBonusXp = {};
+      if (!window.studentHypeCounts) window.studentHypeCounts = { "STU-801": 24, "STU-802": 31, "STU-803": 48, "STU-804": 19, "STU-805": 27, "STU-806": 42 };
+      const lbScope = window.activeLbScope || "class";
+
+      function calcStudentXp(s) {
+        const sEq = computeAcademicEquation(s);
+        const topT = Object.entries(s.talents).sort((a, b) => b[1] - a[1])[0][1];
+        const base = sEq.effectiveBandwidth * 18 + topT * 12 + s.impulse_control * 8;
+        return Math.round(base + (window.studentBonusXp[s.id] || 0));
+      }
+
+      const myXp = calcStudentXp(activeStudent);
+      const streakDays = Math.max(3, Math.round(activeStudent.sleep * 2 + (activeStudent.nutrition > 60 ? 5 : 1)));
+      const streakEl = document.getElementById("studentStreakBadge");
+      if (streakEl) streakEl.textContent = `🔥 ${streakDays}-Day Focus Streak • ${myXp.toLocaleString()} XP`;
+
+      // Render Story Rings (Classmates' Live Streaks & Superpowers)
+      const storiesBarEl = document.getElementById("studentStoriesBar");
+      if (storiesBarEl) {
+        storiesBarEl.innerHTML = COHORT.map((s) => {
+          const initials = s.name.split(" ").map((n) => n[0]).join("");
+          const stDays = Math.max(3, Math.round(s.sleep * 2 + (s.nutrition > 60 ? 5 : 1)));
+          const isMe = s.id === activeStudent.id;
+          return `
+            <div class="story-ring" data-story-sid="${s.id}">
+              <div class="story-avatar" style="${isMe ? "background:linear-gradient(135deg,#06b6d4,#10b981);transform:scale(1.06);" : ""}">
+                <div class="story-avatar-inner">${initials}</div>
+              </div>
+              <div class="story-name">${s.name.split(" ")[0]}${isMe ? " (You)" : ""}</div>
+              <div class="story-streak">🔥 ${stDays}d</div>
+            </div>
+          `;
+        }).join("");
+
+        storiesBarEl.querySelectorAll(".story-ring").forEach((ring) => {
+          ring.addEventListener("click", () => {
+            activeStudentId = ring.dataset.storySid;
+            activeStudent = COHORT.find((s) => s.id === activeStudentId) || COHORT[0];
+            populateSelect();
+            syncSlidersFromStudent();
+            renderDashboard();
+          });
+        });
+      }
+
+      // Build Ranked Leaderboard for Class 8-A, Grade 8, or All School
+      let pool = COHORT.map((s) => ({
+        id: s.id,
+        name: s.name,
+        grade: "Class 8-A",
+        modality: s.dominant_modality,
+        topTalent: Object.entries(s.talents).sort((a, b) => b[1] - a[1])[0][0],
+        xp: calcStudentXp(s),
+        isCohort: true
+      }));
+
+      if (lbScope === "grade" || lbScope === "school") {
+        pool.push(
+          { id: "EXT-1", name: "Devika Rao (8-B)", grade: "Class 8-B", modality: "Analytical-Systems", topTalent: "Quantitative Logic", xp: 2940, isCohort: false },
+          { id: "EXT-2", name: "Aarav Sharma (8-C)", grade: "Class 8-C", modality: "Visual-Spatial", topTalent: "Systems & Engineering", xp: 2810, isCohort: false }
+        );
+      }
+      if (lbScope === "school") {
+        pool.push(
+          { id: "EXT-3", name: "Sana Sheikh (10-A)", grade: "Grade 10", modality: "Auditory-Verbal", topTalent: "Olympiad Debate", xp: 3320, isCohort: false },
+          { id: "EXT-4", name: "Vikram Aditya (9-B)", grade: "Grade 9", modality: "Kinesthetic-Experiential", topTalent: "Robotics Lab", xp: 3150, isCohort: false }
+        );
+      }
+      pool.sort((a, b) => b.xp - a.xp);
+      const myRank = pool.findIndex((p) => p.id === activeStudent.id) + 1;
+
       const studentKpiEl = document.getElementById("studentKpiTiles");
       if (studentKpiEl) {
         studentKpiEl.innerHTML = `
           <div class="stat-tile">
-            <div class="label">My Superpower Modality</div>
-            <div class="val" style="color:var(--cyan);font-size:1.05rem;">${activeStudent.dominant_modality}</div>
+            <div class="label">My Live Arena Rank (${lbScope.toUpperCase()})</div>
+            <div class="val" style="color:var(--amber);font-size:1.15rem;">#${myRank} of ${pool.length} 🏆</div>
           </div>
           <div class="stat-tile">
-            <div class="label">Optimal Focus Sprint</div>
-            <div class="val" style="color:var(--green);font-size:1.05rem;">${sprintMins} Mins + 3m Break</div>
+            <div class="label">My Superpower & Sprint</div>
+            <div class="val" style="color:var(--cyan);font-size:1.02rem;">${activeStudent.dominant_modality} (${sprintMins}m)</div>
           </div>
           <div class="stat-tile">
             <div class="label">Top Talent Track</div>
-            <div class="val" style="color:var(--amber);font-size:1.05rem;">${topTalentName} (${topTalentEntries[0][1]}%)</div>
+            <div class="val" style="color:var(--green);font-size:1.02rem;">${topTalentName} (${topTalentEntries[0][1]}%)</div>
           </div>
         `;
       }
+
+      const lbEl = document.getElementById("studentLeaderboardList");
+      if (lbEl) {
+        lbEl.innerHTML = pool
+          .slice(0, 6)
+          .map((p, idx) => {
+            const isMe = p.id === activeStudent.id;
+            const medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `#${idx + 1}`;
+            return `
+              <div class="lb-row ${isMe ? "me" : ""}">
+                <div style="display:flex;align-items:center;gap:0.65rem;">
+                  <div class="lb-rank">${medal}</div>
+                  <div>
+                    <div style="font-size:0.84rem;font-weight:700;">${p.name} ${isMe ? "<span style='color:var(--cyan);'>(YOU)</span>" : ""}</div>
+                    <div style="font-size:0.72rem;color:var(--muted);">${p.grade} • ${p.topTalent}</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.55rem;">
+                  <strong style="font-size:0.86rem;color:var(--amber);">${p.xp.toLocaleString()} XP</strong>
+                  ${
+                    !isMe
+                      ? `<button class="duel-btn" data-duel-name="${p.name}" data-duel-xp="${p.xp}">⚔️ 1v1 Duel</button>`
+                      : ""
+                  }
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        lbEl.querySelectorAll(".duel-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const oppName = btn.dataset.duelName;
+            window.studentBonusXp[activeStudent.id] = (window.studentBonusXp[activeStudent.id] || 0) + 120;
+            showDopamineToast(`⚔️ Won 60s Brain-Wiring Duel vs ${oppName}! +120 XP & Rank Boost!`);
+            renderDashboard();
+          });
+        });
+      }
+
+      // Live Peer Hype Feed (Pro-Social Dopamine Likes/Fires)
+      const socialFeedEl = document.getElementById("studentSocialFeedList");
+      if (socialFeedEl) {
+        const feedEvents = [
+          { sid: "STU-803", text: `<strong>Zoya Khan (8-A)</strong> crushed a 30-min Socratic Sprint & hit a 🔥 21-Day Streak!`, tag: " Linguistic Boss" },
+          { sid: "STU-806", text: `<strong>Rohan Nair (8-A)</strong> unlocked <strong>BDNF Athletics Shield</strong> (+180 XP before Period 1)!`, tag: "⚡ Kinetic MVP" },
+          { sid: "STU-801", text: `<strong>Arjun Mehta (8-A)</strong> scored <strong>94% in Spatial Engineering Matrix</strong> in 14 seconds!`, tag: "🚀 Systems Pro" },
+          { sid: "STU-802", text: `<strong>Ananya Iyer (8-A)</strong> solved the Grade 8 Pattern Logic Boss Challenge!`, tag: "🧠 Logic Master" }
+        ];
+        socialFeedEl.innerHTML = feedEvents
+          .map((ev) => {
+            const cnt = window.studentHypeCounts[ev.sid] || 20;
+            return `
+              <li style="display:flex;justify-content:space-between;align-items:center;gap:0.6rem;">
+                <div>
+                  ${ev.text}
+                  <span class="badge GREEN" style="margin-left:0.35rem;">${ev.tag}</span>
+                </div>
+                <button class="hype-btn" data-hype-sid="${ev.sid}">🔥 Hype (${cnt})</button>
+              </li>
+            `;
+          })
+          .join("");
+
+        socialFeedEl.querySelectorAll(".hype-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const sid = btn.dataset.hypeSid;
+            window.studentHypeCounts[sid] = (window.studentHypeCounts[sid] || 20) + 1;
+            window.studentBonusXp[activeStudent.id] = (window.studentBonusXp[activeStudent.id] || 0) + 25;
+            showDopamineToast(`🔥 Sent Peer Hype! +25 Pro-Social Dopamine XP!`);
+            renderDashboard();
+          });
+        });
+      }
+
       const quests = [
-        `🎯 <strong>Focus Sprint Quest (${activeStudent.name}):</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts with a 3-min movement break.`,
-        `🌟 <strong>Talent Accelerator:</strong> Channel your top aptitude (<strong>${topTalentName} — ${topTalentEntries[0][1]}%</strong>) to master your toughest subject topic.`
+        `🎯 <strong>Focus Sprint Quest (${activeStudent.name}):</strong> Complete two ${sprintMins}-minute ${activeStudent.dominant_modality} study bursts (+150 XP).`,
+        `🌟 <strong>Talent Boss Challenge:</strong> Use your <strong>${topTalentName} (${topTalentEntries[0][1]}%)</strong> superpower to beat the Grade 8 Squad Challenge (+200 XP).`
       ];
       if (activeStudent.melatonin_shift >= 75 || activeStudent.social_mins >= 45) {
-        quests.push(`🌙 <strong>Melatonin & Digital Sunset Shield:</strong> Warm-light cutoff 60 mins before bed to counter your +${activeStudent.melatonin_shift}m adolescent circadian shift and recover +${Math.round(eq.circadianPenalty)} Bandwidth XP!`);
+        quests.push(`🌙 <strong>Melatonin Digital Sunset Shield:</strong> Beat your classmates by docking your phone 60m before bed to recover +${Math.round(eq.circadianPenalty)} Bandwidth & +250 Streak XP!`);
       }
       if (activeStudent.nutrition < 65 || activeStudent.growth_flag) {
-        quests.push(`⚡ <strong>Endocrine Brain-Fuel Quest:</strong> Log a high-protein + iron/vitamin-C breakfast to power your Grade 8 growth phase and prevent afternoon brain fog.`);
+        quests.push(`⚡ <strong>Endocrine Brain-Fuel Combo:</strong> Log a high-protein + iron breakfast before 8:00 AM to unlock the Morning Multiplier (+180 XP).`);
       }
-      document.getElementById("studentQuestsList").innerHTML = quests.map(q => `<li>${q}</li>`).join("");
+      document.getElementById("studentQuestsList").innerHTML = quests
+        .map(
+          (q) => `
+          <li style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;">
+            <span>${q}</span>
+            <button class="btn-primary complete-quest-btn" style="padding:0.3rem 0.65rem;font-size:0.74rem;white-space:nowrap;">⚡ Claim +150 XP</button>
+          </li>
+        `
+        )
+        .join("");
+
+      document.querySelectorAll(".complete-quest-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          window.studentBonusXp[activeStudent.id] = (window.studentBonusXp[activeStudent.id] || 0) + 150;
+          showDopamineToast(`🎉 Quest Completed! +150 XP — Climbing the Grade 8 Leaderboard!`);
+          renderDashboard();
+        });
+      });
 
       // 2. CLASS TEACHER VIEW ACCOMMODATIONS (PRIVACY MASKED) + WHOLE-CLASS MODALITY CLUSTERS
       const teacherItems = [
@@ -1588,6 +1912,48 @@
     document.getElementById("btnDemoClose").addEventListener("click", () => {
       document.getElementById("guidedDemoBar").style.display = "none";
     });
+
+    // Leaderboard Scope Tabs (Class 8-A / Grade 8 / All School)
+    document.querySelectorAll(".scope-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".scope-tab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        window.activeLbScope = tab.dataset.scope;
+        renderDashboard();
+      });
+    });
+
+    // Mystery Dopamine Chest Drop
+    const mysteryBtn = document.getElementById("btnMysteryDrop");
+    if (mysteryBtn) {
+      mysteryBtn.addEventListener("click", () => {
+        const rewards = [
+          { xp: 200, label: "💎 Rare Prefrontal Focus Multiplier (+200 XP)!" },
+          { xp: 300, label: "🔥 Legendary Grade 8 Arena Boost (+300 XP)!" },
+          { xp: 175, label: "⚡ Golden Spatial Engineering Badge (+175 XP)!" }
+        ];
+        const pick = rewards[Math.floor(Math.random() * rewards.length)];
+        window.studentBonusXp[activeStudent.id] = (window.studentBonusXp[activeStudent.id] || 0) + pick.xp;
+        showDopamineToast(pick.label);
+        renderDashboard();
+      });
+    }
+
+    function showDopamineToast(msg) {
+      let toast = document.getElementById("dopamineToast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "dopamineToast";
+        toast.className = "dopamine-toast";
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = msg;
+      toast.style.display = "block";
+      clearTimeout(window.dopamineToastTimer);
+      window.dopamineToastTimer = setTimeout(() => {
+        toast.style.display = "none";
+      }, 2800);
+    }
 
     loadFromBackend();
   </script>
